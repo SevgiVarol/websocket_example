@@ -1,3 +1,4 @@
+    var ekinoks= require("./tests/ekinoks");
     //server side//sunucu oluştur ve dinle
     var http = require('http');
     var server = http.createServer(function(request, response) {});
@@ -21,12 +22,29 @@
         
         
         ////mesaj dinle ve yayınla////(Create event listener)
-        connection.on('message', function(message_txt) {
-            var msgString = message_txt.utf8Data;
-            for(var i in clients){
-            clients[i].sendUTF(msgString);
-            console.log("mesaj eklendi:"+ msgString);
+        connection.on('message', function(event) {
+            console.log(event);
+            
+            var data = JSON.parse(event.utf8Data);
+            console.log(data);
+            var msgString =data.testnum;
+            var doc = data.doc;
+            //console.log("mesaj:"+msgString+" doc:"+doc);
+            if(doc == 1){ ekinoks.testEt1(msgString).then((value) => {
+                for(var i in clients){
+                clients[i].sendUTF(msgString);
+                }
+            });
             }
+            else if(doc == 2){ ekinoks.testEt2(msgString).then((value) => {
+                for(var i in clients){
+                clients[i].sendUTF(msgString);
+                }
+            });
+                
+            }
+            else console.log(doc+" okunamadı")
+            
 
         });
         

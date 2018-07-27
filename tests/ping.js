@@ -24,9 +24,8 @@ async function ping(page,ip)
 module.exports.camera_restart = async function (page,ip)
 {   var if_close = 0;
     x=1;
-                for(let i=15;x;i--)
-                {
-                    x = await ping (page,ip);
+    for(let i=15;x;i--) {
+                x = await ping (page,ip);
                     await page.waitFor(1000);
                 console.clear();
                 console.log("Kamera kapanıyor. Lütfen bekleyin... "+i);

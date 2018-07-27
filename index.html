@@ -5,10 +5,57 @@
     <style></style>
   </head>
   <body>
-    <div id="chatlog">
-        <input type="button" onclick="sendMessage()">TIKLA<br>
-        <input type="text" id="message_text"><br>
-        <script type="text/javascript" src="./websocket_connection.js"></script>
-    </div>
+    <h1>Ekinoks Test Sistemi</h1>
+        <p>Lütfen yapmak istediğiniz testlerin bulunduğu dökümanı seçiniz</p>
+        <form action="">
+            <input type="checkbox" id="doc1" onclick="myFunction()">TEY-1_ver02.xlsx<br>
+            <input type="checkbox" id="doc2" onclick="myFunction1()">TEY-2_ver06.xlsx<br>
+            
+            <script>
+                function myFunction() {
+                var checkBox1 = document.getElementById("doc1");
+                var checkBox2 = document.getElementById("doc2");
+                var form1 = document.getElementById("test_start1");
+                if (checkBox1.checked == true){
+                    form1.style.display = "block";
+                    checkBox2.checked = false;
+                    myFunction1();
+                } else {
+                form1.style.display = "none";
+                }
+            }
+            </script>
+            <script>
+                function myFunction1() {
+                var checkBox1 = document.getElementById("doc1");
+                var checkBox2 = document.getElementById("doc2");
+                var form2 = document.getElementById("test_start2");
+                if (checkBox2.checked == true){
+                    form2.style.display = "block";
+                    checkBox1.checked = false;
+                    myFunction();
+                    
+                } else {
+                form2.style.display = "none";
+                }
+            }
+            </script>
+        
+        </form>
+        
+        <form action="" id="test_start1" style="display:none">
+            <div id="chatlog1">
+                <input type="text" id="message_text1">
+                <input type="button" onclick="sendMessage1()" value="TEST ET">
+                <script type="text/javascript" src="./websocket_connection.js"></script>
+            </div>
+        </form>
+        <form action="" id="test_start2" style="display:none">
+            <div id="chatlog2">
+                <input type="text" id="message_text2">
+                <input type="button" onclick="sendMessage2()" value="TEST ET">
+                <script type="text/javascript" src="./websocket_connection.js"></script>
+            </div>
+        </form>
   </body>
 </html>

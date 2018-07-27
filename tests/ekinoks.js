@@ -24,7 +24,7 @@ var {ping} = require("./ping.js")
  
 /*async function interface (page)
 {
-        document = await question.ask("Yapacağınız Test Hangi Dökümanda?            ..Çıkış İçin C ye basabilirsiniz");
+        document = await question_ask("Yapacağınız Test Hangi Dökümanda?            ..Çıkış İçin C ye basabilirsiniz");
         console.clear();
         if (document == "c" || document == "C") 
         {
@@ -32,7 +32,7 @@ var {ping} = require("./ping.js")
             return;
             
         }
-        test_number = await question.ask("HANGİ TESTİ YAPMAK İSTİYORSUNUZ?             ..Çıkış İçin C ye basabilirsiniz");
+        test_number = await question_ask("HANGİ TESTİ YAPMAK İSTİYORSUNUZ?             ..Çıkış İçin C ye basabilirsiniz");
         console.clear();
         if (test_number == "c" || test_number == "C")
         { 
@@ -62,11 +62,11 @@ let testIt = async () => {
 
 
   
-   ip = '10.5.177.52'//await question.ask("Test edilecek kameranın ip adresini girin");
+   ip = '10.5.177.52'//await question_ask("Test edilecek kameranın ip adresini girin");
    url = 'http://'+ ip + ':8080';
    dom_url = 'http://10.5.177.164:8080';
    dom_ip = '10.5.177.164';
-   select_cam_type = await question.ask("Kamera tipini seçin Sabit Kamera => 1 DOM => 2");
+   select_cam_type = await question_ask("Kamera tipini seçin Sabit Kamera => 1 DOM => 2");
 	
    if(select_cam_type == 1)
         {
@@ -86,7 +86,7 @@ let testIt = async () => {
             await testIt();
         }
 /*
- select = await question.ask("Test Yapmak İçin T'ye Çıkış için C ye basınz");
+ select = await question_ask("Test Yapmak İçin T'ye Çıkış için C ye basınz");
         console.clear();
         if (select == "c" || select == "C") 
         {
@@ -123,7 +123,7 @@ testIt().then((value) => {
 */
 
 let testIt = async () => {
-    ip = '10.5.176.249'//await question.ask("Test edilecek kameranın ip adresini girin");
+    ip = '10.5.176.249'//await question_ask("Test edilecek kameranın ip adresini girin");
     url = 'http://'+ ip + ':8080';
     dom_url = 'http://10.5.177.164:8080';
     dom_ip = '10.5.177.164';
