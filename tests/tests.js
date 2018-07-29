@@ -57,7 +57,7 @@ async function test_ffmpeg_res(width_test,height_test,stream,test_num,document_n
     avg_frame_rate = await capture_test.read_specs("avg_frame_rate",test_num);//ölçülen kare hızı
     var command = 'vlc rtsp://admin:admin@'+ip+'/stream1';
     proc =await require('child_process').exec(command);
-    select = await question_ask("Görüntü Geldi mi ? e/h");
+    select = await sevgi_api.question_ask("Görüntü Geldi mi ? e/h");
     console.log("İstenen çözünürlük = "+width_test+"x"+height_test);
     console.log("Gerçekleşen çözünürlük = "+coded_width+"x"+coded_height);
     if (coded_width == width_test && coded_height == height_test)
@@ -371,10 +371,10 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                       console.log("Vlc programı açıldıktan sonra 15 dakika görüntüyü izleyin ve görüntüde herhangi bir bozulma varmı kontrol edin. Sonrasında Vlc programını kapatın ve sonucu konsola yazın");
                       var command = 'vlc rtsp://'+ip+'/stream1m';
                       proc =await require('child_process').exec(command);
-                      select1 = await question_ask("Görüntüde istenmeyen bozukluklar var mı? e/h");
+                      select1 = await sevgi_api.question_ask("Görüntüde istenmeyen bozukluklar var mı? e/h");
                       await test_ffmpeg_res_fps("stream1m",31);
                       console.log("Lütfen VLC programı üzerinden görüntünün çözünürlüğünün 1920*1080 olduğunu kontrol edin.");
-                      select2 = await question_ask("Görüntü istenen çözünürlükte mi ? e/h");
+                      select2 = await sevgi_api.question_ask("Görüntü istenen çözünürlükte mi ? e/h");
                       if ( (select1 == "h" || select1 == "H") && (select2 =="e"|| select2=="E"))
                       {
                           console.log("Test Başarılı");
@@ -394,9 +394,9 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                       proc =await require('child_process').exec(command);
                       console.log("Lütfen VLC programının açılmasını bekleyin.");
                       await page.waitFor(5000);
-                      select1 = await question_ask("Görüntü Geldi mi ? e/h");
+                      select1 = await sevgi_api.question_ask("Görüntü Geldi mi ? e/h");
                       console.log("Lütfen VLC programı üzerinden görüntünün çözünürlüğünün 640*368 olduğunu kontrol edin.");
-                      select2 = await question_ask("Görüntü istenen çözünürlükte mi ? e/h");
+                      select2 = await sevgi_api.question_ask("Görüntü istenen çözünürlükte mi ? e/h");
                       if ( (select1 == "e" || select1 == "E") && (select2 =="e"|| select2=="E"))
                       {
                           console.log("Test Başarılı");
@@ -415,9 +415,9 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                       proc =await require('child_process').exec(command);
                       console.log("Lütfen VLC programının açılmasını bekleyin.");
                       await page.waitFor(5000);
-                      select1 = await question_ask("Görüntü Geldi mi ? e/h");
+                      select1 = await sevgi_api.question_ask("Görüntü Geldi mi ? e/h");
                       console.log("Lütfen VLC programı üzerinden görüntünün çözünürlüğünün 1920*1080 olduğunu kontrol edin.");
-                      select2 = await question_ask("Görüntü istenen çözünürlükte mi ? e/h");
+                      select2 = await sevgi_api.question_ask("Görüntü istenen çözünürlükte mi ? e/h");
                       if ( (select1 == "e" || select1 == "E") && (select2 =="e"|| select2=="E"))
                       {
                           console.log("Test Başarılı");
@@ -436,9 +436,9 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                       proc =await require('child_process').exec(command);
                       console.log("Lütfen VLC programının açılmasını bekleyin.");
                       await page.waitFor(5000);
-                      select1 = await question_ask("Görüntü Geldi mi ? e/h");
+                      select1 = await sevgi_api.question_ask("Görüntü Geldi mi ? e/h");
                       console.log("Lütfen VLC programı üzerinden görüntünün çözünürlüğünün 640*368 olduğunu kontrol edin.");
-                      select2 = await question_ask("Görüntü istenen çözünürlükte mi ? e/h");
+                      select2 = await sevgi_api.question_ask("Görüntü istenen çözünürlükte mi ? e/h");
                       if ( (select1 == "e" || select1 == "E") && (select2 =="e"|| select2=="E"))
                       {
                           console.log("Test Başarılı");
@@ -459,8 +459,8 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                       var command = 'vlc rtsp://'+ip+'/stream1';
                       proc =await require('child_process').exec(command);
                       await page.waitFor(5000);
-                      select1 = await question_ask("Görüntü Geldi mi ? e/h");
-                      select2 = await question_ask("Üst yazı ve saat bilgisi güncel mi? e/h");
+                      select1 = await sevgi_api.question_ask("Görüntü Geldi mi ? e/h");
+                      select2 = await sevgi_api.question_ask("Üst yazı ve saat bilgisi güncel mi? e/h");
                       if ( (select1 == "e" || select1 == "E") && (select2 =="e"|| select2=="E"))
                       {
                           console.log("Test Başarılı");
@@ -477,8 +477,8 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                       console.log("Test 36 Başladı.");
                       console.log("Kameranın web arayüzüne geçerek 'Canlı izleme' seklesinden Z+ ve Z- butonları ile Zoom in ve Zoom out işlemleri yapınız. Zoom in ve zoom out işlemlerini yaparken zamandan sonra zoom değerinin yazıldığı ve değiştiği üst yazı gözlemlerek zoom değerinin gösterilebildiğini doğrulayınız.");
                       await page.waitFor(5000);
-                      select1 = await question_ask("Zoom işlemi başarılı bir şekilde yapılabildi mi? e/h");
-                      select2 = await question_ask("Zoom işlemi yapılırken üst yazıda saatten sonra zoom değerleri yazıldı mı? e/h");
+                      select1 = await sevgi_api.question_ask("Zoom işlemi başarılı bir şekilde yapılabildi mi? e/h");
+                      select2 = await sevgi_api.question_ask("Zoom işlemi yapılırken üst yazıda saatten sonra zoom değerleri yazıldı mı? e/h");
                       if ( (select1 == "e" || select1 == "E") && (select2 =="e"|| select2=="E"))
                       {
                           console.log("Test Başarılı");
@@ -499,7 +499,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                       await nav.toVersion(page,ip);
                       await version.test_application(page);
                       await version.test_firmware(page);
-                      select1 = await question_ask("'Uygulama versiyonu' ve 'Firmware sürümü' değerleri başlangıçtaki değerler ile aynı mı? e/h");
+                      select1 = await sevgi_api.question_ask("'Uygulama versiyonu' ve 'Firmware sürümü' değerleri başlangıçtaki değerler ile aynı mı? e/h");
                       if ( select1 == "e" || select1 == "E")
                       {
                           console.log("Test Başarılı");
@@ -537,7 +537,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                       await alarm.set_apply(page);
                       await camera_restart(page,ip);
                       console.log("Kameranın görüntüsünü DEFNE üzerinden izleyin. Kameranın önüne geçerek SEI Alarm Bilgisinin sol üst köşede kırmızı fontlu yazı olarak geldiği gözlemlenerek adım doğrulanır.");
-                      select1 = await question_ask("Kameranın önüne geçildiğinde SEI Alarm Bilgisinin sol üst köşede kırmızı fontlu yazı olarak geldi mi? e/h");
+                      select1 = await sevgi_api.question_ask("Kameranın önüne geçildiğinde SEI Alarm Bilgisinin sol üst köşede kırmızı fontlu yazı olarak geldi mi? e/h");
                        if (select1 == "e" || select1 == "E")
                       {
                           console.log("Test Başarılı");
@@ -559,8 +559,8 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                       await alarm.set_apply(page); 
                       await camera_restart(page,ip);
                       console.log("Kameranın görüntüsünü DEFNE üzerinden izleyin. Kameranın önüne geçerek SEI Alarm Bilgisinin GELDİĞİNİ ve sol üst köşede kırmızı fontlu alarm bilgisinin GELMEDİĞİNİ gözlemleyin.");
-                      select1 = await question_ask("Kameranın önüne geçildiğinde SEI Alarm bilgisi geldi mi ? e/h");
-                      select2 = await question_ask("Sol üst köşede kırmızı fontlu alarm bilgisi geldi mi? e/h");
+                      select1 = await sevgi_api.question_ask("Kameranın önüne geçildiğinde SEI Alarm bilgisi geldi mi ? e/h");
+                      select2 = await sevgi_api.question_ask("Sol üst köşede kırmızı fontlu alarm bilgisi geldi mi? e/h");
                        if ( (select2 == "h" || select2 == "H") && (select1 =="e"|| select1=="E"))
                        {
                           console.log("Test Başarılı");
@@ -606,13 +606,13 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                       await nav.toResolution(page,ip);
                       var command = 'vlc rtsp://'+ip+'/stream1';
                       proc =await require('child_process').exec(command);
-                      select1 = await question_ask("Kamera gündüz modunda mı ? e/h");
+                      select1 = await sevgi_api.question_ask("Kamera gündüz modunda mı ? e/h");
                       console.log("Lütfen kameranızın merceğini bir cisimle kapatın...");
                       console.log("Vlc programı üzerinden kamera modunu kontrol edin...");
-                      select2 = await question_ask("Kamera gece modunda mı ? e/h");
+                      select2 = await sevgi_api.question_ask("Kamera gece modunda mı ? e/h");
                       console.log("Lütfen kameranızın merceğinin önündeki cismi kaldırın...");
                       console.log("Vlc programı üzerinden kamera modunu kontrol edin...");
-                      select3 = await question_ask("Kamera gündüz modunda mı ? e/h");
+                      select3 = await sevgi_api.question_ask("Kamera gündüz modunda mı ? e/h");
                       await nav.toCamera(page,ip);
                       await camera.set_ir_filter_mode(page,"manuel");
                       await camera.ir_filter_apply(page);
@@ -634,7 +634,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                       await page.waitFor(1000);
                       await nav.toLive(page,ip);
                       console.log("Lütfen web arayüzü üzerinden kamera görüntüsünün gelip gelmediğine bakın ...");
-                      select1 = await question_ask("Görüntü geldi mi ? e/h");
+                      select1 = await sevgi_api.question_ask("Görüntü geldi mi ? e/h");
                       if (select1=="e"||select1=="E")
                       {
                           console.log("Test Başarılı");
@@ -653,7 +653,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                       console.log("Test 44 Başladı.");
                       console.log("Lütfen aşağıdaki testi uygulayın.. Ardından otomatik test yazılımını tekrardan başlatın ve test sonuçlarını otomatik test yazılımına bildirmek için bu testin numarasını tuşlayın");
                       console.log("Kameranın gücü kesilir ve bir süre beklendikten sonra tekrar verilir.  Kameranın canlı görüntüsü izlenmeye başladıktan bir süre sonra yine kameranın gücü kesilir bir süre beklenir. Ardından kameranın gücü tekrar verilir. Bu işlem aynı şekilde 1 kez daha tekrarlanır. Toplamda 3 sefer bu işlem yapıldıktan sonra kameranın canlı görüntüsü VLC üzerinden izlenir ve web arayüzüne giriş yapılır. Web arayüzüne giriş yapılabildiği, görüntü çekilebildiği ve görüntüde maskelerin olması gereken yerlede görüldüğü test edilerek doğrulanır.");
-                      select1 = await question_ask("İstenen işlemler sorunsuz bir şekilde yapılabildi mi? e/h");
+                      select1 = await sevgi_api.question_ask("İstenen işlemler sorunsuz bir şekilde yapılabildi mi? e/h");
                       if (select1=="e"||select1=="E")
                       {
                           console.log("Test Başarılı");
@@ -670,7 +670,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                       console.log("Test 45 Başladı.");
                       console.log("Lütfen aşağıdaki testi uygulayın.. Ardından otomatik test yazılımını tekrardan başlatın ve test sonuçlarını otomatik test yazılımına bildirmek için bu testin numarasını tuşlayın");
                       console.log("Kamera web arayüzü üzerinden yeniden başlatılır. Kamera arayüzüne erişim sağlandıktan sonra bu işlem aynı şekilde toplamda 3 sefer tekrarlanır. Daha sonra kameranın canlı görüntüsü VLC üzerinden izlenir ve web arayüzüne giriş yapılır. Bu işlemlerin  sonucunda istenilen işlemlerin sorunsuz bir şekilde yapıldığı gözlemlenerek doğrulanır.");
-                      select1 = await question_ask("İstenen işlemler sorunsuz bir şekilde yapılabildi mi ? e/h");
+                      select1 = await sevgi_api.question_ask("İstenen işlemler sorunsuz bir şekilde yapılabildi mi ? e/h");
                       if (select1=="e"||select1=="E")
                       {
                           console.log("Test Başarılı");
@@ -695,7 +695,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                       console.log("Test 47 Başladı.");
                       console.log("Lütfen aşağıdaki testi uygulayın.. Ardından otomatik test yazılımını tekrardan başlatın ve test sonuçlarını otomatik test yazılımına bildirmek için bu testin numarasını tuşlayın");
                       console.log("Test bilgisayarından kameranın 1.stream adresi kullanılarak(rtsp://<KameraIPAdresi>/stream1) VLC üzerinden 5 adet unicast görüntü oynatılır. 5 adet unicast görüntü çekilirken görüntüde herhangi bir takılma, mozaiklenme, bozulma olmadığı gözlemlenerek kameradan istenilen çözünürlük ve fps değerinde en az 5 adet unicast yayın akışı başlatılabildiği doğrulanır.");
-                      select1 = await question_ask("İstenen işlemler sorunsuz bir şekilde yapılabildi mi ? e/h");
+                      select1 = await sevgi_api.question_ask("İstenen işlemler sorunsuz bir şekilde yapılabildi mi ? e/h");
                       if (select1=="e"||select1=="E")
                       {
                           console.log("Test Başarılı");
@@ -713,7 +713,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                       console.log("Test 48 Başladı.");
                       console.log("Lütfen aşağıdaki testi uygulayın.. Ardından otomatik test yazılımını tekrardan başlatın ve test sonuçlarını otomatik test yazılımına bildirmek için bu testin numarasını tuşlayın");
                       console.log("DEFNE yazılımı üzerinden test yapılan kameranın canlı görüntüsü açılır. Görüntünün oynadığı pencerede herhangi bir noktaya tıklanır ve Yakınlaştırma(Zoom) Tipi değeri Optik Yakınlaştırma olarak seçilir. Bu işlemden sonra mouse yardımı ile zoom in yapılır. Kameranın 3x zoom yapabildiği üst yazı ile gözlemlenerek doğrulanr.");
-                      select1 = await question_ask("İstenen işlemler sorunsuz bir şekilde yapılabildi mi ? e/h");
+                      select1 = await sevgi_api.question_ask("İstenen işlemler sorunsuz bir şekilde yapılabildi mi ? e/h");
                       if (select1=="e"||select1=="E")
                       {
                           console.log("Test Başarılı");
@@ -730,7 +730,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                       console.log("Test 49 Başladı.");
                       console.log("Lütfen aşağıdaki testi uygulayın.. Ardından otomatik test yazılımını tekrardan başlatın ve test sonuçlarını otomatik test yazılımına bildirmek için bu testin numarasını tuşlayın");
                       console.log("Kamera web arayüzü üzerinden yeniden başlatılır. Kamera arayüzüne erişim sağlandıktan sonra bu işlem aynı şekilde toplamda 3 sefer tekrarlanır. Daha sonra kameranın canlı görüntüsü VLC üzerinden izlenir ve web arayüzüne giriş yapılır. Bu işlemlerin  sonucunda istenilen işlemlerin sorunsuz bir şekilde yapıldığı gözlemlenerek doğrulanır.");
-                      select1 = await question_ask("İstenen işlemler sorunsuz bir şekilde yapılabildi mi ? e/h");
+                      select1 = await sevgi_api.question_ask("İstenen işlemler sorunsuz bir şekilde yapılabildi mi ? e/h");
                       if (select1=="e"||select1=="E")
                       {
                           console.log("Test Başarılı");
@@ -752,7 +752,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                       proc =await require('child_process').exec(command);
                       await page.waitFor(9000);
                       await camera.focus_plus(page);
-                      select1 = await question_ask("Görüntünün uzağa odaklama yaptığı ve görüntünün bozulmaya başladığı gözlemlendi mi? e/h");
+                      select1 = await sevgi_api.question_ask("Görüntünün uzağa odaklama yaptığı ve görüntünün bozulmaya başladığı gözlemlendi mi? e/h");
                       if (select1=="e"||select1=="E")
                       {
                           console.log("Test Başarılı");
@@ -773,7 +773,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                       proc =await require('child_process').exec(command);
                       await page.waitFor(9000);
                       await camera.focus_minus(page);
-                      select1 = await question_ask("Görüntünün yakına odaklama yaptığı önce görüntünün uzağa focuslu olduğu için düzelmeye başladığı ve daha sonra daha da yakına zoom yapmaya çalıştığında görüntünün bozulmaya başladığı gözlemlendi mi? e/h");
+                      select1 = await sevgi_api.question_ask("Görüntünün yakına odaklama yaptığı önce görüntünün uzağa focuslu olduğu için düzelmeye başladığı ve daha sonra daha da yakına zoom yapmaya çalıştığında görüntünün bozulmaya başladığı gözlemlendi mi? e/h");
                       if (select1=="e"||select1=="E")
                       {
                           console.log("Test Başarılı");
@@ -794,7 +794,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                       proc =await require('child_process').exec(command);
                       await page.waitFor(9000);
                       await camera.focus_one_shot(page);
-                      select1 = await question_ask("Kameranın focus yaptığı ve görünütünün düzeldiği gözlemlendi mi? e/h");
+                      select1 = await sevgi_api.question_ask("Kameranın focus yaptığı ve görünütünün düzeldiği gözlemlendi mi? e/h");
                       if (select1=="e"||select1=="E")
                       {
                           console.log("Test Başarılı");
@@ -848,8 +848,8 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                     var command = 'vlc rtsp://'+ip+'/stream1';
                     proc =await require('child_process').exec(command)
                     await page.waitFor(3000);
-                    select1 = await question_ask("RTSP kimlik doğrulama ekranı geldi mi? e/h");
-                    select2 = await question_ask("Yayın geldi mi? e/h");
+                    select1 = await sevgi_api.question_ask("RTSP kimlik doğrulama ekranı geldi mi? e/h");
+                    select2 = await sevgi_api.question_ask("Yayın geldi mi? e/h");
                       if ( (select1 == "e" || select1 == "E") && (select2 =="e"|| select2=="E"))
                       {
                           console.log("Test Başarılı");
@@ -871,8 +871,8 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                     var command = 'vlc rtsp://'+ip+'/stream2';
                     proc =await require('child_process').exec(command)
                     await page.waitFor(3000);
-                    select1 = await question_ask("RTSP kimlik doğrulama ekranı geldi mi? e/h");
-                    select2 = await question_ask("Yayın geldi mi? e/h");
+                    select1 = await sevgi_api.question_ask("RTSP kimlik doğrulama ekranı geldi mi? e/h");
+                    select2 = await sevgi_api.question_ask("Yayın geldi mi? e/h");
                       if ( (select1 == "e" || select1 == "E") && (select2 =="e"|| select2=="E"))
                       {
                           console.log("Test Başarılı");
@@ -893,8 +893,8 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                     proc =await require('child_process').exec(command)
                     console.log("Lütfen VLC programının açılmasını bekleyin.\n\n");
                     await page.waitFor(5000);
-                    select1 = await question_ask("RTSP kimlik doğrulama ekranı geldi mi? e/h");
-                    select2 = await question_ask("Yayın geldi mi? e/h");
+                    select1 = await sevgi_api.question_ask("RTSP kimlik doğrulama ekranı geldi mi? e/h");
+                    select2 = await sevgi_api.question_ask("Yayın geldi mi? e/h");
                       if ( (select1 == "h" || select1 == "H") && (select2 =="e"|| select2=="E"))
                       {
                           console.log("Test Başarılı");
@@ -915,8 +915,8 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                       await alarm.set_apply(page);
                       await camera_restart(page,ip);
                       console.log("Kameranın görüntüsünü DEFNE üzerinden izleyin. Kameranın önüne geçerek SEI Alarm Bilgisinin geldiği ve sol üst köşede kırmızı fontlu alarm bilgisinin gelmediğini gözlemleyin");
-                      select1 = await question_ask("Kameranın önüne geçildiğinde SEI Alarm bilgisi geldi mi ? e/h");
-                      select2 = await question_ask("Sol üst köşede kırmızı fontlu alarm bilgisi geldi mi? e/h");
+                      select1 = await sevgi_api.question_ask("Kameranın önüne geçildiğinde SEI Alarm bilgisi geldi mi ? e/h");
+                      select2 = await sevgi_api.question_ask("Sol üst köşede kırmızı fontlu alarm bilgisi geldi mi? e/h");
                        if ( (select1 == "e" || select1 == "E") && (select2 =="e"|| select2=="E"))
                        {
                           console.log("Test Başarılı");
@@ -938,8 +938,8 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                       await alarm.set_apply(page);
                       await camera_restart(page,ip);
                       console.log("Kameranın görüntüsünü DEFNE üzerinden izleyin. Kameranın önüne geçerek SEI Alarm Bilgisinin geldiği ve sol üst köşede kırmızı fontlu alarm bilgisinin gelmediğini gözlemleyin");
-                      select1 = await question_ask("Kameranın önüne geçildiğinde SEI Alarm bilgisi geldi mi ? e/h");
-                      select2 = await question_ask("Sol üst köşede kırmızı fontlu alarm bilgisi geldi mi? e/h");
+                      select1 = await sevgi_api.question_ask("Kameranın önüne geçildiğinde SEI Alarm bilgisi geldi mi ? e/h");
+                      select2 = await sevgi_api.question_ask("Sol üst köşede kırmızı fontlu alarm bilgisi geldi mi? e/h");
                        if ( (select1 == "e" || select1 == "E") && (select2 =="e"|| select2=="E"))
                       {
                           console.log("Test Başarılı");
@@ -958,8 +958,8 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                       await nav.toVersion(page, ip);
                       await nav.toLive(page,ip);
                       console.log("Test 21'de oluşturulan 4 adet maskenin canlı izlemede görüldüğü ve konumlarının aynı kaldığını gözlemleyin");
-                      select1 = await question_ask("4 adet maske görüldü mü? e/h");
-                      select2 = await question_ask("Maskelerin konumları aynı mı? e/h");
+                      select1 = await sevgi_api.question_ask("4 adet maske görüldü mü? e/h");
+                      select2 = await sevgi_api.question_ask("Maskelerin konumları aynı mı? e/h");
                        if ( (select1 == "e" || select1 == "E") && (select2 =="e"|| select2=="E"))
                        {
                           console.log("Test Başarılı");
@@ -978,8 +978,8 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                       await nav.toVersion(page, ip);
                       await nav.toLive(page,ip);
                       console.log("Tanımlanmış maskelerden bir tanesi 'Maske ID' sekmesinden seçilir ve yönlendirme yapılır. Yönlendirme yapıldıktan sonra(maske sol, maske sağ, maske yukarı, maske aşağı) genişlik ve yükseklik değiştirilip 'Maskeyi güncelle' butonuna basılır. Bu durumda maskenin yeni özellikleri aldığı ve güncellendiği gözlemlenerek doğrulanır. Kamera yeniden başlatılır ve görüntü geldiğinde güncellenen maskenin yeni yerinde olduğu gözlemlenir.");
-                      select1 = await question_ask("Ayarlarında değişiklik yapılan maske yeni özellikleri aldı mı? e/h");
-                      select2 = await question_ask("Kamera yeniden başlatıldıktan ve görüntü geldikten sonra güncellenen maske son konumunu korudu mu? e/h");
+                      select1 = await sevgi_api.question_ask("Ayarlarında değişiklik yapılan maske yeni özellikleri aldı mı? e/h");
+                      select2 = await sevgi_api.question_ask("Kamera yeniden başlatıldıktan ve görüntü geldikten sonra güncellenen maske son konumunu korudu mu? e/h");
                        if ( (select1 == "e" || select1 == "E") && (select2 =="e"|| select2=="E"))
                       {
                           console.log("Test Başarılı");
@@ -1048,9 +1048,9 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                     await mask.mask_refresh(page);
                         console.log("Maskeler oluşturuldu ve konumlandırıldı.");
                         console.log("Lütfen web arayüzünden oluşturulan maskeleri kontrol ediniz.");
-                        select1 = await question_ask("8 adet maske tespit edildi mi? e/h");
+                        select1 = await sevgi_api.question_ask("8 adet maske tespit edildi mi? e/h");
                         console.log("Lütfen web arayüzünden 'Canlı İzleme' sekmesinden zoom değerlerini değiştirerek oluşturulan 9. ve 10. maskenin geldiğini gözlemleyerek kontrol ediniz.");
-                        select2 = await question_ask("10 adet maske tespit edildi mi? e/h");
+                        select2 = await sevgi_api.question_ask("10 adet maske tespit edildi mi? e/h");
                         if ( (select1 == "e" || select1 == "E") && (select2 =="e"|| select2=="E"))
                         {
                           console.log("Test Başarılı");
@@ -1090,7 +1090,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 await cam.set_patrol_setting(page,"3,7","5,10");
                 await page.waitFor(2000);
                 console.log("Kameranın hareketini izleyin. 3 ve 7 numaralı indislere gidip sırasıyla 5 ve 10 saniye kalarak desene devam ettiğini gözlemleyin.");
-                select1 = await question_ask("Kamera belirtilen zaman aralığı içerisinde girilen presetlere gidip ve orada belirlenen süre kadar bekledi mi ? e/h");
+                select1 = await sevgi_api.question_ask("Kamera belirtilen zaman aralığı içerisinde girilen presetlere gidip ve orada belirlenen süre kadar bekledi mi ? e/h");
                 if ( select1 == "e" || select1 == "E")
                 {console.log("Test Başarılı");
                     await result.write("21"," BAŞARILI",2);
@@ -1303,14 +1303,14 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 console.log("Stream1m için canlı yayın açılıyor..")
                 var command = 'vlc rtsp://admin:admin@'+ip+'/stream1m';
                 proc =await require('child_process').exec(command);
-                select0 = await question_ask("Görüntü Geldi mi? e/h");
+                select0 = await sevgi_api.question_ask("Görüntü Geldi mi? e/h");
                 if (select0 == "e" || select0 == "E")
                 {
-                    select1 = await question_ask("Görüntüde istenmeyen bozukluklar var mı? e/h");
+                    select1 = await sevgi_api.question_ask("Görüntüde istenmeyen bozukluklar var mı? e/h");
                     if (select1 == "h" || select1 == "H")
                     {
                         console.log("Vlc üzerinden çözünürlüğü kontrol edin.. İstenen çözünürlük 1920*1080")
-                    select2 = await question_ask("Görüntü istenen çözünürlükte mi ? e/h");
+                    select2 = await sevgi_api.question_ask("Görüntü istenen çözünürlükte mi ? e/h");
                     if (select2 =="e"|| select2=="E")
                     {    console.log("Test Başarılı");
                     await result.write("36"," BAŞARILI Görüntüde bozulmalar yok ve istenen çözünürlükte",2);}
@@ -1333,10 +1333,10 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 console.log("Stream2m için canlı yayın açılıyor..")
                 var command = 'vlc rtsp://admin:admin@'+ip+'/stream2m';
                 proc =await require('child_process').exec(command);
-                select1 = await question_ask("Görüntü Geldi mi ? e/h");
+                select1 = await sevgi_api.question_ask("Görüntü Geldi mi ? e/h");
                 if (select1=="e" || select1=="E"){
                 console.log("Vlc üzerinden çözünürlüğü kontrol edin.. İstenen çözünürlük 640x368")
-                select2 = await question_ask("Görüntü istenen çözünürlükte mi ? e/h");
+                select2 = await sevgi_api.question_ask("Görüntü istenen çözünürlükte mi ? e/h");
                 if ( (select1 == "e" || select1 == "E") && (select2 =="e"|| select2=="E"))
                 {  console.log("Test Başarılı");
                 await result.write("37"," BAŞARILI    Görüntü çözünürlüğü doğru.",2);}
@@ -1353,10 +1353,10 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 console.log("Stream1 için canlı yayın açılıyor..")
                 var command = 'vlc rtsp://admin:admin@'+ip+'/stream1';
                 proc =await require('child_process').exec(command);
-                select1 = await question_ask("Görüntü Geldi mi ? e/h");
+                select1 = await sevgi_api.question_ask("Görüntü Geldi mi ? e/h");
                 if (select1=="e" || select1=="E"){
                 console.log("Vlc üzerinden çözünürlüğü kontrol edin.. İstenen çözünürlük 640x368")
-                select2 = await question_ask("Görüntü istenen çözünürlükte mi ? e/h");
+                select2 = await sevgi_api.question_ask("Görüntü istenen çözünürlükte mi ? e/h");
                 if ( (select1 == "e" || select1 == "E") && (select2 =="e"|| select2=="E"))
                 {  console.log("Test Başarılı");
                 await result.write("38"," BAŞARILI    Görüntü çözünürlüğü doğru.",2);}
@@ -1373,10 +1373,10 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 console.log("Stream2 için canlı yayın açılıyor..")
                 var command = 'vlc rtsp://admin:admin@'+ip+'/stream2';
                 proc =await require('child_process').exec(command);
-                select1 = await question_ask("Görüntü Geldi mi ? e/h");
+                select1 = await sevgi_api.question_ask("Görüntü Geldi mi ? e/h");
                 if (select1=="e" || select1=="E"){
                 console.log("Vlc üzerinden çözünürlüğü kontrol edin.. İstenen çözünürlük 640x368")
-                select2 = await question_ask("Görüntü istenen çözünürlükte mi ? e/h");
+                select2 = await sevgi_api.question_ask("Görüntü istenen çözünürlükte mi ? e/h");
                 if ( (select1 == "e" || select1 == "E") && (select2 =="e"|| select2=="E"))
                 {  console.log("Test Başarılı");
                 await result.write("39"," BAŞARILI    Görüntü çözünürlüğü doğru.",2);}
@@ -1395,7 +1395,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 await nav.toVersion(page,ip);
                 var application = await version.test_application(page);
                 var firmware = await version.test_firmware(page);
-                select = await question_ask("Değerler başlangıçta girilen konfigrasyon ayarları ile aynı mı ? e/h");
+                select = await sevgi_api.question_ask("Değerler başlangıçta girilen konfigrasyon ayarları ile aynı mı ? e/h");
                 if (select == "e" || select1 == "E")
                 {  console.log("Test Başarılı");
                 await result.write("42"," BAŞARILI    Konfigrasyon ayarları doğru.",2);}
@@ -1509,9 +1509,9 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 console.log("IT-Cut Filtre Geçişi  Otomatik ayarlandı");
                 var command = 'vlc rtsp://admin:admin@'+ip+'/stream1';
                 proc =await require('child_process').exec(command);
-                select0 = await question_ask("Kamera gündüz modunda mı? e/h");
-                select1 = await question_ask("Kameranın merceğini bir cisimle kapatın. Kamera gece moduna geçti mi? e/h")
-                select2 = await question_ask("Cismi kameranın önünden çekin. Kamera tekrardan gündüz moduna geçti mi? e/h");
+                select0 = await sevgi_api.question_ask("Kamera gündüz modunda mı? e/h");
+                select1 = await sevgi_api.question_ask("Kameranın merceğini bir cisimle kapatın. Kamera gece moduna geçti mi? e/h")
+                select2 = await sevgi_api.question_ask("Cismi kameranın önünden çekin. Kamera tekrardan gündüz moduna geçti mi? e/h");
                 if(select0=="e"||select0=="E") select0=1; else select0=0;
                 if(select1=="e"||select1=="E") select1=1; else select1=0;
                 if(select2=="e"||select2=="E") select2=1; else select2=0;
@@ -1526,7 +1526,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 console.log("TEY-2_ver06 Test-54 Başladı");
                 console.log("Lütfen aşağıdaki testi uygulayın.. Ardından otomatik test yazılımını tekrardan başlatın ve test sonuçlarını otomatik test yazılımına bildirmek için bu testin numarasını tuşlayın");
                 console.log("Kameranın gücü kesilir ve bir süre beklendikten sonra tekrar verilir.  Kameranın canlı görünütüsü izlenmeye başladıktan bir süre sonra yine kameranın gücü kesilir bir süre beklenir. Ardından kameranın gücü tekrar verilir. Bu işlem aynı şekilde 1 kez daha tekrarlanır. Toplamda 3 sefer bu işlem yapıldıktan sonra kameranın canlı görüntüsü VLC üzerinden izlenir ve web arayüzüne giriş yapılır. Web arayüzüne giriş yapılabildiği ve görüntü çekilebildiği test edilerek doğrulanır.");
-                select1 = await question_ask("İstenen işlemler sorunsuz bir şekilde yapılabildi mi? e/h");
+                select1 = await sevgi_api.question_ask("İstenen işlemler sorunsuz bir şekilde yapılabildi mi? e/h");
                 if (select1=="e"||select1=="E")
                 { console.log("Test Başarılı");
                 await result.write("54"," BAŞARILI",2)}
@@ -1539,7 +1539,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 console.log("TEY-2_ver06 Test-55 Başladı");
                 console.log("Lütfen aşağıdaki testi uygulayın.. Ardından otomatik test yazılımını tekrardan başlatın ve test sonuçlarını otomatik test yazılımına bildirmek için bu testin numarasını tuşlayın");
                 console.log("Kamera web arayüzü üzerinden yeniden başlatılır. Kamera arayüzüne erişim sağlandıktan sonra bu işlem aynı şekilde toplamda 3 sefer tekrarlanır. Daha sonra kameranın canlı görüntüsü VLC üzerinden izlenir ve web arayüzüne giriş yapılır. Bu işlemlerin  sonucunda istenilen işlemlerin sorunsuz bir şekilde yapıldığı gözlemlenerek doğrulanır.");
-                select1 = await question_ask("İstenen işlemler sorunsuz bir şekilde yapılabildi mi ? e/h");
+                select1 = await sevgi_api.question_ask("İstenen işlemler sorunsuz bir şekilde yapılabildi mi ? e/h");
                 if (select1=="e"||select1=="E")
                 { console.log("Test Başarılı");
                 await result.write("55"," BAŞARILI",2)}
@@ -1554,7 +1554,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 await nav_dome.toTimeSettings(page,ip);
                 await page.waitFor(2000);
                 await timeSet.test_np1_value(page);
-                select1 = await question_ask("NTP sunucu1 adresi doğru mu? e/h");
+                select1 = await sevgi_api.question_ask("NTP sunucu1 adresi doğru mu? e/h");
                 if (select1=="e"||select1=="E")
                 { console.log("Test Başarılı");
                 await result.write("56"," BAŞARILI   NTP Sunucu1 adresi doğru",2)}
@@ -1571,7 +1571,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 console.log("TEY-2_ver06 Test-57 Başladı");
                 console.log("Lütfen aşağıdaki testi uygulayın.. Ardından otomatik test yazılımını tekrardan başlatın ve test sonuçlarını otomatik test yazılımına bildirmek için bu testin numarasını tuşlayın");
                 console.log("Test bilgisayarından kameranın 1.stream adresi kullanılarak(rtsp://<KameraIPAdresi>/stream1) VLC üzerinden 5 adet unicast görüntü oynatılır. 5 adet unicast görüntü çekilirken görüntüde herhangi bir takılma, mozaiklenme, bozulma olmadığı gözlemlenerek kameradan istenilen çözünürlük ve fps değerinde en az 5 adet unicast yayın akışı başlatılabildiği doğrulanır.");
-                select1 = await question_ask("İstenen işlemler sorunsuz bir şekilde yapılabildi mi ? e/h");
+                select1 = await sevgi_api.question_ask("İstenen işlemler sorunsuz bir şekilde yapılabildi mi ? e/h");
                 if (select1=="e"||select1=="E")
                 { console.log("Test Başarılı");
                 await result.write("57"," BAŞARILI   Kamera istenilen çözünürlük ve fps değerinde en az 5 adet unicast yayın akışı başlatabiliyor.",2)}
@@ -1593,7 +1593,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 for (let i = 0; i < 7; i++){
                     await cam.lighting_level(page,level[i]);
                     await page.waitFor(3000);
-                    select1 = await question_ask("Merceğin sağ ve solunda "+i+"adet IR Led yanıyor mu? e/h");
+                    select1 = await sevgi_api.question_ask("Merceğin sağ ve solunda "+i+"adet IR Led yanıyor mu? e/h");
                     if (select1=="e"||select1=="E")
                     temp_val = temp_val && 1;
                     else
@@ -1654,7 +1654,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 await camera_restart(page,ip);
                 console.log("OPTIONS SETTED");
                 capture_test.watch_rtsp(ip,"stream1",1);
-                select1 = await question_ask("RTSP Kimlik doğrulama ekranı gelip kimlik doğrulama sorunsuz bir şekilde yapılabildi mi? e/h");
+                select1 = await sevgi_api.question_ask("RTSP Kimlik doğrulama ekranı gelip kimlik doğrulama sorunsuz bir şekilde yapılabildi mi? e/h");
                 if (select1=="e"||select1=="E")
                 await result.write("69"," BAŞARILI   Stream1 için RTSP Kimlik doğrulama çalışıyor",2);
                 else
@@ -1670,7 +1670,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 await camera_restart(page,ip);
                 console.log("OPTIONS SETTED");
                 capture_test.watch_rtsp(ip,"stream2",1);
-                select1 = await question_ask("RTSP Kimlik doğrulama ekranı gelip kimlik doğrulama sorunsuz bir şekilde yapılabildi mi? e/h");
+                select1 = await sevgi_api.question_ask("RTSP Kimlik doğrulama ekranı gelip kimlik doğrulama sorunsuz bir şekilde yapılabildi mi? e/h");
                 if (select1=="e"||select1=="E")
                 await result.write("70"," BAŞARILI   Stream2 için RTSP Kimlik doğrulama çalışıyor",2);
                 else
@@ -1686,7 +1686,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 await camera_restart(page,ip);
                 console.log("OPTIONS SETTED");
                 await capture_test.watch_rtsp(ip,"stream1",0);
-                select1 = await question_ask("RTSP Kimlik doğrulama ekranı gelmeden görüntü izlenebildi mi? e/h");
+                select1 = await sevgi_api.question_ask("RTSP Kimlik doğrulama ekranı gelmeden görüntü izlenebildi mi? e/h");
                 if (select1=="e"||select1=="E")
                 await result.write("71"," BAŞARILI   RTSP Kimlik doğrulama kapatılabiliyor.",2);
                 else
@@ -1699,7 +1699,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 await nav_dome.toDomeCamera(page,ip);
                 console.log("Lütfen aşağıdaki testi uygulayın.. Ardından otomatik test yazılımını tekrardan başlatın ve test sonuçlarını otomatik test yazılımına bildirmek için bu testin numarasını tuşlayın");
                 console.log("Kamera web arayüzü üzerinden Kamera sekmesine tıklanır. Pan, Tilt, Zoom, Focus seçeneğinden Aşağı butonuna basılır. Kamera en alt konuma geldikten sonra 180 derece dönmeye başladığında hareketi tamamlamadan buton basılı durumdan çıkarılır. Bu koşulda  kameranın aşağıya bakmaya devam ettiği ve yukarıya yönlenmediği hareketi gözlemlenerek doğrulanır.");
-                select1 = await question_ask("Kamera aşağıya bakmaya devam etti mi ? e/h");
+                select1 = await sevgi_api.question_ask("Kamera aşağıya bakmaya devam etti mi ? e/h");
                 if (select1=="e"||select1=="E")
                 await result.write("72"," BAŞARILI   Kamera en aşağı konumdayken aşağı butonuna basıldığında 180 derece dönüyor ve yukarıya yönelmiyor.",2);
                 else
@@ -1711,7 +1711,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 await nav_dome.toDomeCamera(page,ip);
                 console.log("Lütfen aşağıdaki testi uygulayın.. Ardından otomatik test yazılımını tekrardan başlatın ve test sonuçlarını otomatik test yazılımına bildirmek için bu testin numarasını tuşlayın");
                 console.log("Kamera web arayüzü üzerinden Kamera sekmesine tıklanır. Pan, Tilt, Zoom, Focus seçeneğinden Aşağı butonuna basılır. Kamera en alt konuma konuma geldikten sonra 180 derece dönmeye başladığı ve Aşağı butonuna basılmadan önceki konumuna kadar yukarı hareket ettiği gözlemlenerek e-flip özelliğinin çalışması doğrulanır.");
-                select1 = await question_ask("Kamera en alt konuma konuma geldikten sonra 180 derece dönüp Aşağı butonuna basılmadan önceki konumuna kadar yukarı hareket etti mi? e/h");
+                select1 = await sevgi_api.question_ask("Kamera en alt konuma konuma geldikten sonra 180 derece dönüp Aşağı butonuna basılmadan önceki konumuna kadar yukarı hareket etti mi? e/h");
                 if (select1=="e"||select1=="E")
                 await result.write("73"," BAŞARILI   Kamera en aşağı konumdayken aşağı butonuna basıldığında 180 derece dönüyor ve e-flip hareketini gerçekleştiriyor.",2);
                 else
@@ -1720,9 +1720,9 @@ async function test_set_res_fps_DOM(page,i,res,ip)
             case "75":{
                 console.log("TEY-2_ver06 Test-75 Başladı");
                 console.log("Kamera sabit bir noktaya bakarken kameranın gücünü kesin. Güç kapalı iken kameranın baktığı açı ve kameranın konumunu değiştirin. ");
-                await question_ask("Kameraya tekrar güç verip ENTER'a basın.")
+                await sevgi_api.question_ask("Kameraya tekrar güç verip ENTER'a basın.")
                 await camera_restart(page,ip);
-                select1 = await question_ask("Kamera gücü kesilmeden önceki konumuna döndü mü? e/h");
+                select1 = await sevgi_api.question_ask("Kamera gücü kesilmeden önceki konumuna döndü mü? e/h");
                 if (select1=="e"||select1=="E")
                 await result.write("75"," BAŞARILI   Kamera güç kesintisinde konumu değişirse güç geldiğinde eski konumuna dönüyor.",2);
                 else
@@ -1744,15 +1744,15 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 var time0 = await ppp.push_time(page,1);
                 await cam.PTZ(page);
                 console.log("Son kullanıcı müdahele saati = "+time0);
-                select0 = await question_ask("Kamera durdu mu? e/h")
+                select0 = await sevgi_api.question_ask("Kamera durdu mu? e/h")
                 if(select0=="e" || select0 == "E")
                 {   console.log("Lütfen kamera harekete yeniden başlayıncaya kadar bekleyin ve hareket başladığında zamanı kaydetmek için ENTER'a basın.")
                     var time1= await ppp.push_time(page,1);
                     console.log("Desene yeniden başlama saati = "+time1);
-                    select1 = await question_ask("Kamera deseni düzgün bir şekilde gerçekleştiriyor mu? e/h");
+                    select1 = await sevgi_api.question_ask("Kamera deseni düzgün bir şekilde gerçekleştiriyor mu? e/h");
                     if(select1=="e" || select1 == "E") temp_val = temp_val && 1;
                     else temp_val = 0;
-                    select2 = await question_ask("Kamera durduktan sonra ve Serbest Süre kadar zaman geçtikten sonra harekete devam etti mi ? ")
+                    select2 = await sevgi_api.question_ask("Kamera durduktan sonra ve Serbest Süre kadar zaman geçtikten sonra harekete devam etti mi ? ")
                     if(select2=="e" || select3 == "E") temp_val = temp_val && 1;
                     else temp_val =0;
                     if (temp_val) {
@@ -1781,14 +1781,14 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 await cam.set_pattern(page);
                 await cam.pattern_run(page);
                 await page.waitFor(2000);
-                select1 = await question_ask("Kamera deseni gerçekleştiriyor mu? e/h");
+                select1 = await sevgi_api.question_ask("Kamera deseni gerçekleştiriyor mu? e/h");
                 if (select1=="e"||select1=="E")
                 {
                     await nav_dome.toDomeVersion(page,ip);
                     await version_dome.reload(page);
                     console.log("Lütfen kameranın açılmasını bekleyin....");
                     await camera_restart(page,ip);
-                    select = await question_ask("Kamera açıldıktan sonra desene devam etti mi? e/h");
+                    select = await sevgi_api.question_ask("Kamera açıldıktan sonra desene devam etti mi? e/h");
                     if (select=="e"||select=="E")
                     { console.log("Test Başarılı");
                         await result.write("79"," BAŞARILI   Kamera yeniden başlatma sonrasında desene devam ediyor.",2)
@@ -1810,12 +1810,12 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 await page.waitFor(2000);
                 await cam.set_pattern(page);
                 await cam.pattern_run(page);
-                select1 = await question_ask("Kamera deseni gerçekleştiriyor mu? e/h");
+                select1 = await sevgi_api.question_ask("Kamera deseni gerçekleştiriyor mu? e/h");
                 if (select1=="e"||select1=="E")
                 {
-                    await question_ask("Lütfen kameranın gücünü kesin ve 15-20 sn sonra gücü tekrar verin. Ardından ENTER'a basın..");
+                    await sevgi_api.question_ask("Lütfen kameranın gücünü kesin ve 15-20 sn sonra gücü tekrar verin. Ardından ENTER'a basın..");
                     await camera_restart(page,ip);
-                    select = await question_ask("Kamera açıldıktan sonra desene devam etti mi? e/h");
+                    select = await sevgi_api.question_ask("Kamera açıldıktan sonra desene devam etti mi? e/h");
                     if (select=="e"||select=="E")
                     {
                         console.log("Test Başarılı");
@@ -1843,7 +1843,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 await cam.goto_home_apply(page);
                 await cam.set_pattern(page); ///daha önce kaydettiğimiz bir deseni çalıştırıyoruz. Bu kod için pattern_id:1
                 await cam.pattern_run(page);
-                select1 = await question_ask("Kamera deseni gerçekleştiriyor mu? e/h");
+                select1 = await sevgi_api.question_ask("Kamera deseni gerçekleştiriyor mu? e/h");
                 if(select1=="e"||select1=="E")
                 select1=1;
                 else
@@ -1851,7 +1851,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 console.log("DEFNE'den kameranın canlı görüntüsünü açın ve kameranın alarm girişine saha dolabı kapağının açılma durumunu simüle eden kabloyu çıkarıp Enter tuşuna basın.");
                 time0= await ppp.push_time(page,1);
                 console.log("Alarm başlama saati: "+time0);
-                select3 = await question_ask("Alarm oluşturulduğunda kamera girilen Preset değerine hareket etti mi? e/h");
+                select3 = await sevgi_api.question_ask("Alarm oluşturulduğunda kamera girilen Preset değerine hareket etti mi? e/h");
                 if(select3=="e"||select3=="E")
                 select3=1;
                 else
@@ -1859,7 +1859,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 console.log("Alarmı sonlandırmak için çıkarmış olduğunuz kabloyu tekrar yerine takın. Ardından alarm bitiş saatini kaydetmek için ENTER'a basın.")
                 time1= await ppp.push_time(page,1);
                 console.log("Alarm bitiş saati = "+time1);
-                select2 = await question_ask("Alarm var olduğu sürece DEFNE'de sol üst köşede SEI Alarm bilgisi geldi mi? e/h");
+                select2 = await sevgi_api.question_ask("Alarm var olduğu sürece DEFNE'de sol üst köşede SEI Alarm bilgisi geldi mi? e/h");
                 if(select2=="e"||select2=="E")
                 select2=1;
                 else
@@ -1867,7 +1867,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 console.log("Kamera desene yeniden başlayana kadar bekleyin. Ardından Desene yeniden başlama saatini kaydetmek için ENTER'a basın.")
                 time2= await ppp.push_time(page,1);
                 console.log("Desene yeniden başlama saati = "+time2);
-                select4 = await question_ask("Kamera daha önce yaptığı desene devam etti mi? e/h");
+                select4 = await sevgi_api.question_ask("Kamera daha önce yaptığı desene devam etti mi? e/h");
                 if(select4=="e"||select4=="E")
                 select4=1;
                 else
@@ -1893,7 +1893,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 await cam.goto_home_apply(page);
                 await cam.set_pattern(page); ///daha önce kaydettiğimiz bir deseni çalıştırıyoruz. Bu kod için pattern_id:1
                 await cam.pattern_run(page);
-                select1 = await question_ask("Kamera deseni gerçekleştiriyor mu? e/h");
+                select1 = await sevgi_api.question_ask("Kamera deseni gerçekleştiriyor mu? e/h");
                 if(select1=="e"||select1=="E"){
                     console.log("DEFNE'den kameranın canlı görüntüsünü açın.");
                     for(var i=0 ; i<5 ; i++){
@@ -1911,14 +1911,14 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                     console.log("Kamera desene yeniden başlayana kadar bekleyin. Ardından Desene yeniden başlama saatini kaydetmek için ENTER'a basın.")
                     time_desen_devam= await ppp.push_time(page,1);
                     console.log("Desene yeniden başlama saati:"+time_desen_devam);
-                    select2 = await question_ask("Alarm var olduğu sürece DEFNE'de sol üst köşede SEI Alarm bilgisi geldi mi? e/h");
+                    select2 = await sevgi_api.question_ask("Alarm var olduğu sürece DEFNE'de sol üst köşede SEI Alarm bilgisi geldi mi? e/h");
                     if(select2=="e"||select2=="E")
                     select2=1;
                     else
                     { select2=0;
                         await result.write("84","BAŞARISIZ    Alarm varolduğu sürece DEFNE'ye alarm bilgisi gelmedi.",2)
                     }
-                    select3 = await question_ask("Alarm oluşturulduğunda kamera girilen Preset değerine hareket etti mi? e/h");
+                    select3 = await sevgi_api.question_ask("Alarm oluşturulduğunda kamera girilen Preset değerine hareket etti mi? e/h");
                     if(select3=="e"||select3=="E")
                     select3=1;
                     else
@@ -1957,10 +1957,10 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 await cam.goto_home_apply(page);
                 await cam.set_pattern(page); ///daha önce kaydettiğimiz bir deseni çalıştırıyoruz. Bu kod için pattern_id:1
                 await cam.pattern_run(page);
-                select1 = await question_ask("Kamera deseni gerçekleştiriyor mu? e/h");
+                select1 = await sevgi_api.question_ask("Kamera deseni gerçekleştiriyor mu? e/h");
                 if(select1=="e"||select1=="E")
                 {
-                    select_1 = await question_ask("DEFNE'den kameranın canlı görüntüsünü açın ve kameranın alarm girişine saha dolabı kapağının açılma durumunu simüle eden kabloyu çıkarıp Enter tuşuna basın.");
+                    select_1 = await sevgi_api.question_ask("DEFNE'den kameranın canlı görüntüsünü açın ve kameranın alarm girişine saha dolabı kapağının açılma durumunu simüle eden kabloyu çıkarıp Enter tuşuna basın.");
                     times[0]= await ppp.get_time(1);
                     console.log("Alarm başlama saati:"+times[0]);
                     console.log("Lütfen bir süre bekleyin.");
@@ -1971,17 +1971,17 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                     console.log("PanTiltZoom kontrolü uygulandı.");
                     console.log("Serbest süre x 2 kadar bekleyin (100sn)");
                     await page.waitFor(100000);
-                    select4 = await question_ask("Kamera kullanıcının bıraktığı konumda kalmaya devam etti mi? e/h");
+                    select4 = await sevgi_api.question_ask("Kamera kullanıcının bıraktığı konumda kalmaya devam etti mi? e/h");
                     if(select4=="e"||select4=="E")
                     { select4=1;  times[3]= await ppp.get_time(1); console.log("Hareket olmadığının en son kontrol edildiği saat: "+times[3]);}
                     else
                     {  select4=0; times[3]= "HATA: Kamera pattern hareketine yeniden başladı." }
-                    select2 = await question_ask("Alarm var olduğu sürece DEFNE'de sol üst köşede SEI Alarm bilgisi geldi mi? e/h");
+                    select2 = await sevgi_api.question_ask("Alarm var olduğu sürece DEFNE'de sol üst köşede SEI Alarm bilgisi geldi mi? e/h");
                     if(select2=="e"||select2=="E")
                     select2=1;
                     else
                     select2=0;
-                    select3 = await question_ask("Alarm oluşturulduğunda kamera girilen Preset değerine hareket etti mi? e/h");
+                    select3 = await sevgi_api.question_ask("Alarm oluşturulduğunda kamera girilen Preset değerine hareket etti mi? e/h");
                     if(select3=="e"||select3=="E")
                     select3=1;
                     else
@@ -2011,26 +2011,26 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 await cam.goto_home_apply(page);
                 await cam.set_pattern(page); ///daha önce kaydettiğimiz bir deseni çalıştırıyoruz. Bu kod için pattern_id:1
                 await cam.pattern_run(page);
-                select1 = await question_ask("Kamera deseni gerçekleştiriyor mu? e/h");
+                select1 = await sevgi_api.question_ask("Kamera deseni gerçekleştiriyor mu? e/h");
                 if(select1=="e"||select1=="E"){
-                    select_1 = await question_ask("DEFNE'den kameranın canlı görüntüsünü açın ve kameranın alarm girişine saha dolabı kapağının açılma durumunu simüle eden kabloyu çıkarıp Enter tuşuna basın.");
+                    select_1 = await sevgi_api.question_ask("DEFNE'den kameranın canlı görüntüsünü açın ve kameranın alarm girişine saha dolabı kapağının açılma durumunu simüle eden kabloyu çıkarıp Enter tuşuna basın.");
                     times[0]=await ppp.get_time(1);;
                     console.log("Alarm başlama saati:"+times[0]);
                     console.log("Serbest süre x 2 kadar bekleyin (100sn)");
                     await timer(page,100);
                     await page.waitFor(100000);
-                    select4 = await question_ask("Kamera preset konumda kalmaya devam etti mi? e/h");
+                    select4 = await sevgi_api.question_ask("Kamera preset konumda kalmaya devam etti mi? e/h");
                     if(select4=="e"||select4=="E")
                     {  select4=1; times[2]=await ppp.get_time(1);;
                     console.log("Hareket olmadığının en son kontrol edildiği saat:"+times[2]);}
                     else
                     {  select4=0; times[2] = "HATA: Kamera pattern hareketine yeniden başladı "}
-                    select2 = await question_ask("Alarm var olduğu sürece DEFNE'de sol üst köşede SEI Alarm bilgisi geldi mi? e/h");
+                    select2 = await sevgi_api.question_ask("Alarm var olduğu sürece DEFNE'de sol üst köşede SEI Alarm bilgisi geldi mi? e/h");
                     if(select2=="e"||select2=="E")
                     select2=1;
                     else
                     select2=0;
-                    select3 = await question_ask("Alarm oluşturulduğunda kamera girilen Preset değerine hareket etti mi? e/h");
+                    select3 = await sevgi_api.question_ask("Alarm oluşturulduğunda kamera girilen Preset değerine hareket etti mi? e/h");
                     if(select3=="e"||select3=="E")
                     select3=1;
                     else
@@ -2059,10 +2059,10 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 await cam.goto_home_apply(page);
                 await cam.set_pattern(page); ///daha önce kaydettiğimiz bir deseni çalıştırıyoruz. Bu kod için pattern_id:1
                 await cam.pattern_run(page);
-                select1 = await question_ask("Kamera deseni gerçekleştiriyor mu? e/h");
+                select1 = await sevgi_api.question_ask("Kamera deseni gerçekleştiriyor mu? e/h");
                 if(select1=="e"||select1=="E")
                 {
-                    select_1 = await question_ask("DEFNE'den kameranın canlı görüntüsünü açın ve kameranın alarm girişine saha dolabı kapağının açılma durumunu simüle eden kabloyu çıkarıp Enter tuşuna basın.");
+                    select_1 = await sevgi_api.question_ask("DEFNE'den kameranın canlı görüntüsünü açın ve kameranın alarm girişine saha dolabı kapağının açılma durumunu simüle eden kabloyu çıkarıp Enter tuşuna basın.");
                     times[0]= await ppp.get_time(1);
                     console.log("Alarm başlama saati:"+times[0]);
                     console.log("Lütfen bir süre bekleyin.");
@@ -2074,17 +2074,17 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                     console.log("Serbest süre x 2 kadar bekleyin (100sn)");
                     await timer(page,100);
                     await page.waitFor(100000);
-                    select4 = await question_ask("Kamera kullanıcının bıraktığı konumda kalmaya devam etti mi? e/h");
+                    select4 = await sevgi_api.question_ask("Kamera kullanıcının bıraktığı konumda kalmaya devam etti mi? e/h");
                     if(select4=="e"||select4=="E")
                     { select4=1;  times[3]= await ppp.get_time(1); console.log("Hareket olmadığının en son kontrol edildiği saat: "+times[3]);}
                     else
                     {  select4=0; times[3]= "HATA: Kamera pattern hareketine yeniden başladı." }
-                    select2 = await question_ask("Alarm var olduğu sürece DEFNE'de sol üst köşede SEI Alarm bilgisi geldi mi? e/h");
+                    select2 = await sevgi_api.question_ask("Alarm var olduğu sürece DEFNE'de sol üst köşede SEI Alarm bilgisi geldi mi? e/h");
                     if(select2=="e"||select2=="E")
                     select2=1;
                     else
                     select2=0;
-                    select3 = await question_ask("Alarm oluşturulduğunda kamera girilen Preset değerine hareket etti mi? e/h");
+                    select3 = await sevgi_api.question_ask("Alarm oluşturulduğunda kamera girilen Preset değerine hareket etti mi? e/h");
                     if(select3=="e"||select3=="E")
                     select3=1;
                     else
@@ -2119,10 +2119,10 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 time2 = await ppp.push_time(page,1);
                 console.log("Patrola yeniden başlama saati = "+time2)
                 await ppp.break_patrol(page);
-                select1 = await question_ask("Patrol girilen presetlere gitti mi? e/h");
-                select2 = await question_ask("Patrol girilen presetlerde belirlenen süre kadar kaldı mı? e/h");
-                select3 = await question_ask("Kameraya sağa dön komutu verildikten sonra patrol durdu mu? e/h");
-                select4 = await question_ask("Göreve dön süresi(70sn) kadar zaman geçtikten sonra patrole devam edildi mi? e/h");
+                select1 = await sevgi_api.question_ask("Patrol girilen presetlere gitti mi? e/h");
+                select2 = await sevgi_api.question_ask("Patrol girilen presetlerde belirlenen süre kadar kaldı mı? e/h");
+                select3 = await sevgi_api.question_ask("Kameraya sağa dön komutu verildikten sonra patrol durdu mu? e/h");
+                select4 = await sevgi_api.question_ask("Göreve dön süresi(70sn) kadar zaman geçtikten sonra patrole devam edildi mi? e/h");
                 if(select1)
                 {
                     if(select2){
@@ -2146,14 +2146,14 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 await ppp.set_patrol(page);
                 await ppp.run_patrol(page);
                 await page.waitFor(2000);
-                select1 = await question_ask("Kamera patrol hareketini gerçekleştiriyor mu? e/h");
+                select1 = await sevgi_api.question_ask("Kamera patrol hareketini gerçekleştiriyor mu? e/h");
                 if (select1=="e"||select1=="E")
                 {
                     await nav_dome.toDomeVersion(page,ip);
                     await version_dome.reload(page);
                     console.log("Lütfen kameranın açılmasını bekleyin....");
                     await camera_restart(page,ip);
-                    select = await question_ask("Kamera açıldıktan sonra patrole devam etti mi? e/h");
+                    select = await sevgi_api.question_ask("Kamera açıldıktan sonra patrole devam etti mi? e/h");
                     if (select=="e"||select=="E")
                     { console.log("Test Başarılı");
                     await result.write("109","BAŞARILI    Kamera yeniden başlatıldıktan sonra önce yapmakta olduğu işe devam ediyor.",2);}
@@ -2172,12 +2172,12 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 await ppp.set_patrol(page);
                 await ppp.run_patrol(page);
                 await page.waitFor(2000);
-                select1 = await question_ask("Kamera patrol hareketini gerçekleştiriyor mu? e/h");
+                select1 = await sevgi_api.question_ask("Kamera patrol hareketini gerçekleştiriyor mu? e/h");
                 if (select1=="e"||select1=="E")
                 {
-                    await question_ask("Lütfen kameranın gücünü kesin ve 15-20 sn sonra gücü tekrar verin. Ardından ENTER'a basın..");
+                    await sevgi_api.question_ask("Lütfen kameranın gücünü kesin ve 15-20 sn sonra gücü tekrar verin. Ardından ENTER'a basın..");
                     await camera_restart(page,ip);
-                    select = await question_ask("Kamera açıldıktan sonra patrole devam etti mi? e/h");
+                    select = await sevgi_api.question_ask("Kamera açıldıktan sonra patrole devam etti mi? e/h");
                     if (select=="e"||select=="E")
                     { console.log("Test Başarılı");
                     await result.write("110","BAŞARILI    Kamera güç kesintisinden sonra önce yapmakta olduğu işe devam ediyor.",2);}
@@ -2209,13 +2209,13 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 times2 = await ppp.push_time(page);
                 console.log("Patrole yeniden başlama saati = "+times2);
                 await ppp.break_patrol(page);
-                select1 = await question_ask("Alarm başlatıldığından kamera Alarm Preset'ine yöneldi mi? e/h");
+                select1 = await sevgi_api.question_ask("Alarm başlatıldığından kamera Alarm Preset'ine yöneldi mi? e/h");
                 if (select1=="e"||select1=="E")
                 select1 = 1;
                 else
                 {  select1 = 0;
                 await result.write("111","BAŞARISIZ    Alarm başlatıldığında kamera Alarm presetine yönelmedi.",2);}
-                select2 = await question_ask("Alarm varolduğu süre boyunca DEFNE yazılımında alarm bilgisi mevcutmuydu? e/h");
+                select2 = await sevgi_api.question_ask("Alarm varolduğu süre boyunca DEFNE yazılımında alarm bilgisi mevcutmuydu? e/h");
                 if (select2=="e"||select2=="E")
                 select2 = 1;
                 else
@@ -2245,12 +2245,12 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 console.log("Lütfen patrol tekrar başladığında 'ENTER'a basın");
                 var time_patrol = await ppp.push_time(page);
                 //await ppp.break_patrol(page);
-                select1 = await question_ask("Alarm başlatıldığında kamera Alarm Preset'ine yöneldi mi? e/h");
+                select1 = await sevgi_api.question_ask("Alarm başlatıldığında kamera Alarm Preset'ine yöneldi mi? e/h");
                 if (select1=="e"||select1=="E")
                 select1 = 1;
                 else
                 select1 = 0;
-                select2 = await question_ask("Alarm varolduğu süre boyunca DEFNE yazılımında alarm bilgisi mevcutmuydu? e/h");
+                select2 = await sevgi_api.question_ask("Alarm varolduğu süre boyunca DEFNE yazılımında alarm bilgisi mevcutmuydu? e/h");
                 if (select2=="e"||select2=="E")
                 select2 = 1;
                 else
@@ -2299,17 +2299,17 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                     await page.waitFor(1000);
                     console.log("Kalan Süre:"+i+"sn   Lütfen Bekleyin");
                 }
-                select3 = await question_ask("Kamera patrole yeniden başladı mı? e/h")
+                select3 = await sevgi_api.question_ask("Kamera patrole yeniden başladı mı? e/h")
                 if (select3=="h"||select3=="H")
                 {select3 = 1; times[3] = await get_time(1);}
                 else
                 {  select3 = 0; times[3] = "HATA: Kamera patrole yeniden başladı"}
-                select1 = await question_ask("Alarm başlatıldığından kamera Alarm Preset'ine yöneldi mi? e/h");
+                select1 = await sevgi_api.question_ask("Alarm başlatıldığından kamera Alarm Preset'ine yöneldi mi? e/h");
                 if (select1=="e"||select1=="E")
                 select1 = 1;
                 else
                 select1 = 0;
-                select2 = await question_ask("Alarm var olduğu sürece DEFNE'de sol üst köşede SEI Alarm bilgisi geldi mi? e/h");
+                select2 = await sevgi_api.question_ask("Alarm var olduğu sürece DEFNE'de sol üst köşede SEI Alarm bilgisi geldi mi? e/h");
                 if (select2=="e"||select2=="E")
                 select2 = 1;
                 else
@@ -2340,7 +2340,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 await ppp.set_patrol(page);
                 await ppp.goto_home(page,0,"70");
                 await ppp.run_patrol(page);
-                select = await question_ask("Kamera patrole başladı mı ? e/h");
+                select = await sevgi_api.question_ask("Kamera patrole başladı mı ? e/h");
                 if (select=="e" || select == "E")
                 {
                     console.log("Patrol başlatıldı lütfen DEFNE yazılımınızı çalıştırın...");
@@ -2354,7 +2354,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                         await page.waitFor(1000);
                         console.log("Kalan Süre:"+i+"sn   Lütfen Bekleyin");
                     }
-                    select0 = await question_ask("Kamera patrole devam ediyor mu ? e/h");
+                    select0 = await sevgi_api.question_ask("Kamera patrole devam ediyor mu ? e/h");
                     if (select0=="H" || select0 == "h")
                     {
                         times[2] = await ppp.get_time(1);
@@ -2362,7 +2362,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                         console.log("Lütfen alarmı sonlandırın ardından saati kaydetmek için ENTER tuşuna basın")
                         times[1] = await ppp.push_time(page,1)
                         console.log("Alarmı sonlandırma saati:"+times[1]);
-                        select1 = await question_ask("Alarm başlatıldığından kamera Alarm Preset'ine yöneldi mi? e/h");
+                        select1 = await sevgi_api.question_ask("Alarm başlatıldığından kamera Alarm Preset'ine yöneldi mi? e/h");
                         if (select1=="e"||select1=="E")
                         {
                             await result.write("129","BAŞARILI    Alarm başlama saati"+times[0]+"Alarmı sonlandırma saati:"+times[1]+"Hareket olmadığının en son kontrol edildiği saat:"+times[2],2)
@@ -2382,7 +2382,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 await ppp.set_patrol(page);
                 await ppp.goto_home(page,0,"70");
                 await ppp.run_patrol(page);
-                select = await question_ask("Kamera patrole başladı mı ? e/h");
+                select = await sevgi_api.question_ask("Kamera patrole başladı mı ? e/h");
                 if (select=="e" || select == "E")
                 console.log("Patrol başlatıldı lütfen DEFNE yazılımınızı çalıştırın...");
                 console.log("Lütfen saha dolabı kapağının açılma durumunu simüle eden kabloyu çıkartarak alarm oluşturunuz...");
@@ -2400,7 +2400,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                     await page.waitFor(1000);
                     console.log("Kalan Süre:"+i+"sn   Lütfen Bekleyin");
                 }*/
-                select0 = await question_ask("Kamera patrole devam ediyor mu ? e/h");
+                select0 = await sevgi_api.question_ask("Kamera patrole devam ediyor mu ? e/h");
                 if (select0=="H" || select0 == "h")
                 {
                     times[3] = await ppp.get_time(1);
@@ -2408,7 +2408,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                     console.log("Lütfen alarmı sonlandırın ardından saati kaydetmek için ENTER tuşuna basın")
                     times[1] = await ppp.push_time(page,1)
                     console.log("Alarmı sonlandırma saati:"+times[1]);
-                    select1 = await question_ask("Alarm başlatıldığından kamera Alarm Preset'ine yöneldi mi? e/h");
+                    select1 = await sevgi_api.question_ask("Alarm başlatıldığından kamera Alarm Preset'ine yöneldi mi? e/h");
                     if (select1=="e"||select1=="E")
                     {
                         await result.write("132","BAŞARILI    Alarm başlama saati"+times[0]+"Alarmı sonlandırma saati:"+times[1]+"Hareket olmadığının en son kontrol edildiği saat:"+times[3],2)
@@ -2430,7 +2430,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 console.log("Stop butonu aktif..")
             await cam.stop(page);
 }
-            select2 = await question_ask("Kamera sola dönüp durdu mu? e/h")
+            select2 = await sevgi_api.question_ask("Kamera sola dönüp durdu mu? e/h")
             if (select2 == 'E' || select2 == 'e')
             {if(select == "visible")
                 await result.write("137","BAŞARILI    Stop butonu aktif ve otopan hareketleri gerçekleştirildi.",2)
@@ -2453,7 +2453,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
             if(select == "visible"){
                 console.log("Stop butonu aktif..")
             await cam.stop(page);}
-            select2 = await question_ask("Kamera önce sola ardından sağa dönüp durdu mu? e/h")
+            select2 = await sevgi_api.question_ask("Kamera önce sola ardından sağa dönüp durdu mu? e/h")
             if (select2 == 'E' || select2 == 'e')
             {if(select == "visible")
                 await result.write("138","BAŞARILI    Stop butonu aktif ve otopan hareketleri gerçekleştirildi.",2)
@@ -2475,7 +2475,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
             if(select == "visible"){
                 console.log("Stop butonu aktif..")
             await cam.stop(page);}
-            select2 = await question_ask("Kamera sağa dönüp durdu mu? e/h")
+            select2 = await sevgi_api.question_ask("Kamera sağa dönüp durdu mu? e/h")
             if (select2 == 'E' || select2 == 'e')
             {if(select == "visible")
                 await result.write("139","BAŞARILI    Stop butonu aktif ve otopan hareketleri gerçekleştirildi.",2)
@@ -2497,7 +2497,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
             if(select == "visible"){
                 console.log("Stop butonu aktif..")
             await cam.stop(page);}
-            select2 = await question_ask("Kamera önce sağa ardından sola dönüp durdu mu? e/h")
+            select2 = await sevgi_api.question_ask("Kamera önce sağa ardından sola dönüp durdu mu? e/h")
             if (select2 == 'E' || select2 == 'e')
             {if(select == "visible")
                 await result.write("140","BAŞARILI    Stop butonu aktif ve otopan hareketleri gerçekleştirildi.",2)
@@ -2517,16 +2517,16 @@ async function test_set_res_fps_DOM(page,i,res,ip)
             await cam.check_turn_to_task(page,"1");
             await cam.goto_home_apply(page);
             await cam.turn_left(page);
-            select = await question_ask("Kamera oto pan hareketini gerçekleştiriyor mu? e/h");
+            select = await sevgi_api.question_ask("Kamera oto pan hareketini gerçekleştiriyor mu? e/h");
             if(select=="e"||select=="E")
             {
                 await cam.PTZ(page);
                 var command=await ppp.get_time(1);;
                 console.log("Son müdehale saati:"+command);
-                select3 = await question_ask("Otopan hareketi durdu mu? e/h");
+                select3 = await sevgi_api.question_ask("Otopan hareketi durdu mu? e/h");
                 if(select3=="e"||select3=="E")
                 {
-                  select2 = await question_ask("30 sn bekleyin ve kamera otopan hareketine tekrar başlayınca 'e' tuşlayınız. Eğer kamera otopan hareketine başlamazsa 'h' tuşlayın.");
+                  select2 = await sevgi_api.question_ask("30 sn bekleyin ve kamera otopan hareketine tekrar başlayınca 'e' tuşlayınız. Eğer kamera otopan hareketine başlamazsa 'h' tuşlayın.");
                 if (select2=="e"||select2=="E"){
                     var command1=await ppp.get_time(1);;
                     console.log("Otopan hareketine yeniden başlama saati:"+command1);
@@ -2550,14 +2550,14 @@ async function test_set_res_fps_DOM(page,i,res,ip)
             await nav_dome.toDomeCamera(page,ip);
             await page.waitFor(2000);
             await cam.turn_right(page);
-            select1 = await question_ask("Kamera oto pan hareketini gerçekleştiriyor mu? e/h");
+            select1 = await sevgi_api.question_ask("Kamera oto pan hareketini gerçekleştiriyor mu? e/h");
             if (select1=="e"||select1=="E")
                 {
             await nav_dome.toDomeVersion(page,ip);
             await version_dome.reload(page);
             console.log("Lütfen kameranın açılmasını bekleyin....");
                     await camera_restart(page,ip);
-            select = await question_ask("Kamera açıldıktan sonra otopan hareketine devam etti mi? e/h");
+            select = await sevgi_api.question_ask("Kamera açıldıktan sonra otopan hareketine devam etti mi? e/h");
             if (select=="e"||select=="E")
             {console.log("Test Başarılı"); await result.write("143","BAŞARILI     Kamera yeniden başlatma sonrası otopan hareketine devam etti",2);}
             else
@@ -2573,12 +2573,12 @@ async function test_set_res_fps_DOM(page,i,res,ip)
             await nav_dome.toDomeCamera(page,ip);
             await page.waitFor(2000);
             await cam.turn_right(page);
-            select1 = await question_ask("Kamera oto pan hareketini gerçekleştiriyor mu? e/h");
+            select1 = await sevgi_api.question_ask("Kamera oto pan hareketini gerçekleştiriyor mu? e/h");
             if (select1=="e"||select1=="E")
                 {
-                    await question_ask("Lütfen kameranın gücünü kesin ve 15-20 sn sonra gücü tekrar verin. Ardından ENTER'a basın..");
+                    await sevgi_api.question_ask("Lütfen kameranın gücünü kesin ve 15-20 sn sonra gücü tekrar verin. Ardından ENTER'a basın..");
                     await camera_restart(page,ip);
-                    select = await question_ask("Kamera açıldıktan sonra otopan hareketine devam etti mi? e/h");
+                    select = await sevgi_api.question_ask("Kamera açıldıktan sonra otopan hareketine devam etti mi? e/h");
             if (select=="e"||select=="E")
             {console.log("Test Başarılı"); await result.write("144","BAŞARILI     Kamera güç kesintisi sonrası otopan hareketine devam etti",2);}
             else
@@ -2601,22 +2601,22 @@ async function test_set_res_fps_DOM(page,i,res,ip)
             await cam.check_turn_to_task(page,"1");
             await cam.goto_home_apply(page);
             await cam.turn_left(page);
-            select = await question_ask("Kamera oto pan hareketini gerçekleştiriyor mu? e/h");
+            select = await sevgi_api.question_ask("Kamera oto pan hareketini gerçekleştiriyor mu? e/h");
             if(select=="e"||select=="E"){
-                await question_ask("DEFNE'den kameranın canlı görüntüsünü açın ve otopan hareketi devam ederken kameranın alarm girişine saha dolabı kapağının açılma durumunu simüle eden kabloyu çıkarıp Enter tuşuna basın.");
+                await sevgi_api.question_ask("DEFNE'den kameranın canlı görüntüsünü açın ve otopan hareketi devam ederken kameranın alarm girişine saha dolabı kapağının açılma durumunu simüle eden kabloyu çıkarıp Enter tuşuna basın.");
                 times[0]=await ppp.get_time(1);;
                 console.log("Alarm başlama saati:"+times[0]);
-                await question_ask("10 sn bekleyin ve alarmı sonlandırın. Ardından ENTER'a basın.");
+                await sevgi_api.question_ask("10 sn bekleyin ve alarmı sonlandırın. Ardından ENTER'a basın.");
                 times[1]=await ppp.get_time(1);
                 console.log("Alarm bitiş saati :"+times[1]);
-                await question_ask("Serbest süre kadar (30sn) bekleyin ve kamera otopan hareketine başladığında ENTER'a basın.");
+                await sevgi_api.question_ask("Serbest süre kadar (30sn) bekleyin ve kamera otopan hareketine başladığında ENTER'a basın.");
                 times[2]=await ppp.get_time(1);
                 console.log("Otopana yeniden başlama saati:"+times[2]);
                 
-                select2 = await question_ask("Alarm var olduğu sürece DEFNE'de sol üst köşede SEI Alarm bilgisi geldi mi? e/h");
+                select2 = await sevgi_api.question_ask("Alarm var olduğu sürece DEFNE'de sol üst köşede SEI Alarm bilgisi geldi mi? e/h");
                 if(select2=="e"||select2=="E")
                 {
-                select3 = await question_ask("Alarm oluşturulduğunda kamera girilen Preset değerine hareket etti mi? e/h");
+                select3 = await sevgi_api.question_ask("Alarm oluşturulduğunda kamera girilen Preset değerine hareket etti mi? e/h");
                 if(select3=="e"||select3=="E")
                 {
                     await result.write("145","BAŞARILI Alarm başlama saati:"+times[0]+" Alarm bitiş saati :"+times[1]+" Otopana yeniden başlama saati:"+times[2],2);
@@ -2650,21 +2650,21 @@ async function test_set_res_fps_DOM(page,i,res,ip)
             await cam.check_turn_to_task(page,"1");
             await cam.goto_home_apply(page);
             await cam.turn_left(page);
-            select = await question_ask("Kamera oto pan hareketini gerçekleştiriyor mu? e/h");
+            select = await sevgi_api.question_ask("Kamera oto pan hareketini gerçekleştiriyor mu? e/h");
             console.clear();
             if(select=="e"||select=="E"){
                 console.log("Lütfen DEFNE programını çalıştırın. Ardından saha dolabı kapağının açılma durumunu simüle eden kabloyu çıkartarak alarm oluşturunuz...");
                 for(let i=0;i<4;i++)
                 {
-                    await question_ask("Lütfen"+(i+1)+"'nci alarmı oluşturduğunuzda 'ENTER'a basın");
+                    await sevgi_api.question_ask("Lütfen"+(i+1)+"'nci alarmı oluşturduğunuzda 'ENTER'a basın");
                     times_basla[i] = await ppp.get_time(page);
-                    await question_ask("Lütfen alarm bittiğinde 'ENTER'a basın.. İki işlem arasında en az 10 saniye süre olması gerekmektedir... ");
+                    await sevgi_api.question_ask("Lütfen alarm bittiğinde 'ENTER'a basın.. İki işlem arasında en az 10 saniye süre olması gerekmektedir... ");
                     times_bitis[i] = await ppp.get_time(page);
                     console.clear();
                 }
                 console.log("Lütfen"+(5)+"'nci alarmı oluşturduğunuzda 'ENTER'a basın");
                     times_basla[4] = await ppp.push_time(page);
-                    select1 = await question_ask("Alarm başlatıldığında kamera Alarm Preset'ine yöneldi mi? e/h");
+                    select1 = await sevgi_api.question_ask("Alarm başlatıldığında kamera Alarm Preset'ine yöneldi mi? e/h");
                 if (select1=="e"||select1=="E")
                 select1 = 1;
                 else
@@ -2676,12 +2676,12 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                     
                 console.clear();
                 await page.waitFor(1000);
-                select0 = await question_ask("Lütfen otopan tekrar başladığında 'e' tuşlayın eğer 1 dakika içerisinde başlamazsa 'h' tuşlayın");
+                select0 = await sevgi_api.question_ask("Lütfen otopan tekrar başladığında 'e' tuşlayın eğer 1 dakika içerisinde başlamazsa 'h' tuşlayın");
                 if (select0=="e"||select0=="E")
                 {
                     var time_patrol = await ppp.get_time(1);
                 
-                select2 = await question_ask("Alarm varolduğu süre boyunca DEFNE yazılımında alarm bilgisi mevcutmuydu? e/h");
+                select2 = await sevgi_api.question_ask("Alarm varolduğu süre boyunca DEFNE yazılımında alarm bilgisi mevcutmuydu? e/h");
                 if (select2=="e"||select2=="E")
                 select2 = 1;
                 else
@@ -2725,9 +2725,9 @@ async function test_set_res_fps_DOM(page,i,res,ip)
             await cam.check_turn_to_task(page,"1");
             await cam.goto_home_apply(page);
             await cam.turn_left(page);
-            select = await question_ask("Kamera oto pan hareketini gerçekleştiriyor mu? e/h");
+            select = await sevgi_api.question_ask("Kamera oto pan hareketini gerçekleştiriyor mu? e/h");
             if(select=="e"||select=="E"){
-                select_1 = await question_ask("DEFNE'den kameranın canlı görüntüsünü açın ve otopan hareketi devam ederken kameranın alarm girişine saha dolabı kapağının açılma durumunu simüle eden kabloyu çıkarıp Enter tuşuna basın.");
+                select_1 = await sevgi_api.question_ask("DEFNE'den kameranın canlı görüntüsünü açın ve otopan hareketi devam ederken kameranın alarm girişine saha dolabı kapağının açılma durumunu simüle eden kabloyu çıkarıp Enter tuşuna basın.");
                 times[0]=await ppp.get_time(1);;
                 console.log("Alarm başlama saati:"+times[0]);
                 console.log("PanTiltZoom uygulanıyor. Lüften SerbestSürex2 (60sn) bekleyin.")
@@ -2737,17 +2737,17 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 await page.waitFor(1000);
                 await timer(page,60);
                 await page.waitFor(60000);
-                select0 = await question_ask("Kamera otopana devam ediyor mu?  e/h");
+                select0 = await sevgi_api.question_ask("Kamera otopana devam ediyor mu?  e/h");
                 if(select0=="h"||select0=="H")
                 {
                     times[3]=await ppp.get_time(1);;
                 console.log("Hareket olmadığının en son kontrol edildiği saat:"+times[3]);
-                select2 = await question_ask("Alarm var olduğu sürece DEFNE'de sol üst köşede SEI Alarm bilgisi geldi mi? e/h");
+                select2 = await sevgi_api.question_ask("Alarm var olduğu sürece DEFNE'de sol üst köşede SEI Alarm bilgisi geldi mi? e/h");
                 if(select2=="e"||select2=="E")
                 {
-                    select3 = await question_ask("Alarm oluşturulduğunda kamera girilen Preset değerine hareket etti mi? e/h");
+                    select3 = await sevgi_api.question_ask("Alarm oluşturulduğunda kamera girilen Preset değerine hareket etti mi? e/h");
                 if(select3=="e"||select3=="E")
-                { await question_ask("Alarmı durdurun ardından ENTER'a basın.")
+                { await sevgi_api.question_ask("Alarmı durdurun ardından ENTER'a basın.")
                     times[1] = await ppp.get_time(1);
                     console.log("Alarmın bitiş saati:"+times[1]);
                     await result.write("159","BAŞARILI     Alarm başlama saati:"+times[0]+"Alarmın bitiş saati:"+times[1]+"Kullanıcı müdehale saati:"+times[2]+"Hareket olmadığının en son kontrol edildiği saat:"+times[3],2);
@@ -2775,26 +2775,26 @@ async function test_set_res_fps_DOM(page,i,res,ip)
             await cam.check_turn_to_task(page,"0");
             await cam.goto_home_apply(page);
             await cam.turn_left(page);
-            select = await question_ask("Kamera oto pan hareketini gerçekleştiriyor mu? e/h");
+            select = await sevgi_api.question_ask("Kamera oto pan hareketini gerçekleştiriyor mu? e/h");
             if(select=="e"||select=="E"){
-                select_1 = await question_ask("DEFNE'den kameranın canlı görüntüsünü açın ve otopan hareketi devam ederken kameranın alarm girişine saha dolabı kapağının açılma durumunu simüle eden kabloyu çıkarıp Enter tuşuna basın.");
+                select_1 = await sevgi_api.question_ask("DEFNE'den kameranın canlı görüntüsünü açın ve otopan hareketi devam ederken kameranın alarm girişine saha dolabı kapağının açılma durumunu simüle eden kabloyu çıkarıp Enter tuşuna basın.");
                 times[0]=await ppp.get_time(1);;
                 console.log("Alarm başlama saati:"+times[0]);
                 console.log("Lüften SerbestSürex2 (60sn) bekleyin.")
                 await page.waitFor(1000);
                 await timer(page,60);
                 await page.waitFor(60000);
-                select0 = await question_ask("Kamera otopana devam ediyor mu?  e/h");
+                select0 = await sevgi_api.question_ask("Kamera otopana devam ediyor mu?  e/h");
                 if(select0=="h"||select0=="H")
                 {
                     times[2]=await ppp.get_time(1);;
                 console.log("Hareket olmadığının en son kontrol edildiği saat:"+times[2]);
-                select2 = await question_ask("Alarm var olduğu sürece DEFNE'de sol üst köşede SEI Alarm bilgisi geldi mi? e/h");
+                select2 = await sevgi_api.question_ask("Alarm var olduğu sürece DEFNE'de sol üst köşede SEI Alarm bilgisi geldi mi? e/h");
                 if(select2=="e"||select2=="E")
                 {
-                    select3 = await question_ask("Alarm oluşturulduğunda kamera girilen Preset değerine hareket etti mi? e/h");
+                    select3 = await sevgi_api.question_ask("Alarm oluşturulduğunda kamera girilen Preset değerine hareket etti mi? e/h");
                 if(select3=="e"||select3=="E")
-                { await question_ask("Alarmı durdurun ardından ENTER'a basın.")
+                { await sevgi_api.question_ask("Alarmı durdurun ardından ENTER'a basın.")
                     times[1] = await ppp.get_time(1);
                     console.log("Alarmın bitiş saati:"+times[1]);
                     await result.write("163","BAŞARILI     Alarm başlama saati:"+times[0]+"Alarmın bitiş saati:"+times[1]+"Hareket olmadığının en son kontrol edildiği saat:"+times[2],2);
@@ -2822,9 +2822,9 @@ async function test_set_res_fps_DOM(page,i,res,ip)
             await cam.check_turn_to_task(page,"0");
             await cam.goto_home_apply(page);
             await cam.turn_left(page);
-            select = await question_ask("Kamera oto pan hareketini gerçekleştiriyor mu? e/h");
+            select = await sevgi_api.question_ask("Kamera oto pan hareketini gerçekleştiriyor mu? e/h");
             if(select=="e"||select=="E"){
-                select_1 = await question_ask("DEFNE'den kameranın canlı görüntüsünü açın ve otopan hareketi devam ederken kameranın alarm girişine saha dolabı kapağının açılma durumunu simüle eden kabloyu çıkarıp Enter tuşuna basın.");
+                select_1 = await sevgi_api.question_ask("DEFNE'den kameranın canlı görüntüsünü açın ve otopan hareketi devam ederken kameranın alarm girişine saha dolabı kapağının açılma durumunu simüle eden kabloyu çıkarıp Enter tuşuna basın.");
                 times[0]=await ppp.get_time(1);;
                 console.log("Alarm başlama saati:"+times[0]);
                 console.log("PanTiltZoom uygulanıyor. Lüften SerbestSürex2 (60sn) bekleyin.")
@@ -2834,17 +2834,17 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 await page.waitFor(1000);
                 await timer(page,60);
                 await page.waitFor(60000);
-                select0 = await question_ask("Kamera otopana devam ediyor mu?  e/h");
+                select0 = await sevgi_api.question_ask("Kamera otopana devam ediyor mu?  e/h");
                 if(select0=="h"||select0=="H")
                 {
                     times[3]=await ppp.get_time(1);;
                 console.log("Hareket olmadığının en son kontrol edildiği saat:"+times[3]);
-                select2 = await question_ask("Alarm var olduğu sürece DEFNE'de sol üst köşede SEI Alarm bilgisi geldi mi? e/h");
+                select2 = await sevgi_api.question_ask("Alarm var olduğu sürece DEFNE'de sol üst köşede SEI Alarm bilgisi geldi mi? e/h");
                 if(select2=="e"||select2=="E")
                 {
-                    select3 = await question_ask("Alarm oluşturulduğunda kamera girilen Preset değerine hareket etti mi? e/h");
+                    select3 = await sevgi_api.question_ask("Alarm oluşturulduğunda kamera girilen Preset değerine hareket etti mi? e/h");
                 if(select3=="e"||select3=="E")
-                { await question_ask("Alarmı durdurun ardından ENTER'a basın.")
+                { await sevgi_api.question_ask("Alarmı durdurun ardından ENTER'a basın.")
                     times[1] = await ppp.get_time(1);
                     console.log("Alarmın bitiş saati:"+times[1]);
                     await result.write("166","BAŞARILI     Alarm başlama saati:"+times[0]+"Alarmın bitiş saati:"+times[1]+"Kullanıcı müdehale saati:"+times[2]+"Hareket olmadığının en son kontrol edildiği saat:"+times[3],2);
@@ -2866,7 +2866,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
             console.log("");
             console.log("TEY-2_ver06 Test-171 Başladı");
             await nav_dome.toDomeAlarm(page,ip);
-            select = await question_ask("Saha dolabının kapağının kapanış/açılış durumunu simüle etmek için hareketli kameraya takılı olan konektörü çıkarıp devam etmek için Enter tuşuna basınız.");
+            select = await sevgi_api.question_ask("Saha dolabının kapağının kapanış/açılış durumunu simüle etmek için hareketli kameraya takılı olan konektörü çıkarıp devam etmek için Enter tuşuna basınız.");
             page.reload();
             await login.loginCamera(page, ip);
             await nav_dome.toDomeAlarm(page,ip);
@@ -2888,21 +2888,21 @@ async function test_set_res_fps_DOM(page,i,res,ip)
             await cam.set_goto_home(page,"40");
             await cam.check_turn_to_task(page,"1");
             await cam.goto_home_apply(page);
-            await question_ask("Saha dolabının kapağının kapanış/açılış durumunu simüle etmek için hareketli kameraya takılı olan konektörü çıkarıp  Enter tuşuna basınız.");
+            await sevgi_api.question_ask("Saha dolabının kapağının kapanış/açılış durumunu simüle etmek için hareketli kameraya takılı olan konektörü çıkarıp  Enter tuşuna basınız.");
             times[0]=await ppp.get_time(1);;
             console.log("Alarm başlama saati:"+times[0]);
-            select1 = await question_ask("Kamera tanımlanan presete gitti mi? e/h");
+            select1 = await sevgi_api.question_ask("Kamera tanımlanan presete gitti mi? e/h");
             if(select1=="e"||select1=="E")
             {
                 await timer(page,80);
                 await page.waitFor(80000);
-                select2 = await question_ask("Kamera hala preset noktasına bakmaya devam ediyor mu? e/h");
+                select2 = await sevgi_api.question_ask("Kamera hala preset noktasına bakmaya devam ediyor mu? e/h");
                 if(select2=="e"||select2=="E")
                     {
-                    await question_ask("Kameraya konnektörü geri takıp  Enter tuşuna basınız.");
+                    await sevgi_api.question_ask("Kameraya konnektörü geri takıp  Enter tuşuna basınız.");
                     times[1]=await ppp.get_time(1);;
                     console.log("Alarm bitiş saati:"+times[1]);
-                    select4 = await question_ask("Kamera alarm oluşturulmadan önceki konumuna dönünce 'e' tuşlayın. 1 dakika içerisinde dönmezse 'h' tuşlayın");
+                    select4 = await sevgi_api.question_ask("Kamera alarm oluşturulmadan önceki konumuna dönünce 'e' tuşlayın. 1 dakika içerisinde dönmezse 'h' tuşlayın");
                     if(select4=="e"||select4=="E")
                     {
                         times[2]=await ppp.get_time(1);;
@@ -2923,8 +2923,8 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                       await nav_dome.toDomeVersion(page, ip);
                       await nav_dome.toWatchCamera(page,ip);
                       console.log("Test 21'de oluşturulan 4 adet maskenin canlı izlemede görüldüğü ve konumlarının aynı kaldığını gözlemleyin");
-                      select1 = await question_ask("4 adet maske görüldü mü? e/h");
-                      select2 = await question_ask("Maskelerin konumları aynı mı? e/h");
+                      select1 = await sevgi_api.question_ask("4 adet maske görüldü mü? e/h");
+                      select2 = await sevgi_api.question_ask("Maskelerin konumları aynı mı? e/h");
                        if ( (select1 == "e" || select1 == "E") && (select2 =="e"|| select2=="E"))
                        {
                           console.log("Test Başarılı");
@@ -2943,8 +2943,8 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                       await nav_dome.toDomeVersion(page, ip);
                       await nav_dome.toWatchCamera(page,ip);
                       console.log("Tanımlanmış maskelerden bir tanesi 'Maske ID' sekmesinden seçilir ve yönlendirme yapılır. Yönlendirme yapıldıktan sonra(maske sol, maske sağ, maske yukarı, maske aşağı) genişlik ve yükseklik değiştirilip 'Maskeyi güncelle' butonuna basılır. Bu durumda maskenin yeni özellikleri aldığı ve güncellendiği gözlemlenerek doğrulanır. Kamera yeniden başlatılır ve görüntü geldiğinde güncellenen maskenin yeni yerinde olduğu gözlemlenir.");
-                      select1 = await question_ask("Ayarlarında değişiklik yapılan maske yeni özellikleri aldı mı? e/h");
-                      select2 = await question_ask("Kamera yeniden başlatıldıktan ve görüntü geldikten sonra güncellenen maske son konumunu korudu mu? e/h");
+                      select1 = await sevgi_api.question_ask("Ayarlarında değişiklik yapılan maske yeni özellikleri aldı mı? e/h");
+                      select2 = await sevgi_api.question_ask("Kamera yeniden başlatıldıktan ve görüntü geldikten sonra güncellenen maske son konumunu korudu mu? e/h");
                        if ( (select1 == "e" || select1 == "E") && (select2 =="e"|| select2=="E"))
                       {
                           console.log("Test Başarılı");
@@ -3079,9 +3079,9 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                     await mask.mask_refresh(page);
                         console.log("Maskeler oluşturuldu ve konumlandırıldı.");
                         console.log("Lütfen web arayüzünden oluşturulan maskeleri kontrol ediniz.");
-                        select1 = await question_ask("8 adet maske tespit edildi mi? e/h");
+                        select1 = await sevgi_api.question_ask("8 adet maske tespit edildi mi? e/h");
                         console.log("Lütfen web arayüzünden 'Canlı İzleme' sekmesinde kameranın bakış açısını değiştirerek oluşturulan diğer maskelerin geldiğini gözlemleyerek kontrol ediniz.");
-                        select2 = await question_ask("Diğer maskeler tespit edildi mi? e/h");
+                        select2 = await sevgi_api.question_ask("Diğer maskeler tespit edildi mi? e/h");
                         if ( (select1 == "e" || select1 == "E") && (select2 =="e"|| select2=="E"))
                         {
                           console.log("Test Başarılı");
@@ -3105,7 +3105,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
             await watch_camera.mask_apply(page);
             await page.waitFor(2000);
             console.log("Kameraya pan tilt zoom kontrolleri göderip kameranın bakış açısını değiştirin.");
-            select4 = await question_ask("Maske kapatmak için konulduğu alanı kapatmaya devam ediyor mu? e/h");
+            select4 = await sevgi_api.question_ask("Maske kapatmak için konulduğu alanı kapatmaya devam ediyor mu? e/h");
             if(select4=="e"||select4=="E")
             await result.write("182", "BAŞARILI",2);
             else
@@ -3116,7 +3116,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
         case "189":{
             console.log("");
             console.log("TEY-2_ver06 Test-189 Başladı");
-            select1 = await question_ask("Bilgisayarınızda eğer test yapılacak kameradan herhangi bir program aracılığı ile görüntü çekiliyorsa( VLC, VMS, DEFNE) bu programı kapatıp Enter tuşuna basınız.");
+            select1 = await sevgi_api.question_ask("Bilgisayarınızda eğer test yapılacak kameradan herhangi bir program aracılığı ile görüntü çekiliyorsa( VLC, VMS, DEFNE) bu programı kapatıp Enter tuşuna basınız.");
             await nav_dome.toDomeEncodingHigh(page,ip);
             await page.waitFor(2000);
             await encodingH.traffic_forming(page,"1");
@@ -3126,7 +3126,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
             proc =await require('child_process').exec(command);
             console.log("Lütfen aşağıdaki testi uygulayın.. Ardından otomatik test yazılımını tekrardan başlatın ve test sonuçlarını otomatik test yazılımına bildirmek için bu testin numarasını tuşlayın");
             console.log("Wireshark programı çalıştırılır. Kameradan gelen UDP paketlerinden bir tanesi seçilerek mouse'un sağ tuşuna tıklanır ve Decode As seçilir.  Açılan pencereden Current seçeneği RTP olarak seçilir ve OK butonuna tıklanır. Bu işlemden sonra Telephony sekmesinden  RTP --> Stream Analysis seçeneğine tıklanır. Açılan pencerede Forward altında bulunan Lost değerinin %0 oldugu görülerek kayıp olmadığı gözlemlenerek doğrulanır.");
-            select1 = await question_ask("Görüntü çekilirken herhangi bir kayıp meydana geliyor mu, kayıp %0 'dan farklı mı? e/h");
+            select1 = await sevgi_api.question_ask("Görüntü çekilirken herhangi bir kayıp meydana geliyor mu, kayıp %0 'dan farklı mı? e/h");
             if (select1=="h"||select1=="H")
             await result.write("189", "BAŞARILI",2);
             else
@@ -3136,7 +3136,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
         case "190":{
             console.log("");
             console.log("TEY-2_ver06 Test-190 Başladı");
-            select1 = await question_ask("Bilgisayarınızda eğer test yapılacak kameradan herhangi bir program aracılığı ile görüntü çekiliyorsa( VLC, VMS, DEFNE) bu programı kapatıp Enter tuşuna basınız.");
+            select1 = await sevgi_api.question_ask("Bilgisayarınızda eğer test yapılacak kameradan herhangi bir program aracılığı ile görüntü çekiliyorsa( VLC, VMS, DEFNE) bu programı kapatıp Enter tuşuna basınız.");
             await nav_dome.toDomeEncodingHigh(page,ip);
             await page.waitFor(2000);
             await encodingH.traffic_forming(page,"1");
@@ -3145,7 +3145,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
             proc =await require('child_process').exec(command);
             console.log("Lütfen aşağıdaki testi uygulayın.. Ardından otomatik test yazılımını tekrardan başlatın ve test sonuçlarını otomatik test yazılımına bildirmek için bu testin numarasını tuşlayın");
             console.log("Wireshark programı çalıştırılır. Statistics sekmesinin altından I/O Graph seçeneğien tıklanır. Name altındaki tüm değerler tek tek seçilir ve - butonuna tıklanarak listeden silinir. Liste boşaltıldıktan sonra + butonuna tıklanır ve yeni bir nesne eklenir. Name ve Display Filter seçeneğine RTP ifadesi yazılır. Daha sonra Y Axis değeri Bits ve alt bardaki Interval seçeneği 100ms olarak seçilir. 1 dakika süreyle herhangi bir işlem yapılmadan grafiğin çizilmesi beklenir.");
-            select1 = await question_ask("Grafik geçen süre içerisinde çizildi mi? e/h");
+            select1 = await sevgi_api.question_ask("Grafik geçen süre içerisinde çizildi mi? e/h");
             if (select1=="e"||select1=="E")
             await result.write("190", "BAŞARILI",2);
             else
@@ -3166,7 +3166,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
             proc =await require('child_process').exec(command);
             console.log("Lütfen aşağıdaki testi uygulayın.. Ardından otomatik test yazılımını tekrardan başlatın ve test sonuçlarını otomatik test yazılımına bildirmek için bu testin numarasını tuşlayın");
             console.log("Wireshark programı çalıştırılır. Statistics sekmesinin altından I/O Graph seçeneğien tıklanır.1 dakika süreyle herhangi bir işlem yapılmadan grafiğin çizilmesi beklenir.");
-            select1 = await question_ask("Grafik geçen süre içerisinde çizildi mi? e/h");
+            select1 = await sevgi_api.question_ask("Grafik geçen süre içerisinde çizildi mi? e/h");
             if (select1=="e"||select1=="E")
             await result.write("191", "BAŞARILI",2);
             else
@@ -3178,7 +3178,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
             console.log("TEY-2_ver06 Test-192 Başladı");
             console.log("Lütfen aşağıdaki testi uygulayın.. Ardından otomatik test yazılımını tekrardan başlatın ve test sonuçlarını otomatik test yazılımına bildirmek için bu testin numarasını tuşlayın");
             console.log("TEY-2_ver06 dökümanındaki 190 ve 191 nolu testleri gerçekleştirin. Her iki test için de oluşan grafikleri inceleyin ve aralarındaki farklara bakın. 191 nolu test sonunda oluşan grafiğin bit değerinin 190 nolu test sonucu oluşan grafikteki kadar yüksek olmadığı ve burstlerin limitlendiği gözlemlenerek şekillendiricinin çalıştığı doğrulanır.");
-            select1 = await question_ask("Test istenilen sonuçları veriyor mu? e/h");
+            select1 = await sevgi_api.question_ask("Test istenilen sonuçları veriyor mu? e/h");
             if (select1=="e"||select1=="E")
             await result.write("192", "BAŞARILI",2);
             else
@@ -3199,7 +3199,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
             proc =await require('child_process').exec(command);
             console.log("Lütfen aşağıdaki testi uygulayın.. Ardından otomatik test yazılımını tekrardan başlatın ve test sonuçlarını otomatik test yazılımına bildirmek için bu testin numarasını tuşlayın");
             console.log("Wireshark programı çalıştırılır. Statistics sekmesinin altından I/O Graph seçeneğien tıklanır.1 dakika süreyle herhangi bir işlem yapılmadan grafiğin çizilmesi beklenir.");
-            select1 = await question_ask("Grafik geçen süre içerisinde çizildi mi? e/h");
+            select1 = await sevgi_api.question_ask("Grafik geçen süre içerisinde çizildi mi? e/h");
             if (select1=="e"||select1=="E")
             await result.write("193", "BAŞARILI",2);
             else
@@ -3211,7 +3211,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
             console.log("TEY-2_ver06 Test-194 Başladı");
             console.log("Lütfen aşağıdaki testi uygulayın.. Ardından otomatik test yazılımını tekrardan başlatın ve test sonuçlarını otomatik test yazılımına bildirmek için bu testin numarasını tuşlayın");
             console.log("TEY-2_ver06 dökümanındaki 190,191 ve 193 nolu testleri gerçekleştirin.3 test için de oluşan grafikleri inceleyin ve aralarındaki farklara bakın. 193 nolu test sonunda oluşan grafiğin bit değerinin 191 nolu test sonucu oluşan grafiğe göre biraz daha yükseldiği yani toleransın arttırıldığı ve hala 190 nolu test sonucu oluşan grafiğe göre düşük değerler geldiği grafikler gözlemlenerek doğrulanır.");
-            select1 = await question_ask("Test istenilen sonuçları veriyor mu? e/h");
+            select1 = await sevgi_api.question_ask("Test istenilen sonuçları veriyor mu? e/h");
             if (select1=="e"||select1=="E")
             await result.write("194", "BAŞARILI",2);
             else
@@ -3232,7 +3232,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
             proc =await require('child_process').exec(command);
             console.log("Lütfen aşağıdaki testi uygulayın.. Ardından otomatik test yazılımını tekrardan başlatın ve test sonuçlarını otomatik test yazılımına bildirmek için bu testin numarasını tuşlayın");
             console.log("Wireshark programı çalıştırılır. Statistics sekmesinin altından I/O Graph seçeneğien tıklanır.1 dakika süreyle herhangi bir işlem yapılmadan grafiğin çizilmesi beklenir.");
-            select1 = await question_ask("Grafik geçen süre içerisinde çizildi mi? e/h");
+            select1 = await sevgi_api.question_ask("Grafik geçen süre içerisinde çizildi mi? e/h");
             if (select1=="e"||select1=="E")
             await result.write("195", "BAŞARILI",2);
             else
@@ -3244,7 +3244,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
             console.log("TEY-2_ver06 Test-196 Başladı");
             console.log("Lütfen aşağıdaki testi uygulayın.. Ardından otomatik test yazılımını tekrardan başlatın ve test sonuçlarını otomatik test yazılımına bildirmek için bu testin numarasını tuşlayın");
             console.log("TEY-2_ver06 dökümanındaki 190,191,193 ve 95 nolu testleri gerçekleştirin.4 test için de oluşan grafikleri inceleyin ve aralarındaki farklara bakın. 195 nolu test sonunda oluşan grafiğin bit değerinin 191 ve 193 nolu testler sonucu oluşan grafiklere göre biraz daha yükseldiği yani toleransın arttırıldığı gözlemlenerek doğrulanır.");
-            select1 = await question_ask("Test istenilen sonuçları veriyor mu? e/h");
+            select1 = await sevgi_api.question_ask("Test istenilen sonuçları veriyor mu? e/h");
             if (select1=="e"||select1=="E")
             await result.write("196", "BAŞARILI",2);
             else
