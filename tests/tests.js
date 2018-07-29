@@ -29,6 +29,7 @@ var tests = require('./tests');
 var result = require('./result.js');
 const {camera_restart} = require('./ping.js')
 const file_exist= require("./file_exist");
+var sevgi_api= require('./sevgi_api');
 
 
 async function timer(page,n){

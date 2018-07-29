@@ -22,7 +22,7 @@ var login_dome = require("./login_dome");
 var {ping} = require("./ping.js")
  
  
-/*async function interface (page)
+async function interface (page)
 {
         document = await question_ask("Yapacağınız Test Hangi Dökümanda?            ..Çıkış İçin C ye basabilirsiniz");
         console.clear();
@@ -85,7 +85,7 @@ let testIt = async () => {
             console.log("Hatalı tuşladınız. Lütfen tekrar deneyin..");
             await testIt();
         }
-/*
+
  select = await question_ask("Test Yapmak İçin T'ye Çıkış için C ye basınz");
         console.clear();
         if (select == "c" || select == "C") 
@@ -99,28 +99,9 @@ let testIt = async () => {
         else if (select == "t" || select== "T") await interface(page);
         else {console.log("Hatalı Tuşladınız Çıkmak İçin C ye basabilirsiniz. Test seçme aşamasına geçildi..");
         await interface(page);}
-  
-  await tests.start_2(page,"34",dom_ip);
-    await tests.start_1(page,"47","10.5.177.52");
-  //await tests.start_1(page,"24",ip);
-  /*
-  for(let i=189; i<199; i++)
-  await tests.start_2(page,i.toString(),dom_ip);
-
-        
-  
-  /*
-        await page.waitFor(30000);
-	await page.close();
-	await browser.close();
-  
-	return 0;
 }
 
-testIt().then((value) => {
-	console.log("Testing done " + 1); // Success!
-});
-*/
+testIt();/*
 
 let testIt = async () => {
     ip = '10.5.176.249'//await question_ask("Test edilecek kameranın ip adresini girin");
@@ -129,7 +110,7 @@ let testIt = async () => {
     dom_ip = '10.5.177.164';
     return;
 }
-testIt();
+testIt();*/
 
 module.exports.testEt2 = async function(testno)
     {
