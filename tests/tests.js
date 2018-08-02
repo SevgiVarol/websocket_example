@@ -237,7 +237,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                         await encoding.set_bit_rate(page, "3");
                         await encoding.set_calc_method(page, "tan");
                         await encoding.apply(page);
-                        await camera_restart(page,ip);
+                        //await camera_restart(page,ip);
                         console.log("Konfigürasyon ayarları yapıldı.");
                         await result.write("22", "Konfigürasyon ayarları yapıldı.",1);
                     break;
@@ -251,7 +251,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                         await encodingLow.set_codding_quality(page, "orta");
                         await encodingLow.set_bit_rate(page, "0.4");
                         await encodingLow.apply(page);
-                        await camera_restart(page,ip);
+                        //await camera_restart(page,ip);
                         console.log("Konfigürasyon ayarları yapıldı.");
                         await result.write("23", "Konfigürasyon ayarları yapıldı.",1);
                     break;
@@ -264,7 +264,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                         await resolution.set_resolution1(page,"1920 x 1080 (max:30fps");
                         await resolution.set_fps1(page,"10");
                         await resolution.apply(page);
-                        await camera_restart(page,ip);
+                        //await camera_restart(page,ip);
                         console.log("Konfigürasyon ayarları yapıldı.");
                         await result.write("24", "Konfigürasyon ayarları yapıldı.",1);
                     break;
@@ -1112,7 +1112,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 await alarm_dome.check_turn_location(page,1);
                 await alarm_dome.alarm_apply(page);
                 console.log("Alarm sekmesine alarm preseti kaydedildi");
-                await camera_restart(page,ip);
+                //await camera_restart(page,ip);
                 await result.write("22"," UYGULANDI    Ayarlar kaydedildi",2);
                 console.log("OPTIONS SETTED ");
                 break;
@@ -1208,7 +1208,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 console.log("Hedef bitrate hesaplama metodu = 'Tanımlı Bitrate değerine Göre' ayarlandı ");
                 await encodingH.apply(page);
                 await result.write("27"," UYGULANDI    Ayarlar kaydedildi",2);
-                await camera_restart(page,ip);
+                //await camera_restart(page,ip);
                 console.log("OPTIONS SETTED ");
                 break;
             }
@@ -1223,7 +1223,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 await encodingLow_dome.set_bit_rate(page, "1");
                 await encodingLow_dome.apply(page);
                 await result.write("28","UYGULANDI    Ayarlar kaydedildi",2);
-                await camera_restart(page,ip);
+                //await camera_restart(page,ip);
                 console.log("OPTIONS SETTED ");
                 break;
             }
@@ -1562,7 +1562,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 {console.log("Test Başarısız");
                 await result.write("56"," BAŞARISIZ   NTP Sunucu1 adresi yanlış",2)}
                 await timeSet.apply(page);
-                await camera_restart(page,ip);
+                //await camera_restart(page,ip);
                 
                 console.log("Test is completed!");
                 break;
@@ -1744,7 +1744,9 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 var time0 = await ppp.push_time(page,1);
                 await cam.PTZ(page);
                 console.log("Son kullanıcı müdahele saati = "+time0);
-                select0 = await sevgi_api.question_ask("Kamera durdu mu? e/h")
+                await waitForElement();
+                async function waitForElement(){
+                select0 = await sevgi_api.question_ask("Kamera durdu mu? e/h");
                 if(select0=="e" || select0 == "E")
                 {   console.log("Lütfen kamera harekete yeniden başlayıncaya kadar bekleyin ve hareket başladığında zamanı kaydetmek için ENTER'a basın.")
                     var time1= await ppp.push_time(page,1);
@@ -1753,7 +1755,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                     if(select1=="e" || select1 == "E") temp_val = temp_val && 1;
                     else temp_val = 0;
                     select2 = await sevgi_api.question_ask("Kamera durduktan sonra ve Serbest Süre kadar zaman geçtikten sonra harekete devam etti mi ? ")
-                    if(select2=="e" || select3 == "E") temp_val = temp_val && 1;
+                    if(select2=="e" || select2 == "E") temp_val = temp_val && 1;
                     else temp_val =0;
                     if (temp_val) {
                         console.log("Test Başarılı")
@@ -1771,6 +1773,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 }
                 await cam.pattern_cancel(page);
                 console.log("Test is completed!");
+                }
                 break;
             }
             case "79":{

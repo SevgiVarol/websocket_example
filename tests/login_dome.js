@@ -12,12 +12,12 @@
                     x = await ping (page,ip);
                     await page.waitFor(1000);
                     if(!x)
-                console.log("Kamera offline Lutfen Bekleyin  Gecen Süre = "+i+"sn");
+                        console.log("Kamera offline Lutfen Bekleyin  Gecen Süre = "+i+"sn");
                 }
                 camurl = 'http://'+ ip + ':8080';
 		await page.goto(camurl, {"waitUntil": "networkidle2"});
 		console.log("logging into " + camurl);
-		
+		await page.waitForSelector(LOGIN_USERNAME_SELECTOR,'visible');
 		await page.click(LOGIN_USERNAME_SELECTOR);
 		await page.keyboard.type("admin");
 		await page.click(LOGIN_PASSWORD_SELECTOR);

@@ -1,49 +1,108 @@
+<!DOCTYPE html>
 <html>
-  <head>
-    <title></title>
-    <meta content="">
-    <style></style>
-  </head>
-  <body>
-    <h1>Ekinoks Test Sistemi</h1>
-        <p>Lütfen yapmak istediğiniz testlerin bulunduğu dökümanı seçiniz</p>
-        <form action="">
-            <input type="checkbox" id="doc1" onclick="myFunction()">TEY-1_ver02.xlsx<br>
-            <input type="checkbox" id="doc2" onclick="myFunction1()">TEY-2_ver06.xlsx<br>
+<title>Bilkon kamera test sistemi</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<style>
+html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
+
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 60%;
+}
+
+</style>
+
+<body>
+
+<!-- Navbar -->
+<div class="w3-top">
+  <div class="w3-bar w3-theme w3-top w3-left-align w3-large">
+    <a class="w3-bar-item w3-button w3-right w3-hide-large w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)">
+        <ul style="list-style: none">
+            <li><a id="about_id" onclick="select('about_id')" href="#About" class="w3-bar-item w3-button w3-hide-small w3-hover-white">About</a></li>
+            <li><a id="tests_id" onclick="select('tests_id')" href="#Tests" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Tests</a></li>
+        </ul>
+    </a>
+    
+  </div>
+</div>
+
+<script>
+    function select(id){
+        var main_page= document.getElementById("main_page");
+        var about_tab= document.getElementById("about_tab");
+        var testno_block = document.getElementById("testno_block");
+        if(id == 'about_id'){ about_tab.style.display= "block"; main_page.style.display= "none"; testno_block.style.display= "none"; } 
+        else if(id == 'tests_id'){about_tab.style.display="none"; main_page.style.display="block"; testno_block.style.display= "block"; }
+    }
+</script>
+<div class="w3-main" style="margin-left:80px ; margin-top:80px" id="main_page">
+<h1 class="w3-text-teal">Ekinoks Test Sistemi</h1>
+    <p>Lütfen yapmak istediğiniz testlerin bulunduğu dökümanı seçiniz</p>
+    <form action="">
+        <input type="checkbox" id="doc1" onclick="myFunction()">TEY-1_ver02.xlsx<br>
+        <input type="checkbox" id="doc2" onclick="myFunction1()">TEY-2_ver06.xlsx<br>
             
-            <script>
-                function myFunction() {
-                var checkBox1 = document.getElementById("doc1");
-                var checkBox2 = document.getElementById("doc2");
-                var form1 = document.getElementById("test_start1");
-                if (checkBox1.checked == true){
-                    form1.style.display = "block";
-                    checkBox2.checked = false;
-                    myFunction1();
-                } else {
-                form1.style.display = "none";
-                }
+        <script>
+            function myFunction() {
+            var checkBox1 = document.getElementById("doc1");
+            var checkBox2 = document.getElementById("doc2");
+            var form1 = document.getElementById("test_start1");
+            if (checkBox1.checked == true){
+                form1.style.display = "block";
+                checkBox2.checked = false;
+                myFunction1();
+            } else {
+            form1.style.display = "none";
             }
-            </script>
-            <script>
-                function myFunction1() {
-                var checkBox1 = document.getElementById("doc1");
-                var checkBox2 = document.getElementById("doc2");
-                var form2 = document.getElementById("test_start2");
-                if (checkBox2.checked == true){
-                    form2.style.display = "block";
-                    checkBox1.checked = false;
-                    myFunction();
-                    
-                } else {
-                form2.style.display = "none";
-                }
+        }
+        </script>
+        <script>
+            function myFunction1() {
+            var checkBox1 = document.getElementById("doc1");
+            var checkBox2 = document.getElementById("doc2");
+            var form2 = document.getElementById("test_start2");
+            if (checkBox2.checked == true){
+                form2.style.display = "block";
+                checkBox1.checked = false;
+                myFunction();
+                
+            } else {
+            form2.style.display = "none";
             }
-            </script>
-        
-        </form>
-        
-        <form action="" id="test_start1" style="display:none">
+        }
+        </script>
+    </form>
+</div>
+<div class="w3-main" style="margin-left:80px" id="testno_block">
+    <form action="" id="test_start1" style="display:none">
+        <p>Bu dökümandaki testler statik kameralar içindir. Yapmak istediğiniz testin numarasını girip test et butonuna basın</p>
             <div id="chatlog1">
                 <input type="text" id="message_text1">
                 <input type="button" onclick="sendMessage1()" value="TEST ET">
@@ -51,11 +110,31 @@
             </div>
         </form>
         <form action="" id="test_start2" style="display:none">
+        <p>Bu dökümandaki testler hareketli(dome) kameralar içindir. Yapmak istediğiniz testin numarasını girip test et butonuna basın</p>
             <div id="chatlog2">
                 <input type="text" id="message_text2">
                 <input type="button" onclick="sendMessage2()" value="TEST ET">
                 <script type="text/javascript" src="./websocket_connection.js"></script>
             </div>
         </form>
-  </body>
+        <div id="results1" class="w3-main" style="margin-left:80px"></div>
+</div>
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+    <!-- Modal content -->
+        <div class="modal-content">
+            <p id="sometext"></p>
+            <input id="yes"  type="button" style="" value="evet">
+            <input id="no" type="button" style="" value="hayır">
+        </div>
+
+    </div>
+    
+<form id="about_tab" style="display:none ; margin-left:80px ;margin-top:80px">
+    <h4 class="w3-text-teal" style="margin-left:450px" >Bilgilendirme</h4>
+    <p>Bu sistem üzerinden yapılacak olan testler TEY-2_ver06.xlsx ve TEY-1_ver02.xlsx dökümanlarında bulunan testlerdir. TEY-1_ver02.xlsx dökümanındaki testler statik kameralar için TEY-2_ver06.xlsx dökümanındaki testler ise dome kameralar için uygulanacaktır. Testlerin amacı kameraların işlevlerini uygun biçimde yerine getirip getirmediğini test etmektir. Bu testlerin uygulanması otomatik test yazılımı aracılığıyla sağlanacaktır.</p>
+</form>
+
+</body>
 </html>
