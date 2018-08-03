@@ -63,7 +63,7 @@ let testIt = async () => {
 
 
   
-   ip = '10.5.177.52'//await question.ask("Test edilecek kameranın ip adresini girin");
+   ip = '10.5.176.249'//await question.ask("Test edilecek kameranın ip adresini girin");
    url = 'http://'+ ip + ':8080';
    dom_url = 'http://10.5.177.164:8080';
    dom_ip = '10.5.177.164';

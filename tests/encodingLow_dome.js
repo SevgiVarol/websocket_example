@@ -1,5 +1,5 @@
 (function() {
-
+var sevgi_api= require('./sevgi_api'); 
         const IFRAME_SELECTOR = 'body > div > div:nth-child(3) > div.col-md-8 > div.view-container > div > form > div:nth-child(1) > div > div > input';
 	const APPLY_BUTTON_SELECTOR = 'body > div > div:nth-child(3) > div.col-md-8 > div.view-container > div > form > div:nth-child(9) > div > div > button';
 	const POPUP_SELECTOR = 'body > div.bootbox.modal.fade.bootbox-alert.in > div > div > div.modal-footer > button';
@@ -64,12 +64,12 @@
                         const inpot1 = await input1.$eval('.form-control' , node => node.value);
                         if(inpot1 == 12)
                         {
-                            console.log("Okunan Intraframe değeri "+inpot1+"        TRUE");
+                            sevgi_api.console_log("Okunan Intraframe değeri "+inpot1+"        TRUE");
                             return ['12',inpot1,1];
                         }
                         else
                         {
-                            console.log("Okunan Intraframe değeri "+inpot1+"        FALSE");
+                            sevgi_api.console_log("Okunan Intraframe değeri "+inpot1+"        FALSE");
                             return ['12',inpot1,0];
                         }
             
@@ -86,12 +86,12 @@
  
                         if(inpot2 == 2)
                         {
-                            console.log("Okunan Bit kontrol metodu "+text+"       TRUE");
+                            sevgi_api.console_log("Okunan Bit kontrol metodu "+text+"       TRUE");
                             return ['VBR',text,1];
                         }
                         else
                         {
-                            console.log("Okunan Bit kontrol metodu "+text+"       FALSE");
+                            sevgi_api.console_log("Okunan Bit kontrol metodu "+text+"       FALSE");
                             return ['VBR',text,0];
                             
                         }
@@ -103,12 +103,12 @@
                         const inpot4 = await input4.$eval('.form-control' , node => node.value);
                         if(inpot4 == 0.5)
                         {
-                            console.log("Okunan Bit Rate "+inpot4+"          TRUE");
+                            sevgi_api.console_log("Okunan Bit Rate "+inpot4+"          TRUE");
                             return [0.5,inpot4,1];
                         }
                         else
                         {
-                            console.log("Okunan Bit Rate "+inpot4+"        FALSE");
+                            sevgi_api.console_log("Okunan Bit Rate "+inpot4+"        FALSE");
                             return [0.5,inpot4,0];
                             
                         }
@@ -129,12 +129,12 @@
 
                         if(inpot3 == 2)
                         {
-                            console.log("Okunan Kodlayıcı kalitesi "+text+"  TRUE");
+                            sevgi_api.console_log("Okunan Kodlayıcı kalitesi "+text+"  TRUE");
                             return ['ORTA',text,1];
                         }
                         else
                         {
-                            console.log("Okunan Kodlayıcı kalitesi "+text+"  FALSE");
+                            sevgi_api.console_log("Okunan Kodlayıcı kalitesi "+text+"  FALSE");
                             return ['ORTA',text,0];
                             
                         }

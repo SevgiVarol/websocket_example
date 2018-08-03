@@ -1,3 +1,4 @@
+var sevgi_api= require('./sevgi_api'); 
 const fs = require('fs');
 const child_process = require("child_process");
 
@@ -6,20 +7,20 @@ const child_process = require("child_process");
         var command= "vlc rtsp://"+url+"/"+stream+" --run-time 15 vlc://quit";
         if(set==1){
         console.log("RTSP doğrulaması için User Name:admin ve Password:admin girip OK butonuna basınız.. ");
-        console.log("");}
+        sevgi_api.console_log("");}
         child_process.execSync(command);
-        console.log("");
-        console.log("GÖRÜNTÜ AÇILDI");
+        sevgi_api.console_log("");
+        sevgi_api.console_log("GÖRÜNTÜ AÇILDI");
         
     }
        
     module.exports.record =  function(ip,stream,test_num)
         {
             try {
-            console.log(ip);
+            sevgi_api.console_log(ip);
             var command = "ffmpeg -hide_banner -v quiet -y -i rtsp://admin:admin@"+ip+"/"+stream+" -acodec copy -t 00:00:05 -vcodec copy "+test_num+".mp4";
             child_process.execSync(command);
-            } catch(err){console.log("Bağlantı Hatası"); return 0; }
+            } catch(err){sevgi_api.console_log("Bağlantı Hatası"); return 0; }
                 
             }
         

@@ -5,7 +5,8 @@
     const ALARM_POPUP_BUTTON='body > div.bootbox.modal.fade.bootbox-alert.in > div > div > div.modal-footer > button';
     const PPP_GOTO_HOME_CHECKBOX_SELECTOR= 'body > div > div:nth-child(3) > div.col-md-8 > div.view-container > div > form > div:nth-child(6) > div > div > label > input';
    // const ACTIVE_ALARMS='body > div > div:nth-child(3) > div.col-md-8 > div.view-container > div > form > div:nth-child(1) > div > div > input';
-    
+        var sevgi_api= require('./sevgi_api');
+        
         module.exports.set_preset_id= async function(page,id){
         await page.click(ALARM_PRESET_ID);
             await page.waitFor(2000);
@@ -35,9 +36,9 @@
             const input = await page.$('body > div > div:nth-child(3) > div.col-md-8 > div.view-container > div > form > div:nth-child(8) > div > div');
             const inpot = await input.$eval('.ng-pristine' , node => node.checked);
             if(inpot=='1')
-            {  console.log("Checkbox seçili             TRUE"); return [inpot,1];}
+            {  sevgi_api.console_log("Checkbox seçili             TRUE"); return [inpot,1];}
             else
-            {console.log("Checkbox seçili değil       FALSE"); return [inpot,0];}
+            {sevgi_api.console_log("Checkbox seçili değil       FALSE"); return [inpot,0];}
         }
         module.exports.active_alarms_control= async function(page,set){
             await page.waitFor(2000);
@@ -45,12 +46,12 @@
             const inpot1 = await input1.$eval('.form-control' , node => node.value);
             if(inpot1 ==set)
                         {
-                            console.log("Aktif alarmlar:"+inpot1+"       TRUE");
+                            sevgi_api.console_log("Aktif alarmlar:"+inpot1+"       TRUE");
                             return [inpot1,1];
                         } 
             else
                         {
-                            console.log("Aktif alarmlar:"+inpot1+"       FALSE");
+                            sevgi_api.console_log("Aktif alarmlar:"+inpot1+"       FALSE");
                             return [inpot1,0];
                         }
             

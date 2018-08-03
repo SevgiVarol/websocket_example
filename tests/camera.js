@@ -1,5 +1,5 @@
   (function() {
-
+        var sevgi_api= require('./sevgi_api');
         const IR_FILTER_MODE = '#ircf_stat';
 	const IR_FILTER_TRANSITION = '#auto_ircf_stat';
 	const IR_FILTER_THRESHOLD = '#ircf_threshold';
@@ -70,12 +70,12 @@
             const inpot = await input.$eval('#ircf_stat' , node => node.selectedIndex);
             if(inpot == set)
               {
-                console.log("IR Cut Filter Modu.....DOĞRU");
+                sevgi_api.console_log("IR Cut Filter Modu.....DOĞRU");
                 return 1;
               }
             else
               {
-                 console.log("IR Cut Filter Modu.....YANLIŞ");
+                 sevgi_api.console_log("IR Cut Filter Modu.....YANLIŞ");
                  return 0;
               }
              
@@ -88,12 +88,12 @@
             const inpot = await input.$eval('#auto_ircf_stat' , node => node.selectedIndex);
             if(inpot == set)
               {
-                console.log("IR-Cut Filtre Geçişi.....DOĞRU");
+                sevgi_api.console_log("IR-Cut Filtre Geçişi.....DOĞRU");
                 return 1;
               }
             else
               {
-                console.log("IR-Cut Filtre Geçişi.....YANLIŞ");
+                sevgi_api.console_log("IR-Cut Filtre Geçişi.....YANLIŞ");
                 return 0;
               }
         

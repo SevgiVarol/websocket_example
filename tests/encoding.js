@@ -12,7 +12,7 @@
         const CODDING_QUAL_UP = 'body > div > div:nth-child(3) > div.col-md-8 > div.view-container > div > form > div:nth-child(3) > div > div';
         const BIT_RATE_UP = 'body > div > div:nth-child(3) > div.col-md-8 > div.view-container > div > form > div:nth-child(6) > div > div';
         const CALC_METHOD_UP = 'body > div > div:nth-child(3) > div.col-md-8 > div.view-container > div > form > div:nth-child(4) > div > div';
-        
+        var sevgi_api= require('./sevgi_api');
         
 	module.exports.set_intraframe = async function(page, iFrameInterval) {
 		await page.click(IFRAME_SELECTOR);
@@ -68,12 +68,12 @@
                         const inpot1 = await input1.$eval('.form-control' , node => node.value);
                         if(inpot1 == 12)
                         {
-                            console.log("Intraframe Aralığı Değeri.....DOĞRU");
+                            sevgi_api.console_log("Intraframe Aralığı Değeri.....DOĞRU");
                             return 1;
                         }
                         else
                         {
-                            console.log("Intraframe Aralığı Değeri.....YANLIŞ");
+                            sevgi_api.console_log("Intraframe Aralığı Değeri.....YANLIŞ");
                             return 0;
                         }
             
@@ -85,12 +85,12 @@
                         const inpot2 = await input2.$eval('.form-control' , node => node.selectedIndex);
                         if(inpot2 == 2)
                         {
-                            console.log("Bitrate Kontrol Metodu.....DOĞRU");
+                            sevgi_api.console_log("Bitrate Kontrol Metodu.....DOĞRU");
                             return 1;
                         }
                         else
                         {
-                            console.log("Bitrate Kontrol Metodu.....YANLIŞ");
+                            sevgi_api.console_log("Bitrate Kontrol Metodu.....YANLIŞ");
                             return 0;
                             
                         }
@@ -104,12 +104,12 @@
                         const inpot3 = await input3.$eval('.form-control' , node => node.selectedIndex);
                         if(inpot3 == 3)
                         {
-                            console.log("Kodlayıcı Kalitesi.....DOĞRU");
+                            sevgi_api.console_log("Kodlayıcı Kalitesi.....DOĞRU");
                             return 1;
                         }
                         else
                         {
-                            console.log("Kodlayıcı Kalitesi.....YANLIŞ");
+                            sevgi_api.console_log("Kodlayıcı Kalitesi.....YANLIŞ");
                             return 0;
                         }
           
@@ -120,12 +120,12 @@
                         const inpot4 = await input4.$eval('.form-control' , node => node.value);
                         if(inpot4 == 3.338)
                         {
-                            console.log("Bitrate Değeri.....DOĞRU");
+                            sevgi_api.console_log("Bitrate Değeri.....DOĞRU");
                             return 1;
                         }
                         else
                         {
-                            console.log("Bitrate Değeri.....YANLIŞ");
+                            sevgi_api.console_log("Bitrate Değeri.....YANLIŞ");
                             return 0;
                         }
 		
@@ -135,12 +135,12 @@
                         const inpot5 = await input5.$eval('.form-control' , node => node.selectedIndex);
                         if(inpot5 == 1)
                         {
-                            console.log("Bitrate Hesaplama Metodu.....DOĞRU");
+                            sevgi_api.console_log("Bitrate Hesaplama Metodu.....DOĞRU");
                             return 1;
                         }
                         else
                         {
-                            console.log("Bitrate Hesaplama Metodu.....YANLIŞ");
+                            sevgi_api.console_log("Bitrate Hesaplama Metodu.....YANLIŞ");
                             return 0;
                         }
 		

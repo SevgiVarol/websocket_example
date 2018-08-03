@@ -1,4 +1,5 @@
 (function() {
+    var sevgi_api= require('./sevgi_api'); 
     const TRAFFIC_FORMING_SELECTOR='body > div > div:nth-child(3) > div.col-md-8 > div.view-container > div > form > div:nth-child(8) > div > div > label';    
     const TRAFFIC_PRECISION_SELECTOR='body > div > div:nth-child(3) > div.col-md-8 > div.view-container > div > form > div:nth-child(10) > div > div > select';
     const TARFFIC_FREQUENCY_SELECTOR='body > div > div:nth-child(3) > div.col-md-8 > div.view-container > div > form > div:nth-child(12) > div > div > input';
@@ -102,12 +103,12 @@
                         const inpot1 = await input1.$eval('.form-control' , node => node.value);
                         if(inpot1 == 12)
                         {
-                            console.log("Okunan Intraframe değeri "+inpot1+"        TRUE");
+                            sevgi_api.console_log("Okunan Intraframe değeri "+inpot1+"        TRUE");
                             return ['12',inpot1,1];
                         }
                         else
                         {
-                            console.log("Okunan Intraframe değeri "+inpot1+"        FALSE");
+                            sevgi_api.console_log("Okunan Intraframe değeri "+inpot1+"        FALSE");
                             return ['12',inpot1,0];
                         }
             
@@ -124,12 +125,12 @@
  
                         if(inpot2 == 2)
                         {
-                            console.log("Okunan Bit kontrol metodu "+text+"       TRUE");
+                            sevgi_api.console_log("Okunan Bit kontrol metodu "+text+"       TRUE");
                             return ['VBR',text,1];
                         }
                         else
                         {
-                            console.log("Okunan Bit kontrol metodu "+text+"       FALSE");
+                            sevgi_api.console_log("Okunan Bit kontrol metodu "+text+"       FALSE");
                             return ['VBR',text,0];
                             
                         }
@@ -149,12 +150,12 @@
 
                         if(inpot3 == 2)
                         {
-                            console.log("Okunan Kodlayıcı kalitesi "+text+"  TRUE");
+                            sevgi_api.console_log("Okunan Kodlayıcı kalitesi "+text+"  TRUE");
                             return ['ORTA',text,1];
                         }
                         else
                         {
-                            console.log("Okunan Kodlayıcı kalitesi "+text+"  FALSE");
+                            sevgi_api.console_log("Okunan Kodlayıcı kalitesi "+text+"  FALSE");
                             return ['ORTA',text,0];
                             
                         }
@@ -172,7 +173,7 @@
                        
                         if(inpot5 == 2)
                         {
-                            console.log("Bitrate Hesaplama Metodu "+text+" TRUE");
+                            sevgi_api.console_log("Bitrate Hesaplama Metodu "+text+" TRUE");
                              await page.waitFor(2000);
                             const input6 = await page.$('body > div > div:nth-child(3) > div.col-md-8 > div.view-container > div > form > div:nth-child(5) > div > div');
                             const inpot6 = await input6.$eval('.form-control' , node => node.selectedIndex);
@@ -184,19 +185,19 @@
                         else if(inpot6 == 4) text2 = '100';
                             if(inpot6 == 3)
                             {
-                                console.log("Okunan Video kalite yüzdesi "+text2+" TRUE");
+                                sevgi_api.console_log("Okunan Video kalite yüzdesi "+text2+" TRUE");
                                 return ['Görüntü kalitesine göre',text,1,'75',text2,1];
                             }
                             else
                             {
-                            console.log("Okunan Video kalite yüzdesi "+text2+" FALSE");
+                            sevgi_api.console_log("Okunan Video kalite yüzdesi "+text2+" FALSE");
                             return ['Görüntü kalitesine göre',text,1,'75',text2,0];
                             }
                             
                         }
                         else
                         {
-                            console.log("Okunan Bitrate Hesaplama Metodu "+text+" FALSE");
+                            sevgi_api.console_log("Okunan Bitrate Hesaplama Metodu "+text+" FALSE");
                              await page.waitFor(2000);
                             return ['Görüntü kalitesine göre',text,0,'75','undefined',0];
                             
@@ -210,12 +211,12 @@
                         const inpot4 = await input4.$eval('.form-control' , node => node.value);
                         if(inpot4 == 3.46)
                         {
-                            console.log("Okunan Bit Rate "+inpot4+"          TRUE");
+                            sevgi_api.console_log("Okunan Bit Rate "+inpot4+"          TRUE");
                             return [3.46,inpot4,1];
                         }
                         else
                         {
-                            console.log("Okunan Bit Rate "+inpot4+"        FALSE");
+                            sevgi_api.console_log("Okunan Bit Rate "+inpot4+"        FALSE");
                             return [3.46,inpot4,0];
                             
                         }

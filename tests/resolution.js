@@ -1,3 +1,4 @@
+  var sevgi_api= require('./sevgi_api');
   (function() {
         ///FOR SETS
         const PROFILE_SELECTOR = 'body > div > div:nth-child(3) > div.col-md-8 > div.view-container > div > form > div:nth-child(1) > div > div > select';
@@ -68,12 +69,12 @@
                         
                         if(inpot == set)
                         {
-                            console.log("Profile      Value TRUE  --> "+text[inpot]);
+                            sevgi_api.console_log("Profile      Value TRUE  --> "+text[inpot]);
                             return [text[set],text[inpot],1];
                         }
                         else
                         {
-                            console.log("Profile      Value FALSE --> "+text[inpot]);
+                            sevgi_api.console_log("Profile      Value FALSE --> "+text[inpot]);
                             return [text[set],text[inpot],0];
                         }
             
@@ -88,12 +89,12 @@
                      
                         if(inpot == set)
                         {
-                            console.log("Resolution 1 Value TRUE  --> "+text[inpot]);
+                            sevgi_api.console_log("Resolution 1 Value TRUE  --> "+text[inpot]);
                             return [text[set],text[inpot],1];
                         }
                         else
                         {
-                            console.log("Resolution 1 Value FALSE --> "+text[inpot]);
+                            sevgi_api.console_log("Resolution 1 Value FALSE --> "+text[inpot]);
                             return [text[set],text[inpot],0];
                         }
           
@@ -107,12 +108,12 @@
                         
                         if(inpot == set)
                         {
-                            console.log("FPS1         Value TRUE  --> "+text[inpot]);
+                            sevgi_api.console_log("FPS1         Value TRUE  --> "+text[inpot]);
                             return [text[set],text[inpot],1];
                         }
                         else
                         {
-                            console.log("FPS1         Value FALSE --> "+text[inpot]);
+                            sevgi_api.console_log("FPS1         Value FALSE --> "+text[inpot]);
                             return [text[set],text[inpot],0];
                         }
 	}
@@ -125,12 +126,12 @@
                         
    if(inpot == set)
                         {
-                            console.log("Resolution 2 Value TRUE  --> "+text[inpot]);
+                            sevgi_api.console_log("Resolution 2 Value TRUE  --> "+text[inpot]);
                             return [text[set],text[inpot],1];
                         }
                         else
                         {
-                            console.log("Resolution 2 Value FALSE --> "+text[inpot]);
+                            sevgi_api.console_log("Resolution 2 Value FALSE --> "+text[inpot]);
                             return [text[set],text[inpot],0];
                         }
           
@@ -144,12 +145,12 @@
                         
                         if(inpot == set)
                         {
-                            console.log("FPS2         Value TRUE  --> "+text[inpot]);
+                            sevgi_api.console_log("FPS2         Value TRUE  --> "+text[inpot]);
                             return [text[set],text[inpot],1];
                         } 
                         else
                         {
-                            console.log("FPS2         Value FALSE --> "+text[inpot]);
+                            sevgi_api.console_log("FPS2         Value FALSE --> "+text[inpot]);
                             return [text[set],text[inpot],0];
                         }
 	}

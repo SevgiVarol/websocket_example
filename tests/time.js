@@ -1,3 +1,4 @@
+  var sevgi_api= require('./sevgi_api');
   (function() {
 
         const NTP_SERVER1_SELECTOR_UP = 'body > div > div:nth-child(3) > div.col-md-8 > div.view-container > div > form > div:nth-child(3) > div > div';
@@ -7,16 +8,16 @@
         {
                         const input = await page.$(NTP_SERVER1_SELECTOR_UP);
                         const inpot = await input.$eval('.form-control' , node => node.value);
-                        console.log("NTP Server1 IP");
-                        console.log(inpot);
-                        console.log("");
+                        sevgi_api.console_log("NTP Server1 IP");
+                        sevgi_api.console_log(inpot);
+                        sevgi_api.console_log("");
                         if(inpot == set)
                         {
-                            console.log("NTP Server1 IP is TRUE");
+                            sevgi_api.console_log("NTP Server1 IP is TRUE");
                         }
                         else
                         {
-                            console.log("NTP Server1 IP is FALSE");
+                            sevgi_api.console_log("NTP Server1 IP is FALSE");
                         }
                         
                         return inpot;

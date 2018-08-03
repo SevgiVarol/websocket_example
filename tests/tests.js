@@ -48,9 +48,9 @@ async function to_float(count)
     return result_float;
 }
 async function test_ffmpeg_res(width_test,height_test,stream,test_num,document_no)
-{   console.log("Kamera kaydı alınıyor..")
+{   sevgi_api.console_log("Kamera kaydı alınıyor..")
     await capture_test.record(ip,stream,test_num);
-    console.log("Video özellikleri için json dosyası oluşturuluyor..");
+    sevgi_api.console_log("Video özellikleri için json dosyası oluşturuluyor..");
     await capture_test.create_json(ip,stream,test_num);
     coded_width = await capture_test.read_specs("coded_width",test_num);
     coded_height = await capture_test.read_specs("coded_height",test_num);
@@ -58,15 +58,15 @@ async function test_ffmpeg_res(width_test,height_test,stream,test_num,document_n
     var command = 'vlc rtsp://admin:admin@'+ip+'/stream1';
     proc =await require('child_process').exec(command);
     select = await sevgi_api.question_ask("Görüntü Geldi mi ? e/h");
-    console.log("İstenen çözünürlük = "+width_test+"x"+height_test);
-    console.log("Gerçekleşen çözünürlük = "+coded_width+"x"+coded_height);
+    sevgi_api.console_log("İstenen çözünürlük = "+width_test+"x"+height_test);
+    sevgi_api.console_log("Gerçekleşen çözünürlük = "+coded_width+"x"+coded_height);
     if (coded_width == width_test && coded_height == height_test)
     {
-        console.log("Çözünürlükler Eşit");
+        sevgi_api.console_log("Çözünürlükler Eşit");
         if(select=='e'||select=='E') await result.write(test_num," BAŞARILI    Görüntü geldi , Çözünürlükler eşit    İstenen Çözünürlük="+width_test+"x"+height_test+"  Gerçekleşen çözünürlük ="+coded_width+"x"+coded_height,document_no);
         else await result.write(test_num," BAŞARISIZ    Görüntü gelmedi ",document_no);
     }
-    else {console.log("Çözünürlükler Farklı");
+    else {sevgi_api.console_log("Çözünürlükler Farklı");
         if(select=='e'||select=='E') await result.write(test_num," BAŞARISIZ    Görüntü geldi , Çözünürlükler eşit değil    İstenen Çözünürlük="+width_test+"x"+height_test+"  Gerçekleşen çözünürlük ="+coded_width+"x"+coded_height,document_no);
         else await result.write(test_num," BAŞARISIZ    Görüntü gelmedi ",document_no);
     }
@@ -76,9 +76,9 @@ async function test_ffmpeg_res(width_test,height_test,stream,test_num,document_n
 async function test_ffmpeg_res_fps(stream,test_num,document_no)
 {
     var temp_val = 1;
-    console.log("Görüntü kaydediliyor..")
+    sevgi_api.console_log("Görüntü kaydediliyor..")
     await capture_test.record(ip,stream,test_num);
-    console.log("Kodlayıcı/Çözücü Bilgileri alınıyor ..")
+    sevgi_api.console_log("Kodlayıcı/Çözücü Bilgileri alınıyor ..")
     await capture_test.create_json(ip,stream,test_num);
     width = await capture_test.read_specs("width",test_num); //istenen yükseklik
     height = await capture_test.read_specs("height",test_num); //istenen genişlik
@@ -88,26 +88,26 @@ async function test_ffmpeg_res_fps(stream,test_num,document_no)
     r_frame_rate =await to_float(r_frame_rate);
     avg_frame_rate = await capture_test.read_specs("avg_frame_rate",test_num);//gerçekleşen kare hızı
     avg_frame_rate =await to_float(avg_frame_rate);
-    console.log("");
-    console.log("İstenen çözünürlük = "+width+"x"+height);
-    console.log("Gerçekleşen çözünürlük = "+coded_width+"x"+coded_height);
+    sevgi_api.console_log("");
+    sevgi_api.console_log("İstenen çözünürlük = "+width+"x"+height);
+    sevgi_api.console_log("Gerçekleşen çözünürlük = "+coded_width+"x"+coded_height);
     if (coded_width == width && coded_height == height)
     {
         temp_val = temp_val &&1;
-        console.log("Çözünürlükler Eşit");
+        sevgi_api.console_log("Çözünürlükler Eşit");
     }
-    else {console.log("Çözünürlükler Farklı");
+    else {sevgi_api.console_log("Çözünürlükler Farklı");
         temp_val = temp_val &&0;
     }
-    console.log("");
-    console.log("İstenen kare hızı = "+r_frame_rate);
-    console.log("Gerçekleşen kare hızı = "+avg_frame_rate);
+    sevgi_api.console_log("");
+    sevgi_api.console_log("İstenen kare hızı = "+r_frame_rate);
+    sevgi_api.console_log("Gerçekleşen kare hızı = "+avg_frame_rate);
     if (avg_frame_rate == r_frame_rate )
     {
         temp_val = temp_val &&1;
-        console.log("Kare Hızı Eşit");
+        sevgi_api.console_log("Kare Hızı Eşit");
     }
-    else {console.log("Kare Hızı Farklı");
+    else {sevgi_api.console_log("Kare Hızı Farklı");
         temp_val = temp_val &&0;
     }
     if (temp_val) await result.write(test_num," BAŞARILI   İstenen kare hızı = "+r_frame_rate+" Gerçekleşen kare hızı = "+avg_frame_rate+" İstenen çözünürlük = "+width+"x"+height+" Gerçekleşen çözünürlük = "+coded_width+"x"+coded_height,document_no);
@@ -120,23 +120,23 @@ async function test_set_res_fps(page,res,i)
         var resolution2 = ["640 x 368", "480 x 272", "320 x 180", "640 x 368"];
         var fps2 = ["5", "15", "20", "12.5"];
     if(res == 1)
-    {       console.log("Test "+(i+53)+ " Başladı.");
+    {       sevgi_api.console_log("Test "+(i+53)+ " Başladı.");
             await nav.toResolution(page,ip);
             await resolution.set_resolution1(page, resolution1[i]);  
             await resolution.set_fps1(page, fps1[i]);
             await resolution.apply(page);
             await camera_restart(page,ip);
-            console.log((i+53) + ". Testin konfigürasyon ayarları yapıldı. Karşılaştırma yapılıyor...");
+            sevgi_api.console_log((i+53) + ". Testin konfigürasyon ayarları yapıldı. Karşılaştırma yapılıyor...");
     }
     else if (res == 2)
     {
-            console.log("Test "+(i+57)+ " Başladı.");
+            sevgi_api.console_log("Test "+(i+57)+ " Başladı.");
             await nav.toResolution(page,ip);
             await resolution.set_resolution2(page, resolution2[i]);    
             await resolution.set_fps2(page, fps2[i]);
             await resolution.apply(page);
             await camera_restart(page,ip);
-            console.log((i+57) + ". Testin konfigürasyon ayarları yapıldı. Karşılaştırma yapılıyor...");
+            sevgi_api.console_log((i+57) + ". Testin konfigürasyon ayarları yapıldı. Karşılaştırma yapılıyor...");
         
     }
     
@@ -147,14 +147,14 @@ async function test_set_res_fps_DOM(page,i,res,ip)
     var fps1 = ["15", "10", "20", "12.5"];
     var resolution2 = ["640 x 368", "480 x 272", "320 x 180", "640 x 368"];
     var fps2 = ["5", "15", "20", "12.5"];
-    console.log("Ayarlar set ediliyor..")
+    sevgi_api.console_log("Ayarlar set ediliyor..")
     if(res == 1)
     {
         await nav.toResolution(page,ip);
         await resolution.set_resolution1(page, resolution1[i]);
         await resolution.set_fps1(page, fps1[i]);
         await resolution.apply(page);
-        console.log("Ayarlar set edildi. Kamera yeniden başlatılıyor." );
+        sevgi_api.console_log("Ayarlar set edildi. Kamera yeniden başlatılıyor." );
     }
     else if (res == 2)
     {
@@ -162,7 +162,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
         await resolution.set_resolution2(page, resolution2[i]);
         await resolution.set_fps2(page, fps2[i]);
         await resolution.apply(page);
-        console.log("Ayarlar set edildi. Kamera yeniden başlatılıyor." );
+        sevgi_api.console_log("Ayarlar set edildi. Kamera yeniden başlatılıyor." );
     }
     await camera_restart(page,ip);
 }
@@ -172,12 +172,13 @@ async function test_set_res_fps_DOM(page,i,res,ip)
             switch(test_number.toString()){
                 
                 case "14" : { 
-                    try{ await test_ffmpeg_res("1920","1080","stream1m","14",1); }catch (err){ console.log("HATA");} break;}
-                case "15" : {await test_ffmpeg_res("640","368","stream2m","15",1); break;}
+                    try{ await test_ffmpeg_res("1920","1080","stream1m","14",1); }catch (err){ sevgi_api.console_log("HATA.. Kameranın görüntüsü açılamadı");} break;}
+                case "15" : {
+                    try { await test_ffmpeg_res("640","368","stream2m","15",1); }catch (err){ sevgi_api.console_log("HATA.. Kameranın görüntüsü açılamadı");} break;}
                 case "16" : {await test_ffmpeg_res("1920","1080","stream1","16",1); break;}
                 case "17" : {await test_ffmpeg_res("640","368","stream2","17",1); break;}
                 case "21" : {
-                    console.log("Test 21 Başladı.");
+                    sevgi_api.console_log("Test 21 Başladı.");
                     for(var i = 1; i<5; i++){                        
                         await nav.toVersion(page, ip);
                         await nav.toLive(page,ip);
@@ -224,12 +225,12 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                       }
                         await mask.mask_refresh(page);
                     }         
-                    console.log("4 adet maske oluşturuldu ve konumlandırıldı.");
+                    sevgi_api.console_log("4 adet maske oluşturuldu ve konumlandırıldı.");
                     await result.write("21", "4 adet maske oluşturuldu ve konumlandırıldı.",1);
                     break;
                 }
                 case "22": {console.log(" ");
-                        console.log("Test 22 Başladı.");
+                        sevgi_api.console_log("Test 22 Başladı.");
                         await nav.toEncodingHigh(page,ip);
                         await encoding.set_intraframe(page, "15");
                         await encoding.set_bit_con(page, "cbr");
@@ -238,13 +239,13 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                         await encoding.set_calc_method(page, "tan");
                         await encoding.apply(page);
                         //await camera_restart(page,ip);
-                        console.log("Konfigürasyon ayarları yapıldı.");
+                        sevgi_api.console_log("Konfigürasyon ayarları yapıldı.");
                         await result.write("22", "Konfigürasyon ayarları yapıldı.",1);
                     break;
                 }
                 case "23": {// Kontrol 23
                         console.log(" ");
-                        console.log("Test 23 Başladı.");
+                        sevgi_api.console_log("Test 23 Başladı.");
                         await nav.toEncodingLow(page,ip);
                         await encodingLow.set_intraframe(page, "15");
 			await encodingLow.set_bit_con(page, "cbr");
@@ -252,37 +253,37 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                         await encodingLow.set_bit_rate(page, "0.4");
                         await encodingLow.apply(page);
                         //await camera_restart(page,ip);
-                        console.log("Konfigürasyon ayarları yapıldı.");
+                        sevgi_api.console_log("Konfigürasyon ayarları yapıldı.");
                         await result.write("23", "Konfigürasyon ayarları yapıldı.",1);
                     break;
                 }
                 case "24": {//Kontrol 24
                         console.log(" ");
-                        console.log("Test 24 Başladı.");
+                        sevgi_api.console_log("Test 24 Başladı.");
                         await nav.toResolution(page,ip);
                         await resolution.set_profile(page,"1080");
                         await resolution.set_resolution1(page,"1920 x 1080 (max:30fps");
                         await resolution.set_fps1(page,"10");
                         await resolution.apply(page);
                         //await camera_restart(page,ip);
-                        console.log("Konfigürasyon ayarları yapıldı.");
+                        sevgi_api.console_log("Konfigürasyon ayarları yapıldı.");
                         await result.write("24", "Konfigürasyon ayarları yapıldı.",1);
                     break;
                 }
                 case "25": {//Kontrol 25
                         console.log(" ");
-                        console.log("Test 25 Başladı.");
+                        sevgi_api.console_log("Test 25 Başladı.");
                         await nav.toCamera(page,ip);
                         await camera.set_ir_filter_mode(page,"gece");
                         await camera.set_ir_filter_transition(page,"Otomatik");
                         await camera.ir_filter_apply(page);
-                        console.log("Konfigürasyon ayarları yapıldı.");
+                        sevgi_api.console_log("Konfigürasyon ayarları yapıldı.");
                         await result.write("25", "Konfigürasyon ayarları yapıldı.",1);
                     break;
                 }
                 case "28": {// TEST 28
                       console.log(" ");
-                      console.log("Test 28 Başladı.");
+                      sevgi_api.console_log("Test 28 Başladı.");
                       await nav.toEncodingHigh(page,ip);
                       await encoding.set_intraframe(page, "12");
                       await encoding.set_bit_con(page, "vbr");
@@ -290,8 +291,8 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                       await encoding.set_bit_rate(page, "3.338");
                       await encoding.set_calc_method(page, "tan");
                       await encoding.apply(page);
-                      console.log("Değerler Ayarlandı.");
-                      console.log("Yapılan Konfigürasyon Ayarları:");
+                      sevgi_api.console_log("Değerler Ayarlandı.");
+                      sevgi_api.console_log("Yapılan Konfigürasyon Ayarları:");
                       await nav.toEncodingHigh(page,ip); 
                       var initframe = await encoding.test_intraframe(page); 
                       var bitcon = await encoding.test_bit_con(page); 
@@ -300,26 +301,26 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                       var method = await encoding.test_calc_method(page);
                       if((initframe == 1) && (bitcon == 1) && (quality == 1) && (bitrate == 1) && (method == 1))
                         {
-                            console.log("Konfigürasyon Ayarları Doğru.");
+                            sevgi_api.console_log("Konfigürasyon Ayarları Doğru.");
                             await result.write("28", "Test Başarılı. Konfigürasyon Ayarları Doğru.",1);
                         }
                       else
                         {
-                            console.log("Konfigürasyon Ayarları Yanlış.");
+                            sevgi_api.console_log("Konfigürasyon Ayarları Yanlış.");
                             await result.write("28", "Test Başarısız. Konfigürasyon Ayarları Yanlış.",1);
                         }
                         break;
                 }
                 case "29": {// TEST 29
                       console.log(" ");
-                      console.log("Test 29 Başladı.");
+                      sevgi_api.console_log("Test 29 Başladı.");
                       /*await encodingLow.set_intraframe(page, "12");
                       await encodingLow.set_bit_con(page, "VBR");
                       await encodingLow.set_calc_method(page, "Tanımlı");
                       await encodingLow.set_bit_rate(page, "0,477");
                       await encodingLow.apply(page);
                       console.log("Değerler Ayarlandı.");*/
-                      console.log("Yapılan konfigürasyon ayarları:");
+                      sevgi_api.console_log("Yapılan konfigürasyon ayarları:");
                       await nav.toEncodingLow(page,ip);
                       var initframe = await encodingLow.test_intraframe(page);
                       var bitcon = await encodingLow.test_bit_con(page);
@@ -327,27 +328,28 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                       var quality = await encodingLow.test_codding_quality(page);
                       if((initframe == 1) && (bitcon == 1) && (quality == 1) && (bitrate == 1))
                         {
-                            console.log("Konfigürasyon Ayarları Doğru.");
+                            sevgi_api.console_log("Konfigürasyon Ayarları Doğru.");
                             await result.write("29", "Test Başarılı. Konfigürasyon Ayarları Doğru.",1);
                         }
                       else
                         {
-                            console.log("Konfigürasyon Ayarları Yanlış.");
+                            sevgi_api.console_log("Konfigürasyon Ayarları Yanlış.");
                             await result.write("29", "Test Başarısız. Konfigürasyon Ayarları Yanlış.",1);
                         }
                         break;
                 }
                 case "30": { // TEST 30
                       console.log(" ");  
-                      console.log("Test 30 Başladı.");
+                      sevgi_api.console_log("Test 30 Başladı.");
+                      await nav.toResolution(page,ip);
                       await resolution.set_profile(page, "1080");
                       await resolution.set_resolution1(page, "1920 x 1080 (Max:25fps)");
                       await resolution.set_resolution2(page, "640 x 368");
                       await resolution.set_fps1(page, "12.5");
                       await resolution.set_fps2(page, "12.5");
                       await resolution.apply(page);
-                      console.log("Değerler Ayarlandı.");
-                      console.log("Yapılan konfigürasyon ayarları:");
+                      sevgi_api.console_log("Değerler Ayarlandı.");
+                      sevgi_api.console_log("Yapılan konfigürasyon ayarları:");
                       await nav.toResolution(page,ip);
                       var profile = await resolution.test_profile(page);
                       var res1 = await resolution.test_resolution1(page);
@@ -356,105 +358,105 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                       var fps2 = await resolution.test_fps2(page);
                       if((profile == 1) && (res1 == 1) && (fps1 == 1) && (res2 == 1) && (fps2 == 1))
                         {
-                            console.log("Konfigürasyon Ayarları Doğru.");
+                            sevgi_api.console_log("Konfigürasyon Ayarları Doğru.");
                             await result.write("30", "Test Başarılı. Konfigürasyon Ayarları Doğru.",1);
                         }
                       else
                         {
-                            console.log("Konfigürasyon Ayarları Yanlış.");
+                            sevgi_api.console_log("Konfigürasyon Ayarları Yanlış.");
                             await result.write("30", "Test Başarısız. Konfigürasyon Ayarları Yanlış.",1);
                         }
                         break;
                 }
                 case "31": { //TEST 31
-                      console.log("Test 31 Başladı.");
-                      console.log("Vlc programı açıldıktan sonra 15 dakika görüntüyü izleyin ve görüntüde herhangi bir bozulma varmı kontrol edin. Sonrasında Vlc programını kapatın ve sonucu konsola yazın");
+                      sevgi_api.console_log("Test 31 Başladı.");
+                      await sevgi_api.log_modal("Vlc programı açıldıktan sonra 15 dakika görüntüyü izleyin ve görüntüde herhangi bir bozulma varmı kontrol edin. Sonrasında Vlc programını kapatın ve sonucu konsola yazın");
                       var command = 'vlc rtsp://'+ip+'/stream1m';
                       proc =await require('child_process').exec(command);
                       select1 = await sevgi_api.question_ask("Görüntüde istenmeyen bozukluklar var mı? e/h");
-                      await test_ffmpeg_res_fps("stream1m",31);
-                      console.log("Lütfen VLC programı üzerinden görüntünün çözünürlüğünün 1920*1080 olduğunu kontrol edin.");
+                      await test_ffmpeg_res_fps("stream1m",31,1);
+                      await sevgi_api.log_modal("Lütfen VLC programı üzerinden görüntünün çözünürlüğünün 1920*1080 olduğunu kontrol edin.");
                       select2 = await sevgi_api.question_ask("Görüntü istenen çözünürlükte mi ? e/h");
                       if ( (select1 == "h" || select1 == "H") && (select2 =="e"|| select2=="E"))
                       {
-                          console.log("Test Başarılı");
+                          sevgi_api.console_log("Test Başarılı");
                           await result.write("31", "Test Başarılı",1);  
                       }    
                       else
                       {
-                          console.log("Test Başarısız")
+                          sevgi_api.console_log("Test Başarısız")
                           await result.write("31", "Test Başarısız",1);
                       }    
                     break;
                     
                 }
                 case "32": { //TEST 32
-                    console.log("Test 32 Başladı.");
+                    sevgi_api.console_log("Test 32 Başladı.");
                       var command = 'vlc rtsp://'+ip+'/stream2m';
                       proc =await require('child_process').exec(command);
-                      console.log("Lütfen VLC programının açılmasını bekleyin.");
+                      await sevgi_api.log_modal("Lütfen VLC programının açılmasını bekleyin.");
                       await page.waitFor(5000);
                       select1 = await sevgi_api.question_ask("Görüntü Geldi mi ? e/h");
-                      console.log("Lütfen VLC programı üzerinden görüntünün çözünürlüğünün 640*368 olduğunu kontrol edin.");
+                      await sevgi_api.log_modal("Lütfen VLC programı üzerinden görüntünün çözünürlüğünün 640*368 olduğunu kontrol edin.");
                       select2 = await sevgi_api.question_ask("Görüntü istenen çözünürlükte mi ? e/h");
                       if ( (select1 == "e" || select1 == "E") && (select2 =="e"|| select2=="E"))
                       {
-                          console.log("Test Başarılı");
+                          sevgi_api.console_log("Test Başarılı");
                           await result.write("32", "Test Başarılı",1);  
                       }    
                       else
                       {
-                          console.log("Test Başarısız")
+                          sevgi_api.console_log("Test Başarısız")
                           await result.write("32", "Test Başarısız",1);
                       }
                       break;
                 }
                 case "33": { //TEST 33
-                    console.log("Test 33 Başladı.");
+                    sevgi_api.console_log("Test 33 Başladı.");
                       var command = 'vlc rtsp://'+ip+'/stream1';
                       proc =await require('child_process').exec(command);
-                      console.log("Lütfen VLC programının açılmasını bekleyin.");
+                      await sevgi_api.log_modal("Lütfen VLC programının açılmasını bekleyin.");
                       await page.waitFor(5000);
                       select1 = await sevgi_api.question_ask("Görüntü Geldi mi ? e/h");
-                      console.log("Lütfen VLC programı üzerinden görüntünün çözünürlüğünün 1920*1080 olduğunu kontrol edin.");
+                      await sevgi_api.log_modal("Lütfen VLC programı üzerinden görüntünün çözünürlüğünün 1920*1080 olduğunu kontrol edin.");
                       select2 = await sevgi_api.question_ask("Görüntü istenen çözünürlükte mi ? e/h");
                       if ( (select1 == "e" || select1 == "E") && (select2 =="e"|| select2=="E"))
                       {
-                          console.log("Test Başarılı");
+                          sevgi_api.console_log("Test Başarılı");
                           await result.write("33", "Test Başarılı",1);  
                       }    
                       else
                       {
-                          console.log("Test Başarısız")
+                          sevgi_api.console_log("Test Başarısız")
                           await result.write("33", "Test Başarısız",1);
                       }
                       break;
                 }
                 case "34": { //TEST 34
-                    console.log("Test 34 Başladı.");
+                    sevgi_api.console_log("Test 34 Başladı.");
                       var command = 'vlc rtsp://'+ip+'/stream2';
                       proc =await require('child_process').exec(command);
-                      console.log("Lütfen VLC programının açılmasını bekleyin.");
+                      await sevgi_api.log_modal("Lütfen VLC programının açılmasını bekleyin.");
                       await page.waitFor(5000);
                       select1 = await sevgi_api.question_ask("Görüntü Geldi mi ? e/h");
-                      console.log("Lütfen VLC programı üzerinden görüntünün çözünürlüğünün 640*368 olduğunu kontrol edin.");
+                      await sevgi_api.log_modal("Lütfen VLC programı üzerinden görüntünün çözünürlüğünün 640*368 olduğunu kontrol edin.");
                       select2 = await sevgi_api.question_ask("Görüntü istenen çözünürlükte mi ? e/h");
                       if ( (select1 == "e" || select1 == "E") && (select2 =="e"|| select2=="E"))
                       {
-                          console.log("Test Başarılı");
+                          sevgi_api.console_log("Test Başarılı");
                           await result.write("34", "Test Başarılı",1);  
                       }    
                       else
                       {
-                          console.log("Test Başarısız")
+                          sevgi_api.console_log("Test Başarısız")
                           await result.write("34", "Test Başarısız",1);
                       }
                       break;
                 }
                 case "35": { //TEST 35
-                      console.log("Test 35 Başladı.");
-                      console.log("Lütfen VLC üzerinden yayının gelmesini bekleyiniz.");
-                      console.log("Yayında sol üstte görülen üst yazının yeni yazılım yüklenmeden önceki ile aynı olduğu ve saatin güncel saati göstermeye devam ettiğini   gözlemleyiniz.");
+                      sevgi_api.console_log("Test 35 Başladı.");
+                      await sevgi_api.log_modal("Lütfen VLC üzerinden yayının gelmesini bekleyiniz.");
+                      await sevgi_api.log_modal("Yayında sol üstte görülen üst yazının yeni yazılım yüklenmeden önceki ile aynı olduğu ve saatin güncel saati göstermeye devam ettiğini   gözlemleyiniz.");
                       await page.waitFor(5000);
                       var command = 'vlc rtsp://'+ip+'/stream1';
                       proc =await require('child_process').exec(command);
@@ -463,30 +465,30 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                       select2 = await sevgi_api.question_ask("Üst yazı ve saat bilgisi güncel mi? e/h");
                       if ( (select1 == "e" || select1 == "E") && (select2 =="e"|| select2=="E"))
                       {
-                          console.log("Test Başarılı");
+                          sevgi_api.console_log("Test Başarılı");
                           await result.write("35", "Test Başarılı",1);  
                       }    
                       else
                       {
-                          console.log("Test Başarısız")
+                          sevgi_api.console_log("Test Başarısız")
                           await result.write("35", "Test Başarısız",1);
                       }
                       break;
                 }
                 case "36": { //TEST 36
-                      console.log("Test 36 Başladı.");
-                      console.log("Kameranın web arayüzüne geçerek 'Canlı izleme' seklesinden Z+ ve Z- butonları ile Zoom in ve Zoom out işlemleri yapınız. Zoom in ve zoom out işlemlerini yaparken zamandan sonra zoom değerinin yazıldığı ve değiştiği üst yazı gözlemlerek zoom değerinin gösterilebildiğini doğrulayınız.");
+                      sevgi_api.console_log("Test 36 Başladı.");
+                      await sevgi_api.log_modal("Kameranın web arayüzüne geçerek 'Canlı izleme' seklesinden Z+ ve Z- butonları ile Zoom in ve Zoom out işlemleri yapınız. Zoom in ve zoom out işlemlerini yaparken zamandan sonra zoom değerinin yazıldığı ve değiştiği üst yazı gözlemlerek zoom değerinin gösterilebildiğini doğrulayınız.");
                       await page.waitFor(5000);
                       select1 = await sevgi_api.question_ask("Zoom işlemi başarılı bir şekilde yapılabildi mi? e/h");
                       select2 = await sevgi_api.question_ask("Zoom işlemi yapılırken üst yazıda saatten sonra zoom değerleri yazıldı mı? e/h");
                       if ( (select1 == "e" || select1 == "E") && (select2 =="e"|| select2=="E"))
                       {
-                          console.log("Test Başarılı");
+                          sevgi_api.console_log("Test Başarılı");
                           await result.write("36", "Test Başarılı",1);  
                       }    
                       else
                       {
-                          console.log("Test Başarısız")
+                          sevgi_api.console_log("Test Başarısız")
                           await result.write("36", "Test Başarısız",1);
                       }
                       break;
@@ -494,81 +496,81 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 
                 case "37": {//TEST 37
                       console.log(" ");  
-                      console.log("Test 37 Başladı.");
-                      console.log("'Uygulama versiyonu' ve 'Firmware sürümü' değerlerinin başlangıçta girilen konfigürasyon bilgileri ile aynı olduğu gözlemleyerek  yazılım sürümünü doğrulayınız.");
+                      sevgi_api.console_log("Test 37 Başladı.");
+                      await sevgi_api.log_modal("'Uygulama versiyonu' ve 'Firmware sürümü' değerlerinin başlangıçta girilen konfigürasyon bilgileri ile aynı olduğu gözlemleyerek  yazılım sürümünü doğrulayınız.");
                       await nav.toVersion(page,ip);
                       await version.test_application(page);
                       await version.test_firmware(page);
                       select1 = await sevgi_api.question_ask("'Uygulama versiyonu' ve 'Firmware sürümü' değerleri başlangıçtaki değerler ile aynı mı? e/h");
                       if ( select1 == "e" || select1 == "E")
                       {
-                          console.log("Test Başarılı");
+                          sevgi_api.console_log("Test Başarılı");
                           await result.write("37", "Test Başarılı",1);  
                       }    
                       else
                       {
-                          console.log("Test Başarısız")
+                          sevgi_api.console_log("Test Başarısız")
                           await result.write("37", "Test Başarısız",1);
                       }
                       break;
                 }
                 case "38": {//TEST 38
                       console.log("");
-                      console.log("Test 38 Başladı.");
+                      sevgi_api.console_log("Test 38 Başladı.");
                       await nav.toAlarm(page,ip);
                       var sei = await alarm.test_sei_selected(page);
                       if (sei == 1)
                       {
-                          console.log("Test Başarılı");
+                          sevgi_api.console_log("Test Başarılı");
                           await result.write("38", "Test Başarılı",1);  
                       }    
                       else if (sei == 0)
                       {
-                          console.log("Test Başarısız")
+                          sevgi_api.console_log("Test Başarısız")
                           await result.write("38", "Test Başarısız",1);
                       }
                       break;
                 }
                 case "39": {//TEST 39
-                      console.log("Test 39 Başladı.");
+                      sevgi_api.console_log("Test 39 Başladı.");
                       await nav.toAlarm(page,ip); 
                       await alarm.set_motion_detector(page,"Açık"); 
                       await alarm.set_motion_treshold(page, "50");
                       await alarm.set_apply(page);
                       await camera_restart(page,ip);
-                      console.log("Kameranın görüntüsünü DEFNE üzerinden izleyin. Kameranın önüne geçerek SEI Alarm Bilgisinin sol üst köşede kırmızı fontlu yazı olarak geldiği gözlemlenerek adım doğrulanır.");
+                      await sevgi_api.log_modal("Kameranın görüntüsünü DEFNE üzerinden izleyin. Kameranın önüne geçerek SEI Alarm Bilgisinin sol üst köşede kırmızı fontlu yazı olarak geldiği gözlemlenerek adım doğrulanır.");
                       select1 = await sevgi_api.question_ask("Kameranın önüne geçildiğinde SEI Alarm Bilgisinin sol üst köşede kırmızı fontlu yazı olarak geldi mi? e/h");
                        if (select1 == "e" || select1 == "E")
                       {
-                          console.log("Test Başarılı");
+                          sevgi_api.console_log("Test Başarılı");
                           await result.write("39", "Test Başarılı",1);  
                       }    
                       else
                       {
-                          console.log("Test Başarısız")
+                          sevgi_api.console_log("Test Başarısız")
                           await result.write("39", "Test Başarısız",1);
                       }
                       break;
                 }
                 case "40":{//TEST 40
-                      console.log("Test 40 Başladı.");
+                      sevgi_api.console_log("Test 40 Başladı.");
                       await nav.toAlarm(page,ip);
                       var is_active = await alarm.test_alarm_active(page); 
                       if(!is_active) await alarm.set_alarm_active(page); 
                       await alarm.set_motion_detector(page, "Kapalı"); 
                       await alarm.set_apply(page); 
                       await camera_restart(page,ip);
-                      console.log("Kameranın görüntüsünü DEFNE üzerinden izleyin. Kameranın önüne geçerek SEI Alarm Bilgisinin GELDİĞİNİ ve sol üst köşede kırmızı fontlu alarm bilgisinin GELMEDİĞİNİ gözlemleyin.");
+                      await sevgi_api.log_modal("Kameranın görüntüsünü DEFNE üzerinden izleyin. Kameranın önüne geçerek SEI Alarm Bilgisinin GELDİĞİNİ ve sol üst köşede kırmızı fontlu alarm bilgisinin GELMEDİĞİNİ gözlemleyin.");
                       select1 = await sevgi_api.question_ask("Kameranın önüne geçildiğinde SEI Alarm bilgisi geldi mi ? e/h");
                       select2 = await sevgi_api.question_ask("Sol üst köşede kırmızı fontlu alarm bilgisi geldi mi? e/h");
                        if ( (select2 == "h" || select2 == "H") && (select1 =="e"|| select1=="E"))
                        {
-                          console.log("Test Başarılı");
+                          sevgi_api.console_log("Test Başarılı");
                           await result.write("40", "Test Başarılı",1);  
                       }    
                       else
                       {
-                          console.log("Test Başarısız")
+                          sevgi_api.console_log("Test Başarısız")
                           await result.write("40", "Test Başarısız",1);
                       }
                       break;
@@ -577,29 +579,29 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 case "41": {//TEST 41
                       
                       console.log("");
-                      console.log("Test 41 Başladı.");
+                      sevgi_api.console_log("Test 41 Başladı.");
                       await nav.toCamera(page,ip);
                       var ir_mode = await camera.test_ir_filter_mode(page, "0");
                       var ir_transition = await camera.test_ir_filter_transition(page, "0");
                       if ((ir_mode == 1) && (ir_transition == 1))
                       {
-                          console.log("Test Başarılı");
+                          sevgi_api.console_log("Test Başarılı");
                           await result.write("41", "Test Başarılı",1);  
                       }    
                       else if ((ir_mode != 1) && (ir_transition == 1))
                       {
-                          console.log("Test Başarısız")
+                          sevgi_api.console_log("Test Başarısız")
                           await result.write("41", "Test Başarısız",1);
                       }
                       else if ((ir_mode == 1) && (ir_transition != 1))
                       {
-                          console.log("Test Başarısız")
+                          sevgi_api.console_log("Test Başarısız");
                           await result.write("41", "Test Başarısız",1);
                       }
                       break;
                 }
                 case "42": {//TEST 42
-                      console.log("Test 42 Başladı.");
+                      sevgi_api.console_log("Test 42 Başladı.");
                       await nav.toCamera(page,ip);
                       await camera.set_ir_filter_mode(page,"oto");
                       await camera.ir_filter_apply(page);
@@ -607,42 +609,42 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                       var command = 'vlc rtsp://'+ip+'/stream1';
                       proc =await require('child_process').exec(command);
                       select1 = await sevgi_api.question_ask("Kamera gündüz modunda mı ? e/h");
-                      console.log("Lütfen kameranızın merceğini bir cisimle kapatın...");
-                      console.log("Vlc programı üzerinden kamera modunu kontrol edin...");
+                      await sevgi_api.log_modal("Lütfen kameranızın merceğini bir cisimle kapatın...");
+                      await sevgi_api.log_modal("Vlc programı üzerinden kamera modunu kontrol edin...");
                       select2 = await sevgi_api.question_ask("Kamera gece modunda mı ? e/h");
-                      console.log("Lütfen kameranızın merceğinin önündeki cismi kaldırın...");
-                      console.log("Vlc programı üzerinden kamera modunu kontrol edin...");
+                      await sevgi_api.log_modal("Lütfen kameranızın merceğinin önündeki cismi kaldırın...");
+                      await sevgi_api.log_modal("Vlc programı üzerinden kamera modunu kontrol edin...");
                       select3 = await sevgi_api.question_ask("Kamera gündüz modunda mı ? e/h");
                       await nav.toCamera(page,ip);
                       await camera.set_ir_filter_mode(page,"manuel");
                       await camera.ir_filter_apply(page);
                       if ((select1 == "e" || select1 == "E")&&(select2 == "e" || select2 == "E")&&(select3 == "e" || select3 == "E"))
                       {
-                          console.log("Test Başarılı");
+                          sevgi_api.console_log("Test Başarılı");
                           await result.write("42", "Test Başarılı",1);  
                       }    
                       else
                       {
-                          console.log("Test Başarısız")
+                          sevgi_api.console_log("Test Başarısız")
                           await result.write("42", "Test Başarısız",1);
                       }
                       break;
                 }
                 case "43": {//TEST 43
-                     console.log("Test 43 Başladı.");
+                     sevgi_api.console_log("Test 43 Başladı.");
                       await nav.toVersion(page, ip);
                       await page.waitFor(1000);
                       await nav.toLive(page,ip);
-                      console.log("Lütfen web arayüzü üzerinden kamera görüntüsünün gelip gelmediğine bakın ...");
+                      await sevgi_api.log_modal("Lütfen web arayüzü üzerinden kamera görüntüsünün gelip gelmediğine bakın ...");
                       select1 = await sevgi_api.question_ask("Görüntü geldi mi ? e/h");
                       if (select1=="e"||select1=="E")
                       {
-                          console.log("Test Başarılı");
+                          sevgi_api.console_log("Test Başarılı");
                           await result.write("43", "Test Başarılı",1);  
                       }    
                       else
                       {
-                          console.log("Test Başarısız")
+                          sevgi_api.console_log("Test Başarısız")
                           await result.write("43", "Test Başarısız",1);
                       }
                       break;
@@ -650,102 +652,102 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                                          
                 }
                 case "44":{
-                      console.log("Test 44 Başladı.");
-                      console.log("Lütfen aşağıdaki testi uygulayın.. Ardından otomatik test yazılımını tekrardan başlatın ve test sonuçlarını otomatik test yazılımına bildirmek için bu testin numarasını tuşlayın");
-                      console.log("Kameranın gücü kesilir ve bir süre beklendikten sonra tekrar verilir.  Kameranın canlı görüntüsü izlenmeye başladıktan bir süre sonra yine kameranın gücü kesilir bir süre beklenir. Ardından kameranın gücü tekrar verilir. Bu işlem aynı şekilde 1 kez daha tekrarlanır. Toplamda 3 sefer bu işlem yapıldıktan sonra kameranın canlı görüntüsü VLC üzerinden izlenir ve web arayüzüne giriş yapılır. Web arayüzüne giriş yapılabildiği, görüntü çekilebildiği ve görüntüde maskelerin olması gereken yerlede görüldüğü test edilerek doğrulanır.");
+                      sevgi_api.console_log("Test 44 Başladı.");
+                      await sevgi_api.log_modal("Lütfen aşağıdaki testi uygulayın.. Ardından otomatik test yazılımını tekrardan başlatın ve test sonuçlarını otomatik test yazılımına bildirmek için bu testin numarasını tuşlayın");
+                      await sevgi_api.log_modal("Kameranın gücü kesilir ve bir süre beklendikten sonra tekrar verilir.  Kameranın canlı görüntüsü izlenmeye başladıktan bir süre sonra yine kameranın gücü kesilir bir süre beklenir. Ardından kameranın gücü tekrar verilir. Bu işlem aynı şekilde 1 kez daha tekrarlanır. Toplamda 3 sefer bu işlem yapıldıktan sonra kameranın canlı görüntüsü VLC üzerinden izlenir ve web arayüzüne giriş yapılır. Web arayüzüne giriş yapılabildiği, görüntü çekilebildiği ve görüntüde maskelerin olması gereken yerlede görüldüğü test edilerek doğrulanır.");
                       select1 = await sevgi_api.question_ask("İstenen işlemler sorunsuz bir şekilde yapılabildi mi? e/h");
                       if (select1=="e"||select1=="E")
                       {
-                          console.log("Test Başarılı");
+                          sevgi_api.console_log("Test Başarılı");
                           await result.write("44", "Test Başarılı",1);  
                       }    
                       else
                       {
-                          console.log("Test Başarısız")
+                          sevgi_api.console_log("Test Başarısız")
                           await result.write("44", "Test Başarısız",1);
                       }
                       break;
                 }
                 case "45":{
-                      console.log("Test 45 Başladı.");
-                      console.log("Lütfen aşağıdaki testi uygulayın.. Ardından otomatik test yazılımını tekrardan başlatın ve test sonuçlarını otomatik test yazılımına bildirmek için bu testin numarasını tuşlayın");
-                      console.log("Kamera web arayüzü üzerinden yeniden başlatılır. Kamera arayüzüne erişim sağlandıktan sonra bu işlem aynı şekilde toplamda 3 sefer tekrarlanır. Daha sonra kameranın canlı görüntüsü VLC üzerinden izlenir ve web arayüzüne giriş yapılır. Bu işlemlerin  sonucunda istenilen işlemlerin sorunsuz bir şekilde yapıldığı gözlemlenerek doğrulanır.");
+                      sevgi_api.console_log("Test 45 Başladı.");
+                      await sevgi_api.log_modal("Lütfen aşağıdaki testi uygulayın.. Ardından otomatik test yazılımını tekrardan başlatın ve test sonuçlarını otomatik test yazılımına bildirmek için bu testin numarasını tuşlayın");
+                      await sevgi_api.log_modal("Kamera web arayüzü üzerinden yeniden başlatılır. Kamera arayüzüne erişim sağlandıktan sonra bu işlem aynı şekilde toplamda 3 sefer tekrarlanır. Daha sonra kameranın canlı görüntüsü VLC üzerinden izlenir ve web arayüzüne giriş yapılır. Bu işlemlerin  sonucunda istenilen işlemlerin sorunsuz bir şekilde yapıldığı gözlemlenerek doğrulanır.");
                       select1 = await sevgi_api.question_ask("İstenen işlemler sorunsuz bir şekilde yapılabildi mi ? e/h");
                       if (select1=="e"||select1=="E")
                       {
-                          console.log("Test Başarılı");
+                          sevgi_api.console_log("Test Başarılı");
                           await result.write("45", "Test Başarılı",1);  
                       }    
                       else
                       {
-                          console.log("Test Başarısız")
+                          sevgi_api.console_log("Test Başarısız")
                           await result.write("45", "Test Başarısız",1);
                       }
                       break;
                 }
                 case "46": {//TEST 46
                       console.log("");
-                      console.log("Test 46 Başladı.");
+                      sevgi_api.console_log("Test 46 Başladı.");
                       await nav.toTime(page,ip);
                       select = await time.test_ntp_server1(page, "pool.ntp.org");
                       await result.write("46", "Uygulandı"+select,1); 
                     break;
                 }
                 case "47":{
-                      console.log("Test 47 Başladı.");
-                      console.log("Lütfen aşağıdaki testi uygulayın.. Ardından otomatik test yazılımını tekrardan başlatın ve test sonuçlarını otomatik test yazılımına bildirmek için bu testin numarasını tuşlayın");
-                      console.log("Test bilgisayarından kameranın 1.stream adresi kullanılarak(rtsp://<KameraIPAdresi>/stream1) VLC üzerinden 5 adet unicast görüntü oynatılır. 5 adet unicast görüntü çekilirken görüntüde herhangi bir takılma, mozaiklenme, bozulma olmadığı gözlemlenerek kameradan istenilen çözünürlük ve fps değerinde en az 5 adet unicast yayın akışı başlatılabildiği doğrulanır.");
+                      sevgi_api.console_log("Test 47 Başladı.");
+                      await sevgi_api.log_modal("Lütfen aşağıdaki testi uygulayın.. Ardından otomatik test yazılımını tekrardan başlatın ve test sonuçlarını otomatik test yazılımına bildirmek için bu testin numarasını tuşlayın");
+                      await sevgi_api.log_modal("Test bilgisayarından kameranın 1.stream adresi kullanılarak(rtsp://<KameraIPAdresi>/stream1) VLC üzerinden 5 adet unicast görüntü oynatılır. 5 adet unicast görüntü çekilirken görüntüde herhangi bir takılma, mozaiklenme, bozulma olmadığı gözlemlenerek kameradan istenilen çözünürlük ve fps değerinde en az 5 adet unicast yayın akışı başlatılabildiği doğrulanır.");
                       select1 = await sevgi_api.question_ask("İstenen işlemler sorunsuz bir şekilde yapılabildi mi ? e/h");
                       if (select1=="e"||select1=="E")
                       {
-                          console.log("Test Başarılı");
+                          sevgi_api.console_log("Test Başarılı");
                           await result.write("47", "Test Başarılı",1);  
                       }    
                       else
                       {
-                          console.log("Test Başarısız")
+                          sevgi_api.console_log("Test Başarısız")
                           await result.write("47", "Test Başarısız",1);
                       }
                       break;
                     
                 }
                 case "48":{
-                      console.log("Test 48 Başladı.");
-                      console.log("Lütfen aşağıdaki testi uygulayın.. Ardından otomatik test yazılımını tekrardan başlatın ve test sonuçlarını otomatik test yazılımına bildirmek için bu testin numarasını tuşlayın");
-                      console.log("DEFNE yazılımı üzerinden test yapılan kameranın canlı görüntüsü açılır. Görüntünün oynadığı pencerede herhangi bir noktaya tıklanır ve Yakınlaştırma(Zoom) Tipi değeri Optik Yakınlaştırma olarak seçilir. Bu işlemden sonra mouse yardımı ile zoom in yapılır. Kameranın 3x zoom yapabildiği üst yazı ile gözlemlenerek doğrulanr.");
+                      sevgi_api.console_log("Test 48 Başladı.");
+                      await sevgi_api.log_modal("Lütfen aşağıdaki testi uygulayın.. Ardından otomatik test yazılımını tekrardan başlatın ve test sonuçlarını otomatik test yazılımına bildirmek için bu testin numarasını tuşlayın");
+                      await sevgi_api.log_modal("DEFNE yazılımı üzerinden test yapılan kameranın canlı görüntüsü açılır. Görüntünün oynadığı pencerede herhangi bir noktaya tıklanır ve Yakınlaştırma(Zoom) Tipi değeri Optik Yakınlaştırma olarak seçilir. Bu işlemden sonra mouse yardımı ile zoom in yapılır. Kameranın 3x zoom yapabildiği üst yazı ile gözlemlenerek doğrulanr.");
                       select1 = await sevgi_api.question_ask("İstenen işlemler sorunsuz bir şekilde yapılabildi mi ? e/h");
                       if (select1=="e"||select1=="E")
                       {
-                          console.log("Test Başarılı");
+                          sevgi_api.console_log("Test Başarılı");
                           await result.write("48", "Test Başarılı",1);  
                       }    
                       else
                       {
-                          console.log("Test Başarısız")
+                          sevgi_api.console_log("Test Başarısız")
                           await result.write("48", "Test Başarısız",1);
                       }
                       break;
                 }
                 case "49":{
-                      console.log("Test 49 Başladı.");
-                      console.log("Lütfen aşağıdaki testi uygulayın.. Ardından otomatik test yazılımını tekrardan başlatın ve test sonuçlarını otomatik test yazılımına bildirmek için bu testin numarasını tuşlayın");
-                      console.log("Kamera web arayüzü üzerinden yeniden başlatılır. Kamera arayüzüne erişim sağlandıktan sonra bu işlem aynı şekilde toplamda 3 sefer tekrarlanır. Daha sonra kameranın canlı görüntüsü VLC üzerinden izlenir ve web arayüzüne giriş yapılır. Bu işlemlerin  sonucunda istenilen işlemlerin sorunsuz bir şekilde yapıldığı gözlemlenerek doğrulanır.");
+                      sevgi_api.console_log("Test 49 Başladı.");
+                      await sevgi_api.log_modal("Lütfen aşağıdaki testi uygulayın.. Ardından otomatik test yazılımını tekrardan başlatın ve test sonuçlarını otomatik test yazılımına bildirmek için bu testin numarasını tuşlayın");
+                      await sevgi_api.log_modal("Kamera web arayüzü üzerinden yeniden başlatılır. Kamera arayüzüne erişim sağlandıktan sonra bu işlem aynı şekilde toplamda 3 sefer tekrarlanır. Daha sonra kameranın canlı görüntüsü VLC üzerinden izlenir ve web arayüzüne giriş yapılır. Bu işlemlerin  sonucunda istenilen işlemlerin sorunsuz bir şekilde yapıldığı gözlemlenerek doğrulanır.");
                       select1 = await sevgi_api.question_ask("İstenen işlemler sorunsuz bir şekilde yapılabildi mi ? e/h");
                       if (select1=="e"||select1=="E")
                       {
-                          console.log("Test Başarılı");
+                          sevgi_api.console_log("Test Başarılı");
                           await result.write("49", "Test Başarılı",1);  
                       }    
                       else
                       {
-                          console.log("Test Başarısız")
+                          sevgi_api.console_log("Test Başarısız")
                           await result.write("49", "Test Başarısız",1);
                       }
                       break;
                 }
                 case "50":{
-                      console.log("Test 50 Başladı.");
-                      console.log("VLC şimdi açılacak. Lütfen görüntüyü 20 saniye izleyin ve sonra console ekranına geri dönün.");
+                      sevgi_api.console_log("Test 50 Başladı.");
+                      await sevgi_api.log_modal("VLC şimdi açılacak. Lütfen görüntüyü 20 saniye izleyin ve sonra console ekranına geri dönün.");
                       await nav.toCamera(page,ip);
                       await camera.focus_one_shot(page);
                       var command = 'vlc rtsp://'+ip+'/stream1';
@@ -755,19 +757,19 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                       select1 = await sevgi_api.question_ask("Görüntünün uzağa odaklama yaptığı ve görüntünün bozulmaya başladığı gözlemlendi mi? e/h");
                       if (select1=="e"||select1=="E")
                       {
-                          console.log("Test Başarılı");
+                          sevgi_api.console_log("Test Başarılı");
                           await result.write("50", "Test Başarılı",1);  
                       }    
                       else
                       {
-                          console.log("Test Başarısız")
+                          sevgi_api.console_log("Test Başarısız")
                           await result.write("50", "Test Başarısız",1);
                       }
                       break;
                 }
                 case "51":{
-                    console.log("Test 51 Başladı.");
-                      console.log("VLC şimdi açılacak. Lütfen görüntüyü 20 saniye izleyin ve sonra console ekranına geri dönün.");
+                    sevgi_api.console_log("Test 51 Başladı.");
+                      await sevgi_api.log_modal("VLC şimdi açılacak. Lütfen görüntüyü 20 saniye izleyin ve sonra console ekranına geri dönün.");
                       await nav.toCamera(page,ip);
                       var command = 'vlc rtsp://'+ip+'/stream1';
                       proc =await require('child_process').exec(command);
@@ -776,19 +778,19 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                       select1 = await sevgi_api.question_ask("Görüntünün yakına odaklama yaptığı önce görüntünün uzağa focuslu olduğu için düzelmeye başladığı ve daha sonra daha da yakına zoom yapmaya çalıştığında görüntünün bozulmaya başladığı gözlemlendi mi? e/h");
                       if (select1=="e"||select1=="E")
                       {
-                          console.log("Test Başarılı");
+                          sevgi_api.console_log("Test Başarılı");
                           await result.write("51", "Test Başarılı",1);  
                       }    
                       else
                       {
-                          console.log("Test Başarısız")
+                          sevgi_api.console_log("Test Başarısız")
                           await result.write("51", "Test Başarısız",1);
                       }
                       break;
                 }
                 case "52":{
-                    console.log("Test 52 Başladı.");
-                      console.log("VLC şimdi açılacak. Lütfen görüntüyü 20 saniye izleyin ve sonra console ekranına geri dönün.");
+                    sevgi_api.console_log("Test 52 Başladı.");
+                      await sevgi_api.log_modal("VLC şimdi açılacak. Lütfen görüntüyü 20 saniye izleyin ve sonra console ekranına geri dönün.");
                       await nav.toCamera(page,ip);
                       var command = 'vlc rtsp://'+ip+'/stream1';
                       proc =await require('child_process').exec(command);
@@ -797,12 +799,12 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                       select1 = await sevgi_api.question_ask("Kameranın focus yaptığı ve görünütünün düzeldiği gözlemlendi mi? e/h");
                       if (select1=="e"||select1=="E")
                       {
-                          console.log("Test Başarılı");
+                          sevgi_api.console_log("Test Başarılı");
                           await result.write("52", "Test Başarılı",1);  
                       }    
                       else
                       {
-                          console.log("Test Başarısız")
+                          sevgi_api.console_log("Test Başarısız")
                           await result.write("52", "Test Başarısız",1);
                       }
                       break;
@@ -840,10 +842,10 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                     break;
                 }
                 case "61": {
-                    console.log("Test 61 Başladı.");
+                    sevgi_api.console_log("Test 61 Başladı.");
                     await nav.toRTSP(page,ip);
                     await rtsp.rtsp_set(page, "Tanımlı kullanıcı", "admin",1);
-                    console.log("Lütfen VLC'den yayının açılmasını bekleyin. Yayın açıldıktan sonra gelen 'RTSP kimlik doğrulaması' ekranında  kullanıcı adı:'admin' ve parola:'admin' olarak girilerek 'Ok' butonuna tıklayın.");
+                    await sevgi_api.log_modal("Lütfen VLC'den yayının açılmasını bekleyin. Yayın açıldıktan sonra gelen 'RTSP kimlik doğrulaması' ekranında  kullanıcı adı:'admin' ve parola:'admin' olarak girilerek 'Ok' butonuna tıklayın.");
                     await page.waitFor(4000);
                     var command = 'vlc rtsp://'+ip+'/stream1';
                     proc =await require('child_process').exec(command)
@@ -852,21 +854,21 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                     select2 = await sevgi_api.question_ask("Yayın geldi mi? e/h");
                       if ( (select1 == "e" || select1 == "E") && (select2 =="e"|| select2=="E"))
                       {
-                          console.log("Test Başarılı");
+                          sevgi_api.console_log("Test Başarılı");
                           await result.write("61", "Test Başarılı",1);  
                       }    
                       else
                       {
-                          console.log("Test Başarısız")
+                          sevgi_api.console_log("Test Başarısız")
                           await result.write("61", "Test Başarısız",1);
                       }
                       break;
                 }
                 case "62": {
-                    console.log("Test 62 Başladı.");
+                    sevgi_api.console_log("Test 62 Başladı.");
                     await nav.toRTSP(page,ip);
                     await rtsp.rtsp_set(page, "Tanımlı kullanıcı", "admin",1);
-                    console.log("Lütfen VLC'den yayının açılmasını bekleyin. Yayın açıldıktan sonra gelen 'RTSP kimlik doğrulaması' ekranında  kullanıcı adı:'admin' ve parola:'admin' olarak girilerek 'Ok' butonuna tıklayın.");
+                    await sevgi_api.log_modal("Lütfen VLC'den yayının açılmasını bekleyin. Yayın açıldıktan sonra gelen 'RTSP kimlik doğrulaması' ekranında  kullanıcı adı:'admin' ve parola:'admin' olarak girilerek 'Ok' butonuna tıklayın.");
                     await page.waitFor(4000);
                     var command = 'vlc rtsp://'+ip+'/stream2';
                     proc =await require('child_process').exec(command)
@@ -875,126 +877,126 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                     select2 = await sevgi_api.question_ask("Yayın geldi mi? e/h");
                       if ( (select1 == "e" || select1 == "E") && (select2 =="e"|| select2=="E"))
                       {
-                          console.log("Test Başarılı");
+                          sevgi_api.console_log("Test Başarılı");
                           await result.write("62", "Test Başarılı",1);  
                       }    
                       else
                       {
-                          console.log("Test Başarısız")
+                          sevgi_api.console_log("Test Başarısız")
                           await result.write("62", "Test Başarısız",1);
                       }
                       break;
                 }
                 case "63": {
-                    console.log("Test 63 Başladı.");
+                    sevgi_api.console_log("Test 63 Başladı.");
                     await nav.toRTSP(page,ip);
                     await rtsp.rtsp_set_no(page,0);
                     var command = 'vlc rtsp://'+ip+'/stream1';
                     proc =await require('child_process').exec(command)
-                    console.log("Lütfen VLC programının açılmasını bekleyin.\n\n");
+                    await sevgi_api.log_modal("Lütfen VLC programının açılmasını bekleyin.\n\n");
                     await page.waitFor(5000);
                     select1 = await sevgi_api.question_ask("RTSP kimlik doğrulama ekranı geldi mi? e/h");
                     select2 = await sevgi_api.question_ask("Yayın geldi mi? e/h");
                       if ( (select1 == "h" || select1 == "H") && (select2 =="e"|| select2=="E"))
                       {
-                          console.log("Test Başarılı");
+                          sevgi_api.console_log("Test Başarılı");
                           await result.write("63", "Test Başarılı",1);  
                       }    
                       else
                       {
-                          console.log("Test Başarısız")
+                          sevgi_api.console_log("Test Başarısız")
                           await result.write("63", "Test Başarısız",1);
                       }
                       break;
                 }
                 case "65": {//TEST 65
-                      console.log("Test 65 Başladı.");
+                      sevgi_api.console_log("Test 65 Başladı.");
                       await nav.toAlarm(page,ip); 
                       await alarm.set_motion_detector(page,"a");
                       await alarm.set_motion_treshold(page, "50",1);
                       await alarm.set_apply(page);
                       await camera_restart(page,ip);
-                      console.log("Kameranın görüntüsünü DEFNE üzerinden izleyin. Kameranın önüne geçerek SEI Alarm Bilgisinin geldiği ve sol üst köşede kırmızı fontlu alarm bilgisinin gelmediğini gözlemleyin");
+                      await sevgi_api.log_modal("Kameranın görüntüsünü DEFNE üzerinden izleyin. Kameranın önüne geçerek SEI Alarm Bilgisinin geldiği ve sol üst köşede kırmızı fontlu alarm bilgisinin gelmediğini gözlemleyin");
                       select1 = await sevgi_api.question_ask("Kameranın önüne geçildiğinde SEI Alarm bilgisi geldi mi ? e/h");
                       select2 = await sevgi_api.question_ask("Sol üst köşede kırmızı fontlu alarm bilgisi geldi mi? e/h");
                        if ( (select1 == "e" || select1 == "E") && (select2 =="e"|| select2=="E"))
                        {
-                          console.log("Test Başarılı");
+                          sevgi_api.console_log("Test Başarılı");
                           await result.write("65", "Test Başarılı",1);  
                       }    
                       else
                       {
-                          console.log("Test Başarısız")
+                          sevgi_api.console_log("Test Başarısız")
                           await result.write("65", "Test Başarısız",1);
                       }
                       break;
                 }
                 case "66":{//TEST 66
-                      console.log("Test 66 Başladı.");
+                      sevgi_api.console_log("Test 66 Başladı.");
                       await nav.toAlarm(page,ip);
                       var is_active = await alarm.test_alarm_active(page); 
                       if(!is_active) await alarm.set_alarm_active(page);
                       await alarm.set_motion_detector(page, "k");
                       await alarm.set_apply(page);
                       await camera_restart(page,ip);
-                      console.log("Kameranın görüntüsünü DEFNE üzerinden izleyin. Kameranın önüne geçerek SEI Alarm Bilgisinin geldiği ve sol üst köşede kırmızı fontlu alarm bilgisinin gelmediğini gözlemleyin");
+                      await sevgi_api.log_modal("Kameranın görüntüsünü DEFNE üzerinden izleyin. Kameranın önüne geçerek SEI Alarm Bilgisinin geldiği ve sol üst köşede kırmızı fontlu alarm bilgisinin gelmediğini gözlemleyin");
                       select1 = await sevgi_api.question_ask("Kameranın önüne geçildiğinde SEI Alarm bilgisi geldi mi ? e/h");
                       select2 = await sevgi_api.question_ask("Sol üst köşede kırmızı fontlu alarm bilgisi geldi mi? e/h");
                        if ( (select1 == "e" || select1 == "E") && (select2 =="e"|| select2=="E"))
                       {
-                          console.log("Test Başarılı");
+                          sevgi_api.console_log("Test Başarılı");
                           await result.write("66", "Test Başarılı",1);  
                       }    
                       else
                       {
-                          console.log("Test Başarısız")
+                          sevgi_api.console_log("Test Başarısız")
                           await result.write("66", "Test Başarısız",1);
                       }
                       break;
                     
                 }
                 case "69":{//TEST 69
-                      console.log("Test 69 Başladı.");
+                      sevgi_api.console_log("Test 69 Başladı.");
                       await nav.toVersion(page, ip);
                       await nav.toLive(page,ip);
-                      console.log("Test 21'de oluşturulan 4 adet maskenin canlı izlemede görüldüğü ve konumlarının aynı kaldığını gözlemleyin");
+                      await sevgi_api.log_modal("Test 21'de oluşturulan 4 adet maskenin canlı izlemede görüldüğü ve konumlarının aynı kaldığını gözlemleyin");
                       select1 = await sevgi_api.question_ask("4 adet maske görüldü mü? e/h");
                       select2 = await sevgi_api.question_ask("Maskelerin konumları aynı mı? e/h");
                        if ( (select1 == "e" || select1 == "E") && (select2 =="e"|| select2=="E"))
                        {
-                          console.log("Test Başarılı");
+                          sevgi_api.console_log("Test Başarılı");
                           await result.write("69", "Test Başarılı",1);  
                       }    
                       else
                       {
-                          console.log("Test Başarısız")
+                          sevgi_api.console_log("Test Başarısız")
                           await result.write("69", "Test Başarısız",1);
                       }
                       break;
                 }
                    case "70":{//TEST 70
-                      console.log("Test 70 Başladı.");
-                      console.log("Lütfen aşağıdaki testi uygulayın.. Ardından otomatik test yazılımını tekrardan başlatın ve test sonuçlarını otomatik test yazılımına bildirmek için bu testin numarasını tuşlayın\n");
+                      sevgi_api.console_log("Test 70 Başladı.");
+                      await sevgi_api.log_modal("Lütfen aşağıdaki testi uygulayın.. Ardından otomatik test yazılımını tekrardan başlatın ve test sonuçlarını otomatik test yazılımına bildirmek için bu testin numarasını tuşlayın\n");
                       await nav.toVersion(page, ip);
                       await nav.toLive(page,ip);
-                      console.log("Tanımlanmış maskelerden bir tanesi 'Maske ID' sekmesinden seçilir ve yönlendirme yapılır. Yönlendirme yapıldıktan sonra(maske sol, maske sağ, maske yukarı, maske aşağı) genişlik ve yükseklik değiştirilip 'Maskeyi güncelle' butonuna basılır. Bu durumda maskenin yeni özellikleri aldığı ve güncellendiği gözlemlenerek doğrulanır. Kamera yeniden başlatılır ve görüntü geldiğinde güncellenen maskenin yeni yerinde olduğu gözlemlenir.");
+                      await sevgi_api.log_modal("Tanımlanmış maskelerden bir tanesi 'Maske ID' sekmesinden seçilir ve yönlendirme yapılır. Yönlendirme yapıldıktan sonra(maske sol, maske sağ, maske yukarı, maske aşağı) genişlik ve yükseklik değiştirilip 'Maskeyi güncelle' butonuna basılır. Bu durumda maskenin yeni özellikleri aldığı ve güncellendiği gözlemlenerek doğrulanır. Kamera yeniden başlatılır ve görüntü geldiğinde güncellenen maskenin yeni yerinde olduğu gözlemlenir.");
                       select1 = await sevgi_api.question_ask("Ayarlarında değişiklik yapılan maske yeni özellikleri aldı mı? e/h");
                       select2 = await sevgi_api.question_ask("Kamera yeniden başlatıldıktan ve görüntü geldikten sonra güncellenen maske son konumunu korudu mu? e/h");
                        if ( (select1 == "e" || select1 == "E") && (select2 =="e"|| select2=="E"))
                       {
-                          console.log("Test Başarılı");
+                          sevgi_api.console_log("Test Başarılı");
                           await result.write("70", "Test Başarılı",1);  
                       }    
                       else
                       {
-                          console.log("Test Başarısız")
+                          sevgi_api.console_log("Test Başarısız")
                           await result.write("70", "Test Başarısız",1);
                       }
                       break;
                 }
                 case "71" : {
-                    console.log("Test 71 Başladı.");
-                    console.log("Lütfen maskelerin oluşturulmasını bekleyiniz.");
+                    sevgi_api.console_log("Test 71 Başladı.");
+                    await sevgi_api.log_modal("Lütfen maskelerin oluşturulmasını bekleyiniz.");
                     for(var i = 5; i<11; i++){                        
                         await nav.toVersion(page, ip);
                         await nav.toLive(page,ip);
@@ -1046,24 +1048,24 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                         
                     } 
                     await mask.mask_refresh(page);
-                        console.log("Maskeler oluşturuldu ve konumlandırıldı.");
-                        console.log("Lütfen web arayüzünden oluşturulan maskeleri kontrol ediniz.");
+                        sevgi_api.console_log("Maskeler oluşturuldu ve konumlandırıldı.");
+                        await sevgi_api.log_modal("Lütfen web arayüzünden oluşturulan maskeleri kontrol ediniz.");
                         select1 = await sevgi_api.question_ask("8 adet maske tespit edildi mi? e/h");
-                        console.log("Lütfen web arayüzünden 'Canlı İzleme' sekmesinden zoom değerlerini değiştirerek oluşturulan 9. ve 10. maskenin geldiğini gözlemleyerek kontrol ediniz.");
+                        await sevgi_api.log_modal("Lütfen web arayüzünden 'Canlı İzleme' sekmesinden zoom değerlerini değiştirerek oluşturulan 9. ve 10. maskenin geldiğini gözlemleyerek kontrol ediniz.");
                         select2 = await sevgi_api.question_ask("10 adet maske tespit edildi mi? e/h");
                         if ( (select1 == "e" || select1 == "E") && (select2 =="e"|| select2=="E"))
                         {
-                          console.log("Test Başarılı");
+                          sevgi_api.console_log("Test Başarılı");
                           await result.write("71", "Test Başarılı",1);  
                       }    
                       else
                       {
-                          console.log("Test Başarısız")
+                          sevgi_api.console_log("Test Başarısız")
                           await result.write("71", "Test Başarısız",1);
                       }
                       break;
                 }
-                default: console.log("Test "+test_number+" bulunamadı lütfen tekrar deneyin..");
+                default: sevgi_api.console_log("Test "+test_number+" bulunamadı lütfen tekrar deneyin..");
                 
             }
                 

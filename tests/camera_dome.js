@@ -1,4 +1,5 @@
 var result = require('./result.js');
+var sevgi_api= require('./sevgi_api');
 (function(){
     const PPP_BUTTON_LEFT='#autoPL';
     const PPP_BUTTON_RIGHT='#autoPR';
@@ -37,10 +38,10 @@ var result = require('./result.js');
         module.exports.set_ir_filter_mode = async function(page, set) 
         {
             await page.waitFor(2000);
-            await page.click(IR_TAB_SELECTOR); console.log("1");
+            await page.click(IR_TAB_SELECTOR); sevgi_api.console_log("1");
             await page.waitFor(1000);
-            await page.waitForSelector(IR_FILTER_MODE,'visible');console.log("2");
-            await page.click(IR_FILTER_MODE);console.log("3");
+            await page.waitForSelector(IR_FILTER_MODE,'visible');sevgi_api.console_log("2");
+            await page.click(IR_FILTER_MODE);sevgi_api.console_log("3");
             await page.keyboard.type(set);
             await page.keyboard.press('Enter');
             
@@ -72,21 +73,21 @@ var result = require('./result.js');
         module.exports.turn_left= async function(page){
             
             await page.click(PPP_BUTTON_LEFT);
-            console.log("Kamera sola dönüyor.");
+            sevgi_api.console_log("Kamera sola dönüyor.");
             await page.waitFor(2000);
           
         }
         module.exports.turn_right= async function(page){
             
             await page.click(PPP_BUTTON_RIGHT);
-            console.log("Kamera sağa dönüyor.");
+            sevgi_api.console_log("Kamera sağa dönüyor.");
             await page.waitFor(2000);
           
         }
         module.exports.stop= async function(page){
             
             await page.click(PPP_BUTTON_STOP);
-            console.log("Kamera durduruldu.");
+            sevgi_api.console_log("Kamera durduruldu.");
           
         }
         module.exports.stop_isactive = async function(page)
@@ -110,7 +111,7 @@ var result = require('./result.js');
             await page.keyboard.type('Enter');
             await page.waitFor(1000);
             await page.click(IR_CUT_APPLY_SELECTOR);
-            console.log(set+" applied");
+            sevgi_api.console_log(set+" applied");
             
         }
         //////////TEST-47 İÇİN
@@ -123,15 +124,15 @@ var result = require('./result.js');
                 
                 const index = await page.$eval('#pattern', node => node.selectedIndex);
                 await page.waitFor(1000);
-                console.log(index+". pattern seçildi");
+                sevgi_api.console_log(index+". pattern seçildi");
                 const inpot1 = await page.$eval('#buttonRun' , node => node.style['visibility']);
                 await page.waitFor(2000);
                 if(inpot1 == 'visible'){
-                    console.log(index+". pattern için koş butonu aktif");
+                    sevgi_api.console_log(index+". pattern için koş butonu aktif");
                     return 1;
                 }
                 else{
-                    console.log(index+". pattern için koş butonu aktif değil");
+                    sevgi_api.console_log(index+". pattern için koş butonu aktif değil");
                     return 0;
                 }
 	}
@@ -226,7 +227,7 @@ var result = require('./result.js');
             await page.waitForSelector(PPP_PATTERN_RUN_BUTTON,'visible');
             await page.click(PPP_PATTERN_RUN_BUTTON);
             
-            console.log("Desen başlatıldı");
+            sevgi_api.console_log("Desen başlatıldı");
             
         }
         module.exports.pattern_stop = async function(page )
@@ -241,7 +242,7 @@ var result = require('./result.js');
         //////PAN ,TILT ,ZOOM
         module.exports.PTZ= async function(page){
             await page.click(PTZ_ZOOM);
-            console.log("Kameraya zoom kontrolü gönderildi");
+            sevgi_api.console_log("Kameraya zoom kontrolü gönderildi");
         }
         
         
@@ -252,12 +253,12 @@ var result = require('./result.js');
                 const inpot = await input.$eval('input#home_timeout' , node => node.value);
                 if(inpot ==set)
                         {
-                            console.log("Göreve dön süresi "+inpot+"       TRUE");
+                            sevgi_api.console_log("Göreve dön süresi "+inpot+"       TRUE");
                             return [set,inpot,1];
                         } 
                 else
                         {
-                            console.log("Göreve dön süresi "+inpot+"       FALSE");
+                            sevgi_api.console_log("Göreve dön süresi "+inpot+"       FALSE");
                             return [set,inpot,0];
                         }
             
@@ -265,10 +266,10 @@ var result = require('./result.js');
 	module.exports.turn_to_task_control= async function(page) {
             const inpot = await page.$eval('input#self_goto_home' , node => node.checked);
             if(inpot==1)
-            {console.log("Göreve dön tiki SEÇİLİ      TRUE");
+            {sevgi_api.console_log("Göreve dön tiki SEÇİLİ      TRUE");
                 await result.write("44"," BAŞARILI     Göreve dön tiki seçili",2);}
             else 
-            {console.log("Göreve dön tiki SEÇİLİ DEĞİL       FALSE");
+            {sevgi_api.console_log("Göreve dön tiki SEÇİLİ DEĞİL       FALSE");
                 await result.write("44"," BAŞARISIZ    Göreve dön tiki seçili değil",2);}
         }
         
@@ -284,11 +285,11 @@ var result = require('./result.js');
             inpot = await input.$eval('#patrol_list' , node => node.value);
             }
             if(inpot=="3,7")
-            {  console.log("Okunan değer = "+inpot+"  Test Başarılı.");
+            {  sevgi_api.console_log("Okunan değer = "+inpot+"  Test Başarılı.");
                await result.write("45"," BAŞARILI     İstenen değer = 3,7   Gerçekleşen değer = "+inpot,2);
 
             }
-                else{  console.log("Okunan değer = "+inpot+"  Test Başarısız.");
+                else{  sevgi_api.console_log("Okunan değer = "+inpot+"  Test Başarısız.");
                await result.write("45"," BAŞARISIZ    İstenen değer = 3,7   Gerçekleşen değer = "+inpot,2);
                 }
                     
@@ -304,10 +305,10 @@ var result = require('./result.js');
             inpot = await input.$eval('#patrol_interval' , node => node.value);
             }
             if(inpot=="5,10")
-            {console.log("Okunan değer = "+inpot+"  Test Başarılı.");
+            {sevgi_api.console_log("Okunan değer = "+inpot+"  Test Başarılı.");
                await result.write("46"," BAŞARILI     İstenen değer = 5,10   Gerçekleşen değer = "+inpot,2);}
             else 
-            {console.log("Okunan değer = "+inpot+"  Test Başarısız.");
+            {sevgi_api.console_log("Okunan değer = "+inpot+"  Test Başarısız.");
                await result.write("46"," BAŞARISIZ     İstenen değer = 5,10   Gerçekleşen değer = "+inpot,2);}
         }
         ////////////////////test 50
@@ -317,12 +318,12 @@ var result = require('./result.js');
                 const inpot1 = await page.$eval('select#ir_led_state' , node => node.value);
                 if(inpot1 ==set)
                         {
-                            console.log("IR lighting setting is                TRUE");
+                            sevgi_api.console_log("IR lighting setting is                TRUE");
                             return [set,inpot1,1];
                         } 
                 else
                         {
-                            console.log("IR lighting setting is                FALSE");
+                            sevgi_api.console_log("IR lighting setting is                FALSE");
                             return [set,inpot1,0];
                         }
             
@@ -332,14 +333,14 @@ var result = require('./result.js');
                 const inpot1 = await page.$eval('select#ircf_stat' , node => node.value);
                 if(inpot1 ==set)
                         { 
-                            console.log("IR-Cut filtre modu:"+inpot1);  
-                            console.log("IR filtre mode setting is             TRUE");
+                            sevgi_api.console_log("IR-Cut filtre modu:"+inpot1);  
+                            sevgi_api.console_log("IR filtre mode setting is             TRUE");
                             return [set,inpot1,1];
                         }  
                 else
                         {
-                            console.log("IR-Cut filtre modu:"+inpot1);  
-                            console.log("IR filtre mode setting is             FALSE");
+                            sevgi_api.console_log("IR-Cut filtre modu:"+inpot1);  
+                            sevgi_api.console_log("IR filtre mode setting is             FALSE");
                             return [set,inpot1,0];
                         }
             
@@ -349,12 +350,12 @@ var result = require('./result.js');
                 const inpot1 = await page.$eval('select#auto_ircf_stat' , node => node.value);
                 if(inpot1 ==set)
                         {
-                            console.log("IR filtre transition setting is       TRUE");
+                            sevgi_api.console_log("IR filtre transition setting is       TRUE");
                             return [set,inpot1,1];
                         } 
                 else
                         {
-                            console.log("IR filtre transition setting is       FALSE");
+                            sevgi_api.console_log("IR filtre transition setting is       FALSE");
                             return [set,inpot1,0];
                             
                         }
@@ -370,13 +371,12 @@ var result = require('./result.js');
                 
                 const index = await page.$eval('#pattern', node => node.selectedIndex);
                 await page.waitFor(1000);
-                console.log(index+". pattern seçildi");
+                sevgi_api.console_log(index+". pattern seçildi");
                 const inpot1 = await page.$eval('#buttonDelete' , node => node.style['visibility']);
                 await page.waitFor(2000);
-                //console.log(inpot1);
                 if(inpot1 == 'visible'){
                     await page.click(PPP_PATTERN_DELETE_BUTTON);
-                    console.log(index+". pattern silindi");
+                    sevgi_api.console_log(index+". pattern silindi");
                 }
             
         }
@@ -397,7 +397,7 @@ var result = require('./result.js');
                 await page.click(PPP_PATTERN_STOP_BUTTON);  
                 
                 await page.waitFor(2000);
-                console.log((set+1)+". pattern kaydedildi");
+                sevgi_api.console_log((set+1)+". pattern kaydedildi");
         }
         
 

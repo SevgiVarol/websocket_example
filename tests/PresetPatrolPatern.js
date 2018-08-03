@@ -1,5 +1,5 @@
 var readline = require('readline');
-
+var sevgi_api= require('./sevgi_api');
 (function() {
         const PRESET_INDEX_SELECTOR = '#preset';
         const PRESET_NAME_SELECTOR = '#presetTag';
@@ -26,7 +26,7 @@ var readline = require('readline');
         module.exports.set_preset= async function(page){
             var horizontal = ["0","24000","12000"];
             var vertical = ["9000","0","4500"];
-            console.log("Presetler siliniyor..")
+            sevgi_api.console_log("Presetler siliniyor..")
             for(let clear=0; clear<3; clear++)
             {   await page.waitFor(1000);
                 await page.click(PRESET_INDEX_SELECTOR);
@@ -40,11 +40,11 @@ var readline = require('readline');
                 await page.click(PRESET_DELETE_SELECTOR);
                 
             }
-            console.log("Presetler silindi.");
+            sevgi_api.console_log("Presetler silindi.");
             for(let index = 0; index<3; index++)
                 
             {   
-                console.log("Preset "+(index+1)+" ayarlanıyor..")
+                sevgi_api.console_log("Preset "+(index+1)+" ayarlanıyor..")
                 ////YATAY KONUMU GİR
                 await page.click(DOM_HORIZONTAL_SELECTOR);
                 await page.waitFor(1000);
@@ -74,14 +74,14 @@ var readline = require('readline');
                 await page.waitFor(1000);
                 await page.click(PRESET_SAVE_SELECTOR);
                 await page.waitFor(2000);
-                console.log("Preset "+(index+1)+" ayarlandı..")
+                sevgi_api.console_log("Preset "+(index+1)+" ayarlandı..")
 
             }
         }
         module.exports.set_preset_1= async function(page){
             var horizontal = ["0"];
             var vertical = ["0"];
-            console.log("Presetler siliniyor..")
+            sevgi_api.console_log("Presetler siliniyor..")
             
                 await page.waitFor(1000);
                 await page.click(PRESET_INDEX_SELECTOR);
@@ -93,9 +93,9 @@ var readline = require('readline');
                 await page.waitFor(1500);
                 await page.click(PRESET_DELETE_SELECTOR);
                        
-            console.log("Presetler silindi.");
+            sevgi_api.console_log("Presetler silindi.");
             
-                console.log("Preset "+(1)+" ayarlanıyor..")
+                sevgi_api.console_log("Preset "+(1)+" ayarlanıyor..")
                 ////YATAY KONUMU GİR
                 await page.click(DOM_HORIZONTAL_SELECTOR);
                 await page.waitFor(1000);
@@ -125,14 +125,14 @@ var readline = require('readline');
                 await page.waitFor(1000);
                 await page.click(PRESET_SAVE_SELECTOR);
                 await page.waitFor(2000);
-                console.log("Preset "+(1)+" ayarlandı..")
+                sevgi_api.console_log("Preset "+(1)+" ayarlandı..")
                 
 
             }
         module.exports.set_preset_3_7= async function(page){
             var horizontal = ["0","24000"];
             var vertical = ["9000","0"];
-            console.log("Presetler siliniyor..")
+            sevgi_api.console_log("Presetler siliniyor..")
             
                 await page.waitFor(1000);
                 await page.click(PRESET_INDEX_SELECTOR);
@@ -154,9 +154,9 @@ var readline = require('readline');
                 await page.click(PRESET_DELETE_SELECTOR);
                 
             
-            console.log("Presetler silindi.");
+            sevgi_api.console_log("Presetler silindi.");
             
-                console.log("Preset "+(3)+" ayarlanıyor..")
+                sevgi_api.console_log("Preset "+(3)+" ayarlanıyor..")
                 ////YATAY KONUMU GİR
                 await page.click(DOM_HORIZONTAL_SELECTOR);
                 await page.waitFor(1000);
@@ -186,8 +186,8 @@ var readline = require('readline');
                 await page.waitFor(1000);
                 await page.click(PRESET_SAVE_SELECTOR);
                 await page.waitFor(2000);
-                console.log("Preset "+(3)+" ayarlandı..")
-                console.log("Preset "+(7)+" ayarlanıyor..")
+                sevgi_api.console_log("Preset "+(3)+" ayarlandı..")
+                sevgi_api.console_log("Preset "+(7)+" ayarlanıyor..")
                 ////YATAY KONUMU GİR
                 await page.click(DOM_HORIZONTAL_SELECTOR);
                 await page.waitFor(1000);
@@ -217,13 +217,13 @@ var readline = require('readline');
                 await page.waitFor(1000);
                 await page.click(PRESET_SAVE_SELECTOR);
                 await page.waitFor(2000);
-                console.log("Preset "+(7)+" ayarlandı..")
+                sevgi_api.console_log("Preset "+(7)+" ayarlandı..")
 
             }
         
         
          module.exports.set_patrol= async function(page){
-            console.log("Patrol ayarlanıyor..")
+            sevgi_api.console_log("Patrol ayarlanıyor..")
             await page.click(PATROL_NAME_SELECTOR);
             await page.keyboard.type("0");
             await page.keyboard.press('Enter');
@@ -237,7 +237,7 @@ var readline = require('readline');
                 await page.keyboard.down('Backspace');
             await page.keyboard.type("5,5,5");
             await page.click(PATROL_SAVE_SELECTOR);
-            console.log("Patrol ayarlandı. Presetler arası bekleme süresi 5sn..");
+            sevgi_api.console_log("Patrol ayarlandı. Presetler arası bekleme süresi 5sn..");
 
         }
         module.exports.time_pass = async function(page){
@@ -245,7 +245,7 @@ var readline = require('readline');
     var wait =1;
     var interval = setInterval(function(){zaman++;},10);
     const rl = readline.createInterface({input: process.stdin,output: process.stdout});
-    rl.on("line",function(){console.log("Sayaç durduruldu"+zaman/100+"sn");});
+    rl.on("line",function(){sevgi_api.console_log("Sayaç durduruldu"+zaman/100+"sn");});
     process.stdin.on("keypress",function(){
         clearInterval(interval);
         wait= !wait;
@@ -278,7 +278,7 @@ var readline = require('readline');
         
         module.exports.goto_home= async function(page,set,value)
         {
-            console.log("Göreve dön ayarlanıyor..")
+            sevgi_api.console_log("Göreve dön ayarlanıyor..")
             const input1 = await page.$(PRESET_GOTO_HOME_CHECKBOX_SELECTOR_UP);
             const inpot1 = await input1.$eval('#self_goto_home' , node => node.checked);
             if (inpot1 != set)
@@ -289,16 +289,16 @@ var readline = require('readline');
             await page.keyboard.type(value.toString());
             await page.click(PRESET_GOTO_HOME_SAVE_BUTTON);
             await page.waitFor(2000);
-            console.log("Göreve dön ayarlandı "+value+"sn..");
+            sevgi_api.console_log("Göreve dön ayarlandı "+value+"sn..");
         }
         module.exports.break_patrol= async function(page)
         {
-            console.log("Patrol durduruldu..")
+            sevgi_api.console_log("Patrol durduruldu..")
             await page.click(PATROL_STOP_SELECTOR);
         }
          module.exports.run_patrol= async function(page)
         {
-            console.log("Patrol başlatıldı..")
+            sevgi_api.console_log("Patrol başlatıldı..")
             await page.click(PATROL_RUN_SELECTOR);
         }
         module.exports.turn_left_right= async function(page,direction)

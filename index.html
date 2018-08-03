@@ -13,8 +13,6 @@
 
 <style>
 html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
-
-
 /* The Modal (background) */
 .modal {
     display: none; /* Hidden by default */
@@ -26,7 +24,6 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
     overflow: auto; /* Enable scroll if needed */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
-
 /* Modal Content */
 .modal-content {
     background-color: #fefefe;
@@ -35,7 +32,6 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
     border: 1px solid #888;
     width: 60%;
 }
-
 </style>
 
 <body>
@@ -135,6 +131,19 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
     <h4 class="w3-text-teal" style="margin-left:450px" >Bilgilendirme</h4>
     <p>Bu sistem üzerinden yapılacak olan testler TEY-2_ver06.xlsx ve TEY-1_ver02.xlsx dökümanlarında bulunan testlerdir. TEY-1_ver02.xlsx dökümanındaki testler statik kameralar için TEY-2_ver06.xlsx dökümanındaki testler ise dome kameralar için uygulanacaktır. Testlerin amacı kameraların işlevlerini uygun biçimde yerine getirip getirmediğini test etmektir. Bu testlerin uygulanması otomatik test yazılımı aracılığıyla sağlanacaktır.</p>
 </form>
+<form id="websocket_conn" style="display:none ; margin-left:80px ;margin-top:80px">
+    <div id="conn_text" style="color: red"></div>
+</form>
+<!-- The Modal log -->
+    <div id="myModal_log" class="modal">
+
+    <!-- Modal content -->
+        <div class="modal-content">
+            <p id="sometext_log"></p>
+            <input id="ok"  type="button" style="" value="Tamam">
+        </div>
+
+    </div>
 
 </body>
 </html>

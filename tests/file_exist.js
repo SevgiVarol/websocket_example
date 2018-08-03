@@ -1,6 +1,5 @@
     ///////NOT: Oluşturulan results.xlsx dosyasını manuel olarak değiştirmeyin yoksa güncellemelerde dosya bozuluyor (dosyanın bozulması 
     ////////durumunda dosyayı silip programı yeniden çalıştırın)/////////////
-    
     module.exports.excel_file = async function(test_num,result,document_no){
     const fs = require('fs');
     const child_process = require("child_process");

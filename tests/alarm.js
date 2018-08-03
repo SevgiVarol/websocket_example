@@ -1,5 +1,6 @@
   (function() {
 
+      var sevgi_api= require('./sevgi_api');
 	const MOTION_DETECTOR_SELECTOR_UP= 'body > div > div:nth-child(3) > div.col-md-8 > div.view-container > div > form > div:nth-child(9) > div > div';
 	const MOTION_DETECTOR_SELECTOR = 'body > div > div:nth-child(3) > div.col-md-8 > div.view-container > div > form > div:nth-child(9) > div > div > select';    
 	const MOTION_TRESHOLD_SELECTOR = 'body > div > div:nth-child(3) > div.col-md-8 > div.view-container > div > form > div:nth-child(10) > div > div > input';    
@@ -24,12 +25,12 @@
             const inpot1 = await input1.$eval('.form-control' , node => node.value);
             if(inpot1 == 2)
             {
-                console.log("Hareket Tespit Değeri.....DOĞRU");
+                sevgi_api.console_log("Hareket Tespit Değeri.....DOĞRU");
                 return 1;
             }
             else
             {
-                console.log("Hareket Tespit Değeri.....YANLIŞ");
+                sevgi_api.console_log("Hareket Tespit Değeri.....YANLIŞ");
                 return 0;
             }
         }
