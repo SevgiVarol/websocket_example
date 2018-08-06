@@ -48,7 +48,7 @@
         module.exports.console_log = async function(txt) {
             if(control==1){
                 window_log = txt;
-                setTimeout(function(){window_log = null;},0.1);
+                setTimeout(function(){window_log = null;},0.001);
                 
             }
             else if(control==0) { 
@@ -63,7 +63,7 @@
         module.exports.log_modal = async function(txt) {
             if(control==1){
                 window_log_modal = txt;
-                setTimeout(function(){window_log_modal = null;},1000);
+                setTimeout(function(){window_log_modal = null;},100);
                 
             }
             else if(control==0) { 

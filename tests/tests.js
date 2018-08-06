@@ -73,12 +73,14 @@ async function test_ffmpeg_res(width_test,height_test,stream,test_num,document_n
     if (select=='e') return 1;
     else return 0;
 }
-async function test_ffmpeg_res_fps(stream,test_num,document_no)
+async function test_ffmpeg_res_fps(stream,test_num,document_no,page)
 {
     var temp_val = 1;
-    sevgi_api.console_log("Görüntü kaydediliyor..")
+    await sevgi_api.console_log("Görüntü kaydediliyor..");
+    await page.waitFor(100);
     await capture_test.record(ip,stream,test_num);
-    sevgi_api.console_log("Kodlayıcı/Çözücü Bilgileri alınıyor ..")
+    await sevgi_api.console_log("Kodlayıcı/Çözücü Bilgileri alınıyor ..");
+    await page.waitFor(100);
     await capture_test.create_json(ip,stream,test_num);
     width = await capture_test.read_specs("width",test_num); //istenen yükseklik
     height = await capture_test.read_specs("height",test_num); //istenen genişlik
@@ -88,26 +90,35 @@ async function test_ffmpeg_res_fps(stream,test_num,document_no)
     r_frame_rate =await to_float(r_frame_rate);
     avg_frame_rate = await capture_test.read_specs("avg_frame_rate",test_num);//gerçekleşen kare hızı
     avg_frame_rate =await to_float(avg_frame_rate);
-    sevgi_api.console_log("");
-    sevgi_api.console_log("İstenen çözünürlük = "+width+"x"+height);
-    sevgi_api.console_log("Gerçekleşen çözünürlük = "+coded_width+"x"+coded_height);
+    await sevgi_api.console_log("");
+    await page.waitFor(100);
+    await sevgi_api.console_log("İstenen çözünürlük = "+width+"x"+height);
+    await page.waitFor(100);
+    await sevgi_api.console_log("Gerçekleşen çözünürlük = "+coded_width+"x"+coded_height);
+    await page.waitFor(100);
     if (coded_width == width && coded_height == height)
     {
         temp_val = temp_val &&1;
-        sevgi_api.console_log("Çözünürlükler Eşit");
+        await sevgi_api.console_log("Çözünürlükler Eşit");
+        await page.waitFor(100);
     }
-    else {sevgi_api.console_log("Çözünürlükler Farklı");
+    else {await sevgi_api.console_log("Çözünürlükler Farklı");
+        await page.waitFor(100);
         temp_val = temp_val &&0;
     }
-    sevgi_api.console_log("");
-    sevgi_api.console_log("İstenen kare hızı = "+r_frame_rate);
-    sevgi_api.console_log("Gerçekleşen kare hızı = "+avg_frame_rate);
+    await sevgi_api.console_log("");
+    await sevgi_api.console_log("İstenen kare hızı = "+r_frame_rate);
+    await page.waitFor(100);
+    await sevgi_api.console_log("Gerçekleşen kare hızı = "+avg_frame_rate);
+    await page.waitFor(100);
     if (avg_frame_rate == r_frame_rate )
     {
         temp_val = temp_val &&1;
-        sevgi_api.console_log("Kare Hızı Eşit");
+        await sevgi_api.console_log("Kare Hızı Eşit");
+        await page.waitFor(100);
     }
-    else {sevgi_api.console_log("Kare Hızı Farklı");
+    else {await sevgi_api.console_log("Kare Hızı Farklı");
+        await page.waitFor(100);
         temp_val = temp_val &&0;
     }
     if (temp_val) await result.write(test_num," BAŞARILI   İstenen kare hızı = "+r_frame_rate+" Gerçekleşen kare hızı = "+avg_frame_rate+" İstenen çözünürlük = "+width+"x"+height+" Gerçekleşen çözünürlük = "+coded_width+"x"+coded_height,document_no);
@@ -126,7 +137,7 @@ async function test_set_res_fps(page,res,i)
             await resolution.set_fps1(page, fps1[i]);
             await resolution.apply(page);
             await camera_restart(page,ip);
-            sevgi_api.console_log((i+53) + ". Testin konfigürasyon ayarları yapıldı. Karşılaştırma yapılıyor...");
+            sevgi_api.log_modal((i+53) + ". Testin konfigürasyon ayarları yapıldı. Karşılaştırma yapılıyor...");
     }
     else if (res == 2)
     {
@@ -136,7 +147,7 @@ async function test_set_res_fps(page,res,i)
             await resolution.set_fps2(page, fps2[i]);
             await resolution.apply(page);
             await camera_restart(page,ip);
-            sevgi_api.console_log((i+57) + ". Testin konfigürasyon ayarları yapıldı. Karşılaştırma yapılıyor...");
+            sevgi_api.log_modal((i+57) + ". Testin konfigürasyon ayarları yapıldı. Karşılaştırma yapılıyor...");
         
     }
     
@@ -155,6 +166,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
         await resolution.set_fps1(page, fps1[i]);
         await resolution.apply(page);
         sevgi_api.console_log("Ayarlar set edildi. Kamera yeniden başlatılıyor." );
+        await page.waitFor(100);
     }
     else if (res == 2)
     {
@@ -163,6 +175,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
         await resolution.set_fps2(page, fps2[i]);
         await resolution.apply(page);
         sevgi_api.console_log("Ayarlar set edildi. Kamera yeniden başlatılıyor." );
+        await page.waitFor(100);
     }
     await camera_restart(page,ip);
 }
@@ -238,7 +251,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                         await encoding.set_bit_rate(page, "3");
                         await encoding.set_calc_method(page, "tan");
                         await encoding.apply(page);
-                        //await camera_restart(page,ip);
+                        await camera_restart(page,ip);
                         sevgi_api.console_log("Konfigürasyon ayarları yapıldı.");
                         await result.write("22", "Konfigürasyon ayarları yapıldı.",1);
                     break;
@@ -252,7 +265,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                         await encodingLow.set_codding_quality(page, "orta");
                         await encodingLow.set_bit_rate(page, "0.4");
                         await encodingLow.apply(page);
-                        //await camera_restart(page,ip);
+                        await camera_restart(page,ip);
                         sevgi_api.console_log("Konfigürasyon ayarları yapıldı.");
                         await result.write("23", "Konfigürasyon ayarları yapıldı.",1);
                     break;
@@ -265,7 +278,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                         await resolution.set_resolution1(page,"1920 x 1080 (max:30fps");
                         await resolution.set_fps1(page,"10");
                         await resolution.apply(page);
-                        //await camera_restart(page,ip);
+                        await camera_restart(page,ip);
                         sevgi_api.console_log("Konfigürasyon ayarları yapıldı.");
                         await result.write("24", "Konfigürasyon ayarları yapıldı.",1);
                     break;
@@ -349,6 +362,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                       await resolution.set_fps2(page, "12.5");
                       await resolution.apply(page);
                       sevgi_api.console_log("Değerler Ayarlandı.");
+                      await page.waitFor(100);
                       sevgi_api.console_log("Yapılan konfigürasyon ayarları:");
                       await nav.toResolution(page,ip);
                       var profile = await resolution.test_profile(page);
@@ -810,41 +824,43 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                       break;
                 }
                 case "53": {await test_set_res_fps(page,1,0);
-                    await test_ffmpeg_res_fps("stream1",53,1);
+                    await page.waitFor(100);
+                    await test_ffmpeg_res_fps("stream1",53,1,page);
                     break;
                 }
                 case "54": {await test_set_res_fps(page,1,1);
-                    await test_ffmpeg_res_fps("stream1",54,1);
+                    await test_ffmpeg_res_fps("stream1",54,1,page);
                     break;
                 }
                 case "55": {await test_set_res_fps(page,1,2);
-                    await test_ffmpeg_res_fps("stream1",55,1);
+                    await test_ffmpeg_res_fps("stream1",55,1,page);
                     break;
                 }
                 case "56": {await test_set_res_fps(page,1,3);
-                    await test_ffmpeg_res_fps("stream1",56,1);
+                    await test_ffmpeg_res_fps("stream1",56,1,page);
                     break;
                 }
                 case "57": {await test_set_res_fps(page,2,0);
-                    await test_ffmpeg_res_fps("stream2",57,1);
+                    await test_ffmpeg_res_fps("stream2",57,1,page);
                     break;
                 }
                 case "58": {await test_set_res_fps(page,2,1);
-                    await test_ffmpeg_res_fps("stream2",58,1);
+                    await test_ffmpeg_res_fps("stream2",58,1,page);
                     break;
                 }
                 case "59": {await test_set_res_fps(page,2,2);
-                    await test_ffmpeg_res_fps("stream2",59,1);
+                    await test_ffmpeg_res_fps("stream2",59,1,page);
                     break;
                 }
                 case "60": {await test_set_res_fps(page,2,3);
-                    await test_ffmpeg_res_fps("stream2",60,1);
+                    await test_ffmpeg_res_fps("stream2",60,1,page);
                     break;
                 }
                 case "61": {
                     sevgi_api.console_log("Test 61 Başladı.");
                     await nav.toRTSP(page,ip);
                     await rtsp.rtsp_set(page, "Tanımlı kullanıcı", "admin",1);
+                    await camera_restart(page,ip);
                     await sevgi_api.log_modal("Lütfen VLC'den yayının açılmasını bekleyin. Yayın açıldıktan sonra gelen 'RTSP kimlik doğrulaması' ekranında  kullanıcı adı:'admin' ve parola:'admin' olarak girilerek 'Ok' butonuna tıklayın.");
                     await page.waitFor(4000);
                     var command = 'vlc rtsp://'+ip+'/stream1';
@@ -868,6 +884,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                     sevgi_api.console_log("Test 62 Başladı.");
                     await nav.toRTSP(page,ip);
                     await rtsp.rtsp_set(page, "Tanımlı kullanıcı", "admin",1);
+                    await camera_restart(page,ip);
                     await sevgi_api.log_modal("Lütfen VLC'den yayının açılmasını bekleyin. Yayın açıldıktan sonra gelen 'RTSP kimlik doğrulaması' ekranında  kullanıcı adı:'admin' ve parola:'admin' olarak girilerek 'Ok' butonuna tıklayın.");
                     await page.waitFor(4000);
                     var command = 'vlc rtsp://'+ip+'/stream2';
@@ -891,6 +908,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                     sevgi_api.console_log("Test 63 Başladı.");
                     await nav.toRTSP(page,ip);
                     await rtsp.rtsp_set_no(page,0);
+                    await camera_restart(page,ip);
                     var command = 'vlc rtsp://'+ip+'/stream1';
                     proc =await require('child_process').exec(command)
                     await sevgi_api.log_modal("Lütfen VLC programının açılmasını bekleyin.\n\n");
@@ -1114,7 +1132,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 await alarm_dome.check_turn_location(page,1);
                 await alarm_dome.alarm_apply(page);
                 console.log("Alarm sekmesine alarm preseti kaydedildi");
-                //await camera_restart(page,ip);
+                await camera_restart(page,ip);
                 await result.write("22"," UYGULANDI    Ayarlar kaydedildi",2);
                 console.log("OPTIONS SETTED ");
                 break;
@@ -1210,7 +1228,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 console.log("Hedef bitrate hesaplama metodu = 'Tanımlı Bitrate değerine Göre' ayarlandı ");
                 await encodingH.apply(page);
                 await result.write("27"," UYGULANDI    Ayarlar kaydedildi",2);
-                //await camera_restart(page,ip);
+                await camera_restart(page,ip);
                 console.log("OPTIONS SETTED ");
                 break;
             }
@@ -1225,7 +1243,7 @@ async function test_set_res_fps_DOM(page,i,res,ip)
                 await encodingLow_dome.set_bit_rate(page, "1");
                 await encodingLow_dome.apply(page);
                 await result.write("28","UYGULANDI    Ayarlar kaydedildi",2);
-                //await camera_restart(page,ip);
+                await camera_restart(page,ip);
                 console.log("OPTIONS SETTED ");
                 break;
             }

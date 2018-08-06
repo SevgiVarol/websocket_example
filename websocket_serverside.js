@@ -1,4 +1,5 @@
      const {ping} = require('./tests/ping.js');
+     const ping_module = require('./tests/ping.js');
      const sevgi_api = require('./tests/sevgi_api.js');
      const puppeteer = require('puppeteer');
      var page;
@@ -42,15 +43,31 @@
             else if(doc == 2) ip='10.5.177.164';
                       
             if(response != null) sevgi_api.wait_response(response);
-            ping(page,ip).then((value) => 
-            { x= value; console.log("ping x:"+value);
+              
+            ping_control();
+            async function ping_control(){
+                x = await ping(page,ip);
+                console.log("ping x:"+x);
             
                 if(!x){
-                    for(var i in clients){
-                        var data0 = { "test_no" : null , "question" : null, "bekle" : "Kamera offline Lutfen Bekleyin" , "log" : null , "log_modal" : null };
-                        var m = JSON.stringify(data0);
-                        console.log(m);
-                        clients[i].sendUTF(m);
+                    for(let k=1 ; !x ; k++){
+                        for(var i in clients){
+                            var data0 = { "test_no" : null , "question" : null, "bekle" : "Kamera offline Lutfen Bekleyin.. " , "log" : null , "log_modal" : null , "endmodal" :null };
+                            var m = JSON.stringify(data0);
+                            clients[i].sendUTF(m);
+                        }
+                        x = await ping(page,ip);
+                        await page.waitFor(1000);
+                        if(x)
+                        {
+                            for(var c in clients)
+                                {
+                                    var end ={"test_no" : null , "question" : null, "bekle" : null, "log" : null , "log_modal" : null , "endmodal" : true }; 
+                                    var endrestart = JSON.stringify(end);
+                                    clients[c].sendUTF(endrestart);
+                                }
+                                break;
+                        }
                     }
                 } 
                 else 
@@ -62,7 +79,7 @@
                         {
                             for(var i in clients)
                             {
-                                var data1 = { "test_no" : msgString , "question" : null, "bekle" : null , "log" : null , "log_modal" : null };
+                                var data1 = { "test_no" : msgString , "question" : null, "bekle" : null , "log" : null , "log_modal" : null , "endmodal" :null };
                                 var m1 = JSON.stringify(data1);
                                 clients[i].sendUTF(m1);
                             }
@@ -75,7 +92,7 @@
                                 console.log("soru:"+soru);
                                 for(var i in clients)
                                 {
-                                    var data2 = { "test_no" : null , "question" : soru, "bekle" : null , "log" : null , "log_modal" : null };
+                                    var data2 = { "test_no" : null , "question" : soru, "bekle" : null , "log" : null , "log_modal" : null , "endmodal" :null };
                                     var m2 = JSON.stringify(data2);
                                     clients[i].sendUTF(m2);
                                 }
@@ -94,12 +111,12 @@
                                 console.log("log:"+log_in);
                                 for(var i in clients)
                                 {
-                                    var datalog = { "test_no" : null , "question" : null, "bekle" : null , "log" : log_in , "log_modal" : null };
+                                    var datalog = { "test_no" : null , "question" : null, "bekle" : null , "log" : log_in , "log_modal" : null , "endmodal" :null };
                                     var mlog = JSON.stringify(datalog);
                                     clients[i].sendUTF(mlog);
                                 }
                         
-                                setTimeout(log_control, 0.2);
+                                setTimeout(log_control, 0.01);
                             }
                             else setTimeout(log_control,0);
                         }
@@ -113,7 +130,7 @@
                                 console.log("log_modal:"+log_modal);
                                 for(var i in clients)
                                 {
-                                    var datalog_modal = { "test_no" : null , "question" : null, "bekle" : null , "log" : null , "log_modal" : log_modal };
+                                    var datalog_modal = { "test_no" : null , "question" : null, "bekle" : null , "log" : null , "log_modal" : log_modal , "endmodal" :null };
                                     var mlog_modal = JSON.stringify(datalog_modal);
                                     clients[i].sendUTF(mlog_modal);
                                 }
@@ -121,6 +138,53 @@
                                 setTimeout(modal_log_control, 1000);
                             }
                             else setTimeout(modal_log_control,0);
+                        }
+                        cam_restart_control();
+                        async function cam_restart_control()
+                        {
+                            var closed = await ping_module.cam_closing_func();
+                            var opened = await ping_module.cam_opening_func();
+                            if(closed == 1)
+                            {
+                                for(let i = 15 ; closed ; i--)
+                                { 
+                                    for(var j in clients)
+                                    {
+                                        var data_restart = { "test_no" : null , "question" : null, "bekle" : "Kamera kapanıyor.. "+i+"sn" , "log" : null , "log_modal" : null , "endmodal" :null };
+                                        var mrestart = JSON.stringify(data_restart);
+                                        clients[j].sendUTF(mrestart);
+                                    }
+                                    closed = await ping_module.cam_closing_func(); 
+                                    await page.waitFor(1000); 
+                                    if(closed == 0) break;
+                                }
+                            }
+                            if(opened == 1)
+                            {                                
+                                for(let i = 168 ; opened ; i--)
+                                { 
+                                    for(var j in clients)
+                                    {
+                                        var data_restart = { "test_no" : null , "question" : null, "bekle" : "Kamera açılıyor.. Lütfen bekleyin.. "+i+"sn" , "log" : null , "log_modal" : null , "endmodal" :null };
+                                        var mrestart = JSON.stringify(data_restart);
+                                        clients[j].sendUTF(mrestart);
+                                    }
+                                    opened = await ping_module.cam_opening_func(); 
+                                    await page.waitFor(1000); 
+                                    if(opened == 0)
+                                    {
+                                        for(var c in clients)
+                                        {
+                                            var end ={"test_no" : null , "question" : null, "bekle" : null, "log" : null , "log_modal" : null , "endmodal" : true }; 
+                                            var endrestart = JSON.stringify(end);
+                                            clients[j].sendUTF(endrestart);
+                                        }
+                                        break;
+                                    }
+                                }
+                            }
+                            setTimeout(cam_restart_control, 200);
+                            
                         }
                 
                     }
@@ -130,7 +194,7 @@
                         {
                             for(var i in clients)
                             {
-                                var data2 = { "test_no" : msgString , "question" : null, "bekle" : null , "log" : null , "log_modal" : null };
+                                var data2 = { "test_no" : msgString , "question" : null, "bekle" : null , "log" : null , "log_modal" : null , "endmodal" :null};
                                 var m2 = JSON.stringify(data2);
                                 clients[i].sendUTF(m2);
                             }
@@ -144,7 +208,7 @@
                                 console.log("soru:"+soru);
                                 for(var i in clients)
                                 {
-                                    var data2 = { "test_no" : null , "question" : soru, "bekle" : null , "log" : null , "log_modal" : null };
+                                    var data2 = { "test_no" : null , "question" : soru, "bekle" : null , "log" : null , "log_modal" : null , "endmodal" :null };
                                     var m2 = JSON.stringify(data2);
                                     clients[i].sendUTF(m2);
                                 }
@@ -163,7 +227,7 @@
                                 console.log("log:"+log_in);
                                 for(var i in clients)
                                 {
-                                    var datalog = { "test_no" : null , "question" : null, "bekle" : null , "log" : log_in , "log_modal" : null };
+                                    var datalog = { "test_no" : null , "question" : null, "bekle" : null , "log" : log_in , "log_modal" : null , "endmodal" :null };
                                     var mlog = JSON.stringify(datalog);
                                     clients[i].sendUTF(mlog);
                                 }
@@ -174,7 +238,7 @@
                         }
                     }
                 }
-            });
+            }
 
         });
         

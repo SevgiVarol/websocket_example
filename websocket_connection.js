@@ -24,6 +24,8 @@
             var msg = data.test_no;
             var question = data.question;
             var bekle= data.bekle;
+            var endmodal = data.endmodal;
+            if(endmodal){var modal_wait = document.getElementById('myModal_wait'); modal_wait.style.display = "none";}
             if(log) console.log(log);
             if(log_modal)
             {
@@ -38,7 +40,15 @@
                 }
             }
                             
-            if(bekle) alert(bekle);
+            if(bekle){
+                var modal = document.getElementById('myModal_wait');
+                var sometext = document.getElementById('sometext_wait');
+                sometext.innerHTML=bekle;
+                modal.style.display = "block";
+                /*window.onclick = function(event) {
+                if (event.target == modal)
+                {modal.style.display = "none";}}*/
+            }
             else if(question)
             {
                 // Get the modal
